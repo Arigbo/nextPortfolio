@@ -1153,13 +1153,6 @@ const handleThemeChange = (e) => {
             flex: 1;
           }
 
-          .section-space > div {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: var(--card-shadow);
-          }
-
           /* Project modal tools */
           .tools-grid {
             display: flex;
@@ -1761,50 +1754,7 @@ const handleThemeChange = (e) => {
             text-gray-400 hover:text-blue-400 transition-colors duration-300;
           }
 
-          .about-content {
-            flex flex-col md:flex-row items-center md:items-start md:space-x-12;
-          }
-
-          .about-image-container {
-            flex-shrink-0 mb-6 md:mb-0 hidden md:flex;
-          }
-
-          .about-image {
-            h-full w-auto rounded-xl object-cover shadow-lg;
-          }
-
-          .about-text {
-            text-center md:text-left;
-          }
-
-          .about-title {
-            font-display text-3xl md:text-4xl font-bold mb-4 var(--accent-color);
-          }
-
-          .about-desc {
-            text-lg font-normal mb-6 var(--root-text);
-          }
-
-          .section-space {
-            mt-8 space-y-12 text-center md:text-left;
-          }
-
-          .subsection-title {
-            font-display text-2xl font-semibold mb-4 var(--accent-color);
-          }
-
-          .subsection-desc {
-            font-normal text-lg var(--root-text) mb-4;
-          }
-
-          .diagram-image {
-            rounded-xl shadow-lg border-2 border-slate-700 max-w-full h-auto;
-          }
-
-          .coworker-grid {
-            grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6;
-          }
-
+    
           .photo-grid {
             grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8;
           }
@@ -1999,7 +1949,7 @@ const handleThemeChange = (e) => {
               {/* New Content Describing me, skills, and journey */}
               <div className="section-space">
                 {/* My Full-Stack Approach */}
-                <div>
+                {/* <div>
                   <h4 className="subsection-title">A Full-Stack Approach</h4>
                   <p className="subsection-desc">
                     As a full-stack developer, I thrive on the challenge of handling every layer of a web application. From designing intuitive user interfaces to building powerful back-end systems, I ensure that every piece of the puzzle fits together seamlessly. This holistic perspective allows me to build robust, scalable, and maintainable applications that are ready for production. I'm not just a front-end or a back-end developer; I'm an architect of complete digital experiences.
@@ -2011,7 +1961,7 @@ const handleThemeChange = (e) => {
                       className="diagram-image"
                     />
                   </div>
-                </div>
+                </div> */}
 
                 {/* My Toolkit */}
                 <div>
