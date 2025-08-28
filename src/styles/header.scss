@@ -1,0 +1,58 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  height: 4rem;
+  padding-inline: 1rem;
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 0.4rem;
+    height: 100%;
+    font-size: 24px;
+    font-weight: 200;
+    color: white;
+    font-family: "JetBrains Mono", monospace;
+  }
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .nav {
+
+  }
+}
+
+.nav-items {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .nav-items {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.talk-button {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .talk-button {
+    display: block;
+  }
+}

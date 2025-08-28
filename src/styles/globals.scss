@@ -1,0 +1,479 @@
+@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Funnel+Display:wght@300..800&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
+@import "./home.scss";
+@import "./header.scss";
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Funnel Display", sans-serif;
+}
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  a {
+    text-decoration: none;
+  }
+  button {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 0.4rem;
+    height: 2.5rem;
+    padding-inline: 0.5rem;
+  }
+  &.light {
+    $rootBg: #f3f4f6;
+    $rootText: #1f2937;
+    $navBg: rgba(255, 255, 255, 0.9);
+    $navBlur: blur(8px);
+    $navShadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    $navTextColor: #4a5568;
+    $navTextHover: #2563eb;
+    $cardBg: #ffffff;
+    $cardShadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    $borderColor: #e2e8f0;
+    $accentColor: #2563eb;
+    $heroFrom: #06b6d4;
+    $heroTo: #2563eb;
+    $heroHoverFrom: #2563eb;
+    $heroHoverTo: #06b6d4;
+    $placeholderColor: #a0aec0;
+    background-color: $rootBg;
+    color: $rootText;
+    select {
+      background-color: $rootBg;
+      option {
+        &:hover {
+          background-color: $rootBg;
+        }
+      }
+    }
+    .gradient-button {
+      transition: all 0.8s ease;
+      background: linear-gradient(to right, $heroFrom, $heroTo);
+      &:hover {
+        background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    header {
+      background-color: $navBg;
+      color: $navTextColor;
+      backdrop-filter: $navBlur;
+      box-shadow: $navShadow;
+      .logo {
+        background-image: linear-gradient(to right, $heroFrom, $heroTo);
+      }
+      .header-right {
+        display: flex;
+        align-items: center;
+      }
+    }
+    .header,
+    .section-title,
+    .project-title,
+    .name {
+      transition: all 0.8s ease;
+      background: linear-gradient(
+        to right,
+        $heroFrom,
+        $heroTo
+      ); /* Pink to Blue gradient */
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroHoverFrom,
+          $heroHoverTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+  &.dark {
+    $rootBg: #030712;
+    $rootText: #f3f4f6;
+    $navBg: rgba(3, 7, 18, 0.9);
+    $navBlur: blur(8px);
+    $navShadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    $navTextColor: #9ca3af;
+    $navTextHover: #60a5fa;
+    $cardBg: #111827;
+    $cardShadow: 0 20px 25px -5px rgba(31, 41, 55, 0.5),
+      0 8px 10px -6px rgba(31, 41, 55, 0.5);
+    $borderColor: #1f2937;
+    $accentColor: #60a5fa;
+    $heroFrom: #38bdf8;
+    $heroTo: #3b82f6;
+    $heroHoverFrom: #3b82f6;
+    $heroHoverTo: #38bdf8;
+    $placeholderColor: #6b7280;
+    background-color: $rootBg;
+    color: $rootText;
+    select {
+      background-color: $rootBg;
+      option {
+        &:hover {
+          background-color: $rootBg;
+        }
+      }
+    }
+    .gradient-button {
+      transition: all 0.8s ease;
+      background: linear-gradient(to right, $heroFrom, $heroTo);
+      &:hover {
+        background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    header {
+      background-color: $navBg;
+      color: $navTextColor;
+      backdrop-filter: $navBlur;
+      box-shadow: $navShadow;
+      .logo {
+        background-image: linear-gradient(to right, $heroFrom, $heroTo);
+      }
+      .header-right {
+        display: flex;
+      }
+    }
+    .header,
+    .section-title,
+    .project-title,
+    .name {
+      transition: all 0.8s ease;
+      background: linear-gradient(
+        to right,
+        $heroFrom,
+        $heroTo
+      ); /* Pink to Blue gradient */
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroHoverFrom,
+          $heroHoverTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+  &.blue {
+    $rootBg: #020617;
+    $rootText: #e2e8f0;
+    $navBg: rgba(7, 8, 13, 0.9);
+    $navBlur: blur(8px);
+    $navShadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    $navTextColor: #94a3b8;
+    $navTextHover: #38bdf8;
+    $cardBg: #0f172a;
+    $cardShadow: 0 20px 25px -5px rgba(30, 41, 59, 0.5),
+      0 8px 10px -6px rgba(30, 41, 59, 0.5);
+    $borderColor: #1e293b;
+    $accentColor: #38bdf8;
+    $heroFrom: #38bdf8;
+    $heroTo: #3b82f6;
+    $heroHoverFrom: #3b82f6;
+    $heroHoverTo: #38bdf8;
+    $placeholderColor: #64748b;
+    background-color: $rootBg;
+    color: $rootText;
+    select {
+      background-color: $rootBg;
+      option {
+        &:hover {
+          background-color: $rootBg;
+        }
+      }
+    }
+    .gradient-button {
+      transition: all 0.8s ease;
+      background: linear-gradient(to right, $heroFrom, $heroTo);
+      &:hover {
+        background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    header {
+      background-color: $navBg;
+      color: $navTextColor;
+      backdrop-filter: $navBlur;
+      box-shadow: $navShadow;
+      .logo {
+        background-image: linear-gradient(to right, $heroFrom, $heroTo);
+      }
+      .header-right {
+        display: flex;
+      }
+    }
+    .header,
+    .section-title,
+    .project-title,
+    .name {
+      transition: all 0.8s ease;
+      background: linear-gradient(
+        to right,
+        $heroFrom,
+        $heroTo
+      ); /* Pink to Blue gradient */
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroHoverFrom,
+          $heroHoverTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+  &.forest {
+    $rootBg: #1f2937;
+    $rootText: #e5e7eb;
+    $navBg: rgba(31, 41, 55, 0.9);
+    $navBlur: blur(8px);
+    $navShadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    $navTextColor: #d1d5db;
+    $navTextHover: #60a5fa;
+    $cardBg: #374151;
+    $cardShadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    $borderColor: #4a5568;
+    $accentColor: #60a5fa;
+    $heroFrom: #06b6d4;
+    $heroTo: #2563eb;
+    $heroHoverFrom: #2563eb;
+    $heroHoverTo: #06b6d4;
+    $placeholderColor: #a0aec0;
+    background-color: $rootBg;
+    color: $rootText;
+    select {
+      background-color: $rootBg;
+      option {
+        &:hover {
+          background-color: $rootBg;
+        }
+      }
+    }
+    .gradient-button {
+      transition: all 0.8s ease;
+      background: linear-gradient(to right, $heroFrom, $heroTo);
+      &:hover {
+        background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    header {
+      background-color: $navBg;
+      color: $navTextColor;
+      backdrop-filter: $navBlur;
+      box-shadow: $navShadow;
+      .logo {
+        background-image: linear-gradient(to right, $heroFrom, $heroTo);
+      }
+      .header-right {
+        display: flex;
+      }
+    }
+    .header,
+    .section-title,
+    .project-title,
+    .name {
+      transition: all 0.8s ease;
+      background: linear-gradient(
+        to right,
+        $heroFrom,
+        $heroTo
+      ); /* Pink to Blue gradient */
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroHoverFrom,
+          $heroHoverTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+  &.purple {
+    $rootBg: #0f031a;
+    $rootText: #f3e8ff;
+    $navBg: rgba(15, 3, 26, 0.9);
+    $navBlur: blur(8px);
+    $navShadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    $navTextColor: #d8b4fe;
+    $navTextHover: #a855f7;
+    $cardBg: #1c0933;
+    $cardShadow: 0 20px 25px 5px rgba(76, 29, 149, 0.5),
+      0 8px 10px -6px rgba(76, 29, 149, 0.5);
+    $borderColor: #3b0764;
+    $accentColor: #d946ef;
+    $heroFrom: #c084fc;
+    $heroTo: #a855f7;
+    $heroHoverFrom: #a855f7;
+    $heroHoverTo: #c084fc;
+    $placeholderColor: #a78bfa;
+    background-color: $rootBg;
+    color: $rootText;
+    select {
+      background-color: $rootBg;
+      option {
+        &:hover {
+          background-color: $rootBg;
+        }
+      }
+    }
+    .gradient-button {
+      transition: all 0.8s ease;
+      background: linear-gradient(to right, $heroFrom, $heroTo);
+      &:hover {
+        background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    header {
+      background-color: $navBg;
+      color: $navTextColor;
+      backdrop-filter: $navBlur;
+      box-shadow: $navShadow;
+      .logo {
+        background-image: linear-gradient(to right, $heroFrom, $heroTo);
+      }
+      .header-right {
+        display: flex;
+      }
+    }
+    .header,
+    .section-title,
+    .project-title,
+    .name {
+      transition: all 0.8s ease;
+      background: linear-gradient(
+        to right,
+        $heroFrom,
+        $heroTo
+      ); /* Pink to Blue gradient */
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroHoverFrom,
+          $heroHoverTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+  &.orange {
+    $rootBg: #2c0a00;
+    $rootText: #ffedd5;
+    $navBg: rgba(44, 10, 0, 0.9);
+    $navBlur: blur(8px);
+    $navShadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    $navTextColor: #fdba74;
+    $navTextHover: #f97316;
+    $cardBg: #431407;
+    $cardShadow: 0 20px 25px-5px rgba(124, 45, 18, 0.5),
+      0 8px 10px -6px rgba(124, 45, 18, 0.5);
+    $borderColor: #7c2d12;
+    $accentColor: #fb923c;
+    $heroFrom: #fdba74;
+    $heroTo: #f97316;
+    $heroHoverFrom: #f97316;
+    $heroHoverTo: #fdba74;
+    $placeholderColor: #ea580c;
+    background-color: $rootBg;
+    color: $rootText;
+    select {
+      background-color: $rootBg;
+      option {
+        &:hover {
+          background-color: $rootBg;
+        }
+      }
+    }
+    .gradient-button {
+      transition: all 0.8s ease;
+      background: linear-gradient(to right, $heroFrom, $heroTo);
+      &:hover {
+        background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    header {
+      background-color: $navBg;
+      color: $navTextColor;
+      backdrop-filter: $navBlur;
+      box-shadow: $navShadow;
+      .logo {
+        background-image: linear-gradient(to right, $heroFrom, $heroTo);
+      }
+      .header-right {
+        display: flex;
+      }
+    }
+    .header,
+    .section-title,
+    .project-title,
+    .name {
+      transition: all 0.8s ease;
+      background: linear-gradient(
+        to right,
+        $heroFrom,
+        $heroTo
+      ); /* Pink to Blue gradient */
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroHoverFrom,
+          $heroHoverTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+}
