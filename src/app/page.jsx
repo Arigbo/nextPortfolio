@@ -883,7 +883,7 @@ const App = () => {
                 <div key={project.id} className="project-card group">
                   <div className="image-container">
                     <img src={project.imageUrl} alt={project.title} />
-                    <div className="overlay">
+                    <div className="handle-overlay">
                       <button
                         onClick={() => handleOpenProjectModal(project)}
                         className="detail-button group-hover"
@@ -894,14 +894,14 @@ const App = () => {
                   </div>
                   <h4>{project.title}</h4>
                   <p className="line-clamp-3">{project.description}</p>
-                  <div>
+                  <div className="tech-tags">
                     {project.techStack.map((tech, index) => (
                       <span key={index} className="tech-tag">
                         {tech}
                       </span>
                     ))}
                   </div>
-                  <div>
+                  <div className="links">
                     {project.link && (
                       <a href={project.link} className="link">
                         <i className="fas fa-external-link-alt"></i>

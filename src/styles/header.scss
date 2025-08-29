@@ -8,51 +8,74 @@ header {
   right: 0;
   z-index: 40;
   height: 4rem;
-.header_inner{
-  display: flex;
-  justify-content: space-between;
-  width: 95%;
-    .logo {
+  width: 100%;
+  .headerInner {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    padding-inline: 0.4rem;
-    height: 100%;
-    width: 20%;
-    font-size: 24px;
-    font-weight: 200;
-    color: white;
-    font-family: "JetBrains Mono", monospace;
-  }
-  nav {
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    transition: all 0.3s ease;
-    width: 60%;
-    @media (min-width: 768px) {
+    width: 95%;
+    .logo {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
-      font-weight: 600;
-    }
-  }
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: 20%;
-    .talk-button {
-      display: none;
-      height: 2rem;
-      border-radius: 0.5rem;
-
+      justify-content: start;
+      padding-inline: 0.4rem;
+      height: 100%;
+      font-size: 24px;
+      font-weight: 200;
+      color: white;
+      font-family: "JetBrains Mono", monospace;
+      h1 {
+        width: 100%;
+      }
       @media (min-width: 768px) {
-        display: block;
+        width: 5%;
+      }
+    }
+    nav {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      width: 75%;
+      .nav-items {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 2rem;
+        justify-content: center;
+      }
+      @media (min-width: 768px) {
+        display: flex;
+      }
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      @media (min-width: 768px) {
+        width: 15%;
+      }
+      .theme-select {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border-width: 2px;
+        color: var(--root-text);
+        transition: border-color 0.3s;
+      }
+
+      .theme-select:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px #3b82f6;
+      }
+      .talk-button {
+        display: none;
+        height: 2rem;
+        border-radius: 0.5rem;
+        width: 100%;
+        @media (min-width: 768px) {
+          display: block;
+        }
       }
     }
   }
-}
 }

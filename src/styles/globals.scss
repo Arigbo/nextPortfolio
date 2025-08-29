@@ -80,10 +80,17 @@ body {
       }
       a {
         color: $navTextColor;
-        &:hover{
-        color: $navTextHover;
+        &:hover {
+          color: $navTextHover;
         }
       }
+    }
+    .tech-tag {
+      color: $accentColor;
+      background-color: $rootBg;
+    }
+    .link{
+      color: linear-gradient(to right, $heroFrom, $heroTo);
     }
     .tech-category-title,
     .header,
@@ -179,10 +186,17 @@ body {
       }
       a {
         color: $navTextColor;
-        &:hover{
-        color: $navTextHover;
+        &:hover {
+          color: $navTextHover;
         }
       }
+    }
+    .tech-tag {
+      color: $accentColor;
+      background-color: $rootBg;
+    }
+    .link{
+      color: linear-gradient(to right, $heroFrom, $heroTo);
     }
     .tech-category-title,
     .header,
@@ -278,10 +292,17 @@ body {
       }
       a {
         color: $navTextColor;
-        &:hover{
-        color: $navTextHover;
+        &:hover {
+          color: $navTextHover;
         }
       }
+    }
+    .tech-tag {
+      color: $accentColor;
+      background-color: $rootBg;
+    }
+    .link{
+      color: linear-gradient(to right, $heroFrom, $heroTo);
     }
     .tech-category-title,
     .header,
@@ -377,10 +398,17 @@ body {
       }
       a {
         color: $navTextColor;
-        &:hover{
-        color: $navTextHover;
+        &:hover {
+          color: $navTextHover;
         }
       }
+    }
+    .tech-tag {
+      color: $accentColor;
+      background-color: $rootBg;
+    }
+    .link{
+      color: linear-gradient(to right, $heroFrom, $heroTo);
     }
     .tech-category-title,
     .header,
@@ -476,10 +504,17 @@ body {
       }
       a {
         color: $navTextColor;
-        &:hover{
-        color: $navTextHover;
+        &:hover {
+          color: $navTextHover;
         }
       }
+    }
+    .tech-tag {
+      color: $accentColor;
+      background-color: $rootBg;
+    }
+    .link{
+      color: linear-gradient(to right, $heroFrom, $heroTo);
     }
     .tech-category-title,
     .header,
@@ -575,10 +610,17 @@ body {
       }
       a {
         color: $navTextColor;
-        &:hover{
-        color: $navTextHover;
+        &:hover {
+          color: $navTextHover;
         }
       }
+    }
+    .tech-tag {
+      color: $accentColor;
+      background-color: $rootBg;
+    }
+    .link{
+      color: linear-gradient(to right, $heroFrom, $heroTo);
     }
     .tech-category-title,
     .header,

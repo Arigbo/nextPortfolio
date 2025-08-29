@@ -8,8 +8,10 @@ export default function Header({
 }) {
   return (
     <header>
-      <div className="header_inner">
-        <div>{logo}</div>
+      <div className="headerInner">
+        <div className="logo">
+          <h1>{logo}</h1>
+        </div>
         <nav className="nav">
           <div className="nav-items">
             <a href="#projects" className="nav-link underline-hover">
