@@ -1,6 +1,6 @@
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: fixed;
   top: 0;
@@ -8,54 +8,51 @@ header {
   right: 0;
   z-index: 40;
   height: 4rem;
-  padding-inline: 1rem;
-  .logo {
+.header_inner{
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+    .logo {
     display: flex;
     align-items: center;
     justify-content: center;
     padding-inline: 0.4rem;
     height: 100%;
+    width: 20%;
     font-size: 24px;
     font-weight: 200;
     color: white;
     font-family: "JetBrains Mono", monospace;
   }
-  .header-right{
+  nav {
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    transition: all 0.3s ease;
+    width: 60%;
+    @media (min-width: 768px) {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-weight: 600;
+    }
+  }
+  .header-right {
     display: flex;
     align-items: center;
     gap: 1rem;
+    width: 20%;
+    .talk-button {
+      display: none;
+      height: 2rem;
+      border-radius: 0.5rem;
+
+      @media (min-width: 768px) {
+        display: block;
+      }
+    }
   }
 }
-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.3s ease;
-}
-
-@media (min-width: 768px) {
-
-}
-
-.nav-items {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .nav-items {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    font-weight: 600;
-  }
-}
-
-.talk-button {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .talk-button {
-    display: block;
-  }
 }

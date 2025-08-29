@@ -20,6 +20,9 @@ body {
     height: 2.5rem;
     padding-inline: 1rem;
   }
+  .gradient-button {
+    color: white;
+  }
   &.light {
     $rootBg: #f3f4f6;
     $rootText: #1f2937;
@@ -77,6 +80,9 @@ body {
       }
       a {
         color: $navTextColor;
+        &:hover{
+        color: $navTextHover;
+        }
       }
     }
     .tech-category-title,
@@ -173,6 +179,9 @@ body {
       }
       a {
         color: $navTextColor;
+        &:hover{
+        color: $navTextHover;
+        }
       }
     }
     .tech-category-title,
@@ -269,6 +278,9 @@ body {
       }
       a {
         color: $navTextColor;
+        &:hover{
+        color: $navTextHover;
+        }
       }
     }
     .tech-category-title,
@@ -365,6 +377,9 @@ body {
       }
       a {
         color: $navTextColor;
+        &:hover{
+        color: $navTextHover;
+        }
       }
     }
     .tech-category-title,
@@ -461,6 +476,9 @@ body {
       }
       a {
         color: $navTextColor;
+        &:hover{
+        color: $navTextHover;
+        }
       }
     }
     .tech-category-title,
@@ -557,6 +575,9 @@ body {
       }
       a {
         color: $navTextColor;
+        &:hover{
+        color: $navTextHover;
+        }
       }
     }
     .tech-category-title,
