@@ -1,7 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Funnel+Display:wght@300..800&display=swap");
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
-@import "./home.scss";
-@import "./header.scss";
 * {
   padding: 0;
   margin: 0;
@@ -21,9 +17,8 @@ body {
     align-items: center;
     padding: 0;
     border: 0;
-    border-radius: 0.4rem;
     height: 2.5rem;
-    padding-inline: 0.5rem;
+    padding-inline: 1rem;
   }
   &.light {
     $rootBg: #f3f4f6;
@@ -46,6 +41,17 @@ body {
     $placeholderColor: #a0aec0;
     background-color: $rootBg;
     color: $rootText;
+    a {
+      color: $rootText;
+    }
+    .community-social-link {
+      &:hover {
+        background-color: $rootBg;
+      }
+    }
+    .about-modal-inner {
+      background-color: $rootBg;
+    }
     select {
       background-color: $rootBg;
       option {
@@ -69,15 +75,19 @@ body {
       .logo {
         background-image: linear-gradient(to right, $heroFrom, $heroTo);
       }
-      .header-right {
-        display: flex;
-        align-items: center;
+      a {
+        color: $navTextColor;
       }
     }
+    .tech-category-title,
     .header,
     .section-title,
     .project-title,
-    .name {
+    .name,
+    .subsection-title,
+    .about-title,
+    .collaborator-handle,
+    .info-link {
       transition: all 0.8s ease;
       background: linear-gradient(
         to right,
@@ -99,6 +109,11 @@ body {
         color: transparent;
         -webkit-text-fill-color: transparent;
       }
+    }
+    .project-card,
+    .collaborator-card,
+    .community-card {
+      background-color: $cardBg;
     }
   }
   &.dark {
@@ -122,6 +137,17 @@ body {
     $placeholderColor: #6b7280;
     background-color: $rootBg;
     color: $rootText;
+    a {
+      color: $rootText;
+    }
+    .community-social-link {
+      &:hover {
+        background-color: $rootBg;
+      }
+    }
+    .about-modal-inner {
+      background-color: $rootBg;
+    }
     select {
       background-color: $rootBg;
       option {
@@ -145,14 +171,19 @@ body {
       .logo {
         background-image: linear-gradient(to right, $heroFrom, $heroTo);
       }
-      .header-right {
-        display: flex;
+      a {
+        color: $navTextColor;
       }
     }
+    .tech-category-title,
     .header,
     .section-title,
     .project-title,
-    .name {
+    .name,
+    .subsection-title,
+    .about-title,
+    .collaborator-handle,
+    .info-link {
       transition: all 0.8s ease;
       background: linear-gradient(
         to right,
@@ -174,6 +205,11 @@ body {
         color: transparent;
         -webkit-text-fill-color: transparent;
       }
+    }
+    .project-card,
+    .collaborator-card,
+    .community-card {
+      background-color: $cardBg;
     }
   }
   &.blue {
@@ -197,6 +233,17 @@ body {
     $placeholderColor: #64748b;
     background-color: $rootBg;
     color: $rootText;
+    a {
+      color: $rootText;
+    }
+    .community-social-link {
+      &:hover {
+        background-color: $rootBg;
+      }
+    }
+    .about-modal-inner {
+      background-color: $rootBg;
+    }
     select {
       background-color: $rootBg;
       option {
@@ -220,14 +267,19 @@ body {
       .logo {
         background-image: linear-gradient(to right, $heroFrom, $heroTo);
       }
-      .header-right {
-        display: flex;
+      a {
+        color: $navTextColor;
       }
     }
+    .tech-category-title,
     .header,
     .section-title,
     .project-title,
-    .name {
+    .name,
+    .subsection-title,
+    .about-title,
+    .collaborator-handle,
+    .info-link {
       transition: all 0.8s ease;
       background: linear-gradient(
         to right,
@@ -249,6 +301,11 @@ body {
         color: transparent;
         -webkit-text-fill-color: transparent;
       }
+    }
+    .project-card,
+    .collaborator-card,
+    .community-card {
+      background-color: $cardBg;
     }
   }
   &.forest {
@@ -272,6 +329,17 @@ body {
     $placeholderColor: #a0aec0;
     background-color: $rootBg;
     color: $rootText;
+    a {
+      color: $rootText;
+    }
+    .community-social-link {
+      &:hover {
+        background-color: $rootBg;
+      }
+    }
+    .about-modal-inner {
+      background-color: $rootBg;
+    }
     select {
       background-color: $rootBg;
       option {
@@ -295,14 +363,19 @@ body {
       .logo {
         background-image: linear-gradient(to right, $heroFrom, $heroTo);
       }
-      .header-right {
-        display: flex;
+      a {
+        color: $navTextColor;
       }
     }
+    .tech-category-title,
     .header,
     .section-title,
     .project-title,
-    .name {
+    .name,
+    .subsection-title,
+    .about-title,
+    .collaborator-handle,
+    .info-link {
       transition: all 0.8s ease;
       background: linear-gradient(
         to right,
@@ -324,6 +397,11 @@ body {
         color: transparent;
         -webkit-text-fill-color: transparent;
       }
+    }
+    .project-card,
+    .collaborator-card,
+    .community-card {
+      background-color: $cardBg;
     }
   }
   &.purple {
@@ -347,6 +425,17 @@ body {
     $placeholderColor: #a78bfa;
     background-color: $rootBg;
     color: $rootText;
+    a {
+      color: $rootText;
+    }
+    .community-social-link {
+      &:hover {
+        background-color: $rootBg;
+      }
+    }
+    .about-modal-inner {
+      background-color: $rootBg;
+    }
     select {
       background-color: $rootBg;
       option {
@@ -370,14 +459,19 @@ body {
       .logo {
         background-image: linear-gradient(to right, $heroFrom, $heroTo);
       }
-      .header-right {
-        display: flex;
+      a {
+        color: $navTextColor;
       }
     }
+    .tech-category-title,
     .header,
     .section-title,
     .project-title,
-    .name {
+    .name,
+    .subsection-title,
+    .about-title,
+    .collaborator-handle,
+    .info-link {
       transition: all 0.8s ease;
       background: linear-gradient(
         to right,
@@ -399,6 +493,11 @@ body {
         color: transparent;
         -webkit-text-fill-color: transparent;
       }
+    }
+    .project-card,
+    .collaborator-card,
+    .community-card {
+      background-color: $cardBg;
     }
   }
   &.orange {
@@ -422,6 +521,17 @@ body {
     $placeholderColor: #ea580c;
     background-color: $rootBg;
     color: $rootText;
+    a {
+      color: $rootText;
+    }
+    .community-social-link {
+      &:hover {
+        background-color: $rootBg;
+      }
+    }
+    .about-modal-inner {
+      background-color: $rootBg;
+    }
     select {
       background-color: $rootBg;
       option {
@@ -445,14 +555,19 @@ body {
       .logo {
         background-image: linear-gradient(to right, $heroFrom, $heroTo);
       }
-      .header-right {
-        display: flex;
+      a {
+        color: $navTextColor;
       }
     }
+    .tech-category-title,
     .header,
     .section-title,
     .project-title,
-    .name {
+    .name,
+    .subsection-title,
+    .about-title,
+    .collaborator-handle,
+    .info-link {
       transition: all 0.8s ease;
       background: linear-gradient(
         to right,
@@ -474,6 +589,11 @@ body {
         color: transparent;
         -webkit-text-fill-color: transparent;
       }
+    }
+    .project-card,
+    .collaborator-card,
+    .community-card {
+      background-color: $cardBg;
     }
   }
 }

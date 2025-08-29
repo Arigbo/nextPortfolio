@@ -20,6 +20,11 @@ header {
     color: white;
     font-family: "JetBrains Mono", monospace;
   }
+  .header-right{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 }
 nav {
   display: flex;
@@ -29,9 +34,7 @@ nav {
 }
 
 @media (min-width: 768px) {
-  .nav {
 
-  }
 }
 
 .nav-items {

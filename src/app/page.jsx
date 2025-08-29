@@ -1,5 +1,6 @@
 "use client";
 import { Context } from "@/components/context";
+import Image from "next/image";
 import React, { useState, useEffect, useContext } from "react";
 
 // Static data for the tech stack
@@ -416,10 +417,17 @@ const App = () => {
 
             <div className="about-content">
               <div className="about-image-container">
-                <img
-                  src="https://placehold.co/400x600/1e293b/4ade80?text=Developer+Image"
+                {/* <img
+                  src="/public/dp.jpg"
                   alt="Your profile"
                   className="about-image"
+                /> */}
+                <Image
+                  className="about-image"
+                  src="/dp.jpg"
+                  width={400}
+                  height={600}
+                  alt="Your profile"
                 />
               </div>
               <div className="about-text">
@@ -445,26 +453,110 @@ const App = () => {
                     and seamless user experiences.
                   </p>
                 </div>
+                <div className="info-grid">
+                  <div className="info-grid-left">
+                    <div className="info-item">
+                      <i className="fa-solid fa-map-pin info-icon"></i>
+                      <div>
+                        <p className="info-label">Location:</p>
+                        <p className="info-value">San Francisco, CA</p>
+                      </div>
+                    </div>
+                    <div className="info-item">
+                      <i className="fa-solid fa-briefcase info-icon"></i>
+                      <div>
+                        <p className="info-label">Years of Experience:</p>
+                        <p className="info-value">{yearsOfExperience}+</p>
+                      </div>
+                    </div>
+                    <div className="info-item">
+                      <i className="fa-solid fa-graduation-cap info-icon"></i>
+                      <div>
+                        <p className="info-label">Education:</p>
+                        <p className="info-value">
+                          B.S. in Computer Science from Stanford University
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="info-grid-right">
+                    <div className="info-item">
+                      <i className="fa-brands fa-github info-icon"></i>
+                      <div>
+                        <p className="info-label">GitHub:</p>
+                        <a
+                          href="https://github.com/ArigboJesse"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="info-link"
+                        >
+                          github.com/ArigboJesse
+                        </a>
+                      </div>
+                    </div>
+                    <div className="info-item">
+                      <i className="fa-brands fa-linkedin info-icon"></i>
+                      <div>
+                        <p className="info-label">LinkedIn:</p>
+                        <a
+                          href="https://linkedin.com/in/ArigboJesse"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="info-link"
+                        >
+                          linkedin.com/in/ArigboJesse
+                        </a>
+                      </div>
+                    </div>
+                    <div className="info-item">
+                      <i className="fa-brands fa-x-twitter info-icon"></i>
+                      <div>
+                        <p className="info-label">X:</p>
+                        <a
+                          href="https://x.com/ArigboJesse"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="info-link"
+                        >
+                          x.com/ArigboJesse
+                        </a>
+                      </div>
+                    </div>
+                    <div className="info-item">
+                      <i className="fa-brands fa-facebook info-icon"></i>
+                      <div>
+                        <p className="info-label">Facebook:</p>
+                        <a
+                          href="https://facebook.com/ArigboJesse"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="info-link"
+                        >
+                          facebook.com/ArigboJesse
+                        </a>
+                      </div>
+                    </div>
+                    <div className="info-item">
+                      <i className="fa-brands fa-threads info-icon"></i>
+                      <div>
+                        <p className="info-label">Threads:</p>
+                        <a
+                          href="https://threads.net/@ArigboJesse"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="info-link"
+                        >
+                          threads.net/@ArigboJesse
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* New Content Describing me, skills, and journey */}
             <div className="section-space">
-              {/* My Full-Stack Approach */}
-              {/* <div>
-                  <h4 className="subsection-title">A Full-Stack Approach</h4>
-                  <p className="subsection-desc">
-                    As a full-stack developer, I thrive on the challenge of handling every layer of a web application. From designing intuitive user interfaces to building powerful back-end systems, I ensure that every piece of the puzzle fits together seamlessly. This holistic perspective allows me to build robust, scalable, and maintainable applications that are ready for production. I'm not just a front-end or a back-end developer; I'm an architect of complete digital experiences.
-                  </p>style
-                  <div ={{ display: 'flex', justifyContent: 'center' }}>
-                    <img
-                      src="https://placehold.co/800x400/1e293b/a855f7?text=Full+Stack+Diagram"
-                      alt="A diagram illustrating full-stack development"
-                      className="diagram-image"
-                    />
-                  </div>
-                </div> */}
-
               {/* My Toolkit */}
               <div>
                 <h4 className="subsection-title">My Toolkit</h4>
@@ -482,11 +574,11 @@ const App = () => {
               </div>
 
               {/* People I've Collaborated With */}
-              <div>
+              <div className="collaborators">
                 <h4 className="subsection-title">
                   People I've Collaborated With
                 </h4>
-                <div>
+                <div className="collaborators-list">
                   {collaborators.map((collab, index) => (
                     <div key={index} className="collaborator-card">
                       <img
@@ -507,178 +599,87 @@ const App = () => {
               </div>
 
               {/* Community & Connections */}
-              <div>
-                <h4 className="subsection-title">
-                  Connecting with the Community
-                </h4>
-                <p className="subsection-desc">
-                  My journey isn't just about code; it's also about people. I
-                  believe in continuous learning and collaboration, which is why
-                  I actively participate in tech events and conferences. I've
-                  had the pleasure of attending events like **React Conf** and
-                  **Node.js Summit**, where I've met inspiring developers,
-                  product managers, and mentors. These connections have enriched
-                  my understanding of the industry and have led to exciting new
-                  opportunities.
-                </p>
+              <div className="community">
+                <div className="subsection">
+                  <h4 className="subsection-title">
+                    Connecting with the Community
+                  </h4>
+                  <p className="subsection-desc">
+                    My journey isn't just about code; it's also about people. I
+                    believe in continuous learning and collaboration, which is
+                    why I actively participate in tech events and conferences.
+                    I've had the pleasure of attending events like **React
+                    Conf** and **Node.js Summit**, where I've met inspiring
+                    developers, product managers, and mentors. These connections
+                    have enriched my understanding of the industry and have led
+                    to exciting new opportunities.
+                  </p>
 
-                <div className="photo-grid">
-                  {communityPhotos.map((photo) => (
-                    <div
-                      key={photo.id}
-                      className="photo-card photo-card-container group"
-                    >
-                      <img
-                        src={photo.imgUrl}
-                        alt={photo.altText}
-                        className="photo-img"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src =
-                            "https://placehold.co/400x300/cccccc/000000?text=Image+Load+Error";
-                        }}
-                      />
-                      <div className="handle-overlay absolute inset-0 flex flex-col justify-end p-2 md:p-4">
-                        <div>
-                          {photo.people.map((person, index) => (
-                            <span key={index} className="handle-text">
-                              {person.handle}
-                            </span>
-                          ))}
+                  <div className="photo-grid">
+                    {communityPhotos.map((photo) => (
+                      <div
+                        key={photo.id}
+                        className="photo-card photo-card-container"
+                      >
+                        <img
+                          src={photo.imgUrl}
+                          alt={photo.altText}
+                          className="photo-img"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                              "https://placehold.co/400x300/cccccc/000000?text=Image+Load+Error";
+                          }}
+                        />
+                        <div className="handle-overlay">
+                          <div>
+                            {photo.people.map((person, index) => (
+                              <span key={index} className="handle-text">
+                                {person.handle}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
 
                 {/* New Communities Section */}
-                <h4 className="subsection-title">My Communities</h4>
-                <p className="subsection-desc">
-                  I am an active member of several vibrant tech communities.
-                  Here are some of the groups I'm proud to be a part of:
-                </p>
-                <div className="community-grid">
-                  {communities.map((community, index) => (
-                    <div key={index} className="community-card">
-                      <div className="community-header">
-                        {getCommunityIcon(community.name)}
-                        <h5 className="community-name">{community.name}</h5>
+                <div className="subsection">
+                  <h4 className="subsection-title">My Communities</h4>
+                  <p className="subsection-desc">
+                    I am an active member of several vibrant tech communities.
+                    Here are some of the groups I'm proud to be a part of:
+                  </p>
+                  <div className="community-grid">
+                    {communities.map((community, index) => (
+                      <div key={index} className="community-card">
+                        <div className="community-header">
+                          {getCommunityIcon(community.name)}
+                          <h5 className="community-name">{community.name}</h5>
+                        </div>
+                        <div className="community-social">
+                          {community.social.map((handle, handleIndex) => (
+                            <a
+                              key={handleIndex}
+                              href={handle.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="community-social-link"
+                              aria-label={`Visit ${community.name} on ${handle.platform}`}
+                            >
+                              {getSocialIcon(handle.platform)}
+                            </a>
+                          ))}
+                        </div>
                       </div>
-                      <div className="community-social">
-                        {community.social.map((handle, handleIndex) => (
-                          <a
-                            key={handleIndex}
-                            href={handle.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="community-social-link"
-                            aria-label={`Visit ${community.name} on ${handle.platform}`}
-                          >
-                            {getSocialIcon(handle.platform)}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="info-grid">
-              <div className="info-item">
-                <i className="fa-solid fa-map-pin info-icon"></i>
-                <div>
-                  <p className="info-label">Location:</p>
-                  <p className="info-value">San Francisco, CA</p>
-                </div>
-              </div>
-              <div className="info-item">
-                <i className="fa-solid fa-briefcase info-icon"></i>
-                <div>
-                  <p className="info-label">Years of Experience:</p>
-                  <p className="info-value">{yearsOfExperience}+</p>
-                </div>
-              </div>
-              <div className="info-item">
-                <i className="fa-solid fa-graduation-cap info-icon"></i>
-                <div>
-                  <p className="info-label">Education:</p>
-                  <p className="info-value">
-                    B.S. in Computer Science from Stanford University
-                  </p>
-                </div>
-              </div>
-              <div className="info-item">
-                <i className="fa-brands fa-github info-icon"></i>
-                <div>
-                  <p className="info-label">GitHub:</p>
-                  <a
-                    href="https://github.com/ArigboJesse"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="info-link"
-                  >
-                    github.com/ArigboJesse
-                  </a>
-                </div>
-              </div>
-              <div className="info-item">
-                <i className="fa-brands fa-linkedin info-icon"></i>
-                <div>
-                  <p className="info-label">LinkedIn:</p>
-                  <a
-                    href="https://linkedin.com/in/ArigboJesse"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="info-link"
-                  >
-                    linkedin.com/in/ArigboJesse
-                  </a>
-                </div>
-              </div>
-              <div className="info-item">
-                <i className="fa-brands fa-x-twitter info-icon"></i>
-                <div>
-                  <p className="info-label">X:</p>
-                  <a
-                    href="https://x.com/ArigboJesse"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="info-link"
-                  >
-                    x.com/ArigboJesse
-                  </a>
-                </div>
-              </div>
-              <div className="info-item">
-                <i className="fa-brands fa-facebook info-icon"></i>
-                <div>
-                  <p className="info-label">Facebook:</p>
-                  <a
-                    href="https://facebook.com/ArigboJesse"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="info-link"
-                  >
-                    facebook.com/ArigboJesse
-                  </a>
-                </div>
-              </div>
-              <div className="info-item">
-                <i className="fa-brands fa-threads info-icon"></i>
-                <div>
-                  <p className="info-label">Threads:</p>
-                  <a
-                    href="https://threads.net/@ArigboJesse"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="info-link"
-                  >
-                    threads.net/@ArigboJesse
-                  </a>
-                </div>
-              </div>
-            </div>
             <div>
               <button onClick={handleCVDownload} className="cv-button">
                 <i className="fa-solid fa-file-arrow-down"></i>
@@ -880,12 +881,6 @@ const App = () => {
             <div className="projects-grid">
               {allProjects.map((project) => (
                 <div key={project.id} className="project-card group">
-                  {/* Status badge */}
-                  <span className="status-badge">
-                    {project.status === "in-progress"
-                      ? "In Progress"
-                      : "Completed"}
-                  </span>
                   <div className="image-container">
                     <img src={project.imageUrl} alt={project.title} />
                     <div className="overlay">
@@ -937,7 +932,7 @@ const App = () => {
           <div className="container">
             <h3 className="section-title">Tech Stack</h3>
             <div className="tech-grid">
-              <div>
+              <div className="tech-category">
                 <h4 className="tech-category-title">Frontend</h4>
                 <div className="tech-icons">
                   {techStackData.frontend.map((tech) => (
@@ -952,7 +947,7 @@ const App = () => {
                   ))}
                 </div>
               </div>
-              <div>
+              <div className="tech-category">
                 <h4 className="tech-category-title">Backend</h4>
                 <div className="tech-icons">
                   {techStackData.backend.map((tech) => (
