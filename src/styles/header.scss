@@ -61,6 +61,7 @@ header {
         border-width: 2px;
         color: var(--root-text);
         transition: border-color 0.3s;
+        position: relative;
       }
 
       .theme-select:focus {

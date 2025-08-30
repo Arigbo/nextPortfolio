@@ -692,8 +692,8 @@ const App = () => {
 
       {/* Contact Modal */}
       {isContactModalOpen && (
-        <div className="about-modal-overlay">
-          <div className="about-modal-inner">
+        <div className="contact-modal-overlay">
+          <div className="contact-modal-inner">
             <button
               onClick={() => setIsContactModalOpen(false)}
               className="close-button"
@@ -807,7 +807,7 @@ const App = () => {
                     href={selectedProject.link}
                     className="project-link-button"
                   >
-                    View Live Demo
+                    View Live
                   </a>
                 )}
                 {selectedProject.github && (
@@ -892,7 +892,7 @@ const App = () => {
                       </button>
                     </div>
                   </div>
-                  <h4>{project.title}</h4>
+                  <h4 className="project-name">{project.title}</h4>
                   <p className="line-clamp-3">{project.description}</p>
                   <div className="tech-tags">
                     {project.techStack.map((tech, index) => (

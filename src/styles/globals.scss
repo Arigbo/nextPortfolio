@@ -52,8 +52,11 @@ body {
         background-color: $rootBg;
       }
     }
-    .about-modal-inner {
+    .about,
+    .project,.contact{
+      &-modal-inner {
       background-color: $rootBg;
+    }
     }
     select {
       background-color: $rootBg;
@@ -63,7 +66,9 @@ body {
         }
       }
     }
-    .gradient-button {
+    .gradient-button,
+    .project-link-button, .links .link,.cv-button {
+      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
@@ -89,13 +94,16 @@ body {
       color: $accentColor;
       background-color: $rootBg;
     }
-    .link{
+    .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
+
     .tech-category-title,
     .header,
     .section-title,
     .project-title,
+    .features-title,
+    .project-name,
     .name,
     .subsection-title,
     .about-title,
@@ -124,6 +132,7 @@ body {
       }
     }
     .project-card,
+    .tool-item,
     .collaborator-card,
     .community-card {
       background-color: $cardBg;
@@ -158,8 +167,11 @@ body {
         background-color: $rootBg;
       }
     }
-    .about-modal-inner {
+    .about,
+    .project,.contact{
+      &-modal-inner {
       background-color: $rootBg;
+    }
     }
     select {
       background-color: $rootBg;
@@ -169,7 +181,9 @@ body {
         }
       }
     }
-    .gradient-button {
+    .gradient-button,
+    .project-link-button, .links .link,.cv-button {
+      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
@@ -195,13 +209,16 @@ body {
       color: $accentColor;
       background-color: $rootBg;
     }
-    .link{
+    .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
+
     .tech-category-title,
     .header,
     .section-title,
     .project-title,
+    .features-title,
+    .project-name,
     .name,
     .subsection-title,
     .about-title,
@@ -230,6 +247,7 @@ body {
       }
     }
     .project-card,
+    .tool-item,
     .collaborator-card,
     .community-card {
       background-color: $cardBg;
@@ -264,8 +282,11 @@ body {
         background-color: $rootBg;
       }
     }
-    .about-modal-inner {
+    .about,
+    .project,.contact{
+      &-modal-inner {
       background-color: $rootBg;
+    }
     }
     select {
       background-color: $rootBg;
@@ -275,7 +296,9 @@ body {
         }
       }
     }
-    .gradient-button {
+    .gradient-button,
+    .project-link-button, .links .link,.cv-button {
+      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
@@ -301,13 +324,16 @@ body {
       color: $accentColor;
       background-color: $rootBg;
     }
-    .link{
+    .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
+
     .tech-category-title,
     .header,
     .section-title,
     .project-title,
+    .features-title,
+    .project-name,
     .name,
     .subsection-title,
     .about-title,
@@ -336,6 +362,7 @@ body {
       }
     }
     .project-card,
+    .tool-item,
     .collaborator-card,
     .community-card {
       background-color: $cardBg;
@@ -370,8 +397,11 @@ body {
         background-color: $rootBg;
       }
     }
-    .about-modal-inner {
+    .about,
+    .project,.contact{
+      &-modal-inner {
       background-color: $rootBg;
+    }
     }
     select {
       background-color: $rootBg;
@@ -381,7 +411,9 @@ body {
         }
       }
     }
-    .gradient-button {
+    .gradient-button,
+    .project-link-button, .links .link,.cv-button {
+      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
@@ -407,13 +439,16 @@ body {
       color: $accentColor;
       background-color: $rootBg;
     }
-    .link{
+    .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
+
     .tech-category-title,
     .header,
     .section-title,
     .project-title,
+    .features-title,
+    .project-name,
     .name,
     .subsection-title,
     .about-title,
@@ -442,6 +477,7 @@ body {
       }
     }
     .project-card,
+    .tool-item,
     .collaborator-card,
     .community-card {
       background-color: $cardBg;
@@ -476,8 +512,11 @@ body {
         background-color: $rootBg;
       }
     }
-    .about-modal-inner {
+    .about,
+    .project,.contact{
+      &-modal-inner {
       background-color: $rootBg;
+    }
     }
     select {
       background-color: $rootBg;
@@ -487,7 +526,9 @@ body {
         }
       }
     }
-    .gradient-button {
+    .gradient-button,
+    .project-link-button, .links .link,.cv-button {
+      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
@@ -513,13 +554,16 @@ body {
       color: $accentColor;
       background-color: $rootBg;
     }
-    .link{
+    .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
+
     .tech-category-title,
     .header,
     .section-title,
     .project-title,
+    .features-title,
+    .project-name,
     .name,
     .subsection-title,
     .about-title,
@@ -548,6 +592,7 @@ body {
       }
     }
     .project-card,
+    .tool-item,
     .collaborator-card,
     .community-card {
       background-color: $cardBg;
@@ -582,8 +627,11 @@ body {
         background-color: $rootBg;
       }
     }
-    .about-modal-inner {
+    .about,
+    .project,.contact{
+      &-modal-inner {
       background-color: $rootBg;
+    }
     }
     select {
       background-color: $rootBg;
@@ -593,7 +641,9 @@ body {
         }
       }
     }
-    .gradient-button {
+    .gradient-button,
+    .project-link-button, .links .link,.cv-button {
+      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
@@ -619,13 +669,16 @@ body {
       color: $accentColor;
       background-color: $rootBg;
     }
-    .link{
+    .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
+
     .tech-category-title,
     .header,
     .section-title,
     .project-title,
+    .features-title,
+    .project-name,
     .name,
     .subsection-title,
     .about-title,
@@ -654,6 +707,7 @@ body {
       }
     }
     .project-card,
+    .tool-item,
     .collaborator-card,
     .community-card {
       background-color: $cardBg;
