@@ -4,8 +4,6 @@
   font-family: "Funnel Display", sans-serif;
 }
 body {
-  max-width: 100%;
-  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,7 +65,7 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button, .links .link,.cv-button {
+    .project-link-button,.cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -100,6 +98,7 @@ body {
 
     .tech-category-title,
     .header,
+    .links .link,
     .section-title,
     .project-title,
     .features-title,
@@ -182,7 +181,7 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button, .links .link,.cv-button {
+    .project-link-button,.cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -215,6 +214,7 @@ body {
 
     .tech-category-title,
     .header,
+    .links .link,
     .section-title,
     .project-title,
     .features-title,
@@ -297,7 +297,7 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button, .links .link,.cv-button {
+    .project-link-button,.cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -330,6 +330,7 @@ body {
 
     .tech-category-title,
     .header,
+    .links .link,
     .section-title,
     .project-title,
     .features-title,
@@ -412,7 +413,7 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button, .links .link,.cv-button {
+    .project-link-button,.cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -445,6 +446,7 @@ body {
 
     .tech-category-title,
     .header,
+    .links .link,
     .section-title,
     .project-title,
     .features-title,
@@ -527,7 +529,7 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button, .links .link,.cv-button {
+    .project-link-button,.cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -560,6 +562,7 @@ body {
 
     .tech-category-title,
     .header,
+    .links .link,
     .section-title,
     .project-title,
     .features-title,
@@ -642,7 +645,7 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button, .links .link,.cv-button {
+    .project-link-button,.cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -675,6 +678,7 @@ body {
 
     .tech-category-title,
     .header,
+    .links .link,
     .section-title,
     .project-title,
     .features-title,

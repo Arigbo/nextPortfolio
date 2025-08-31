@@ -375,7 +375,7 @@ const App = () => {
   };
 
   return (
-    <>
+    <div className="portfolio">
       {/* General Purpose Modal for messages */}
       {modal.show && (
         <div className="about-modal-overlay">
@@ -839,10 +839,6 @@ const App = () => {
       )}
       <main>
         <section id="home" className="hero">
-          <div className="hero-bg">
-            {/* Subtle background gradient or pattern */}
-            <div className="hero-gradient"></div>
-          </div>
 
           <div className="hero-content">
             <h1 className="hero-title">
@@ -876,23 +872,25 @@ const App = () => {
 
         {/* Projects Section */}
         <section id="projects" className="section">
-          <div className="container">
-            <h3 className="section-title">Projects</h3>
-            <div className="projects-grid">
-              {allProjects.map((project) => (
-                <div key={project.id} className="project-card group">
-                  <div className="image-container">
-                    <img src={project.imageUrl} alt={project.title} />
-                    <div className="handle-overlay">
-                      <button
-                        onClick={() => handleOpenProjectModal(project)}
-                        className="detail-button group-hover"
-                      >
-                        View Details
-                      </button>
-                    </div>
+          <h3 className="section-title">Projects</h3>
+          <div className="projects-grid">
+            {allProjects.map((project) => (
+              <div key={project.id} className="project-card">
+                <div className="image-container">
+                  <img src={project.imageUrl} alt={project.title} />
+                  <div className="handle-overlay">
+                    <button
+                      onClick={() => handleOpenProjectModal(project)}
+                      className="detail-button group-hover"
+                    >
+                      View Details
+                    </button>
                   </div>
-                  <h4 className="project-name">{project.title}</h4>
+                </div>
+                <div className="project-card-bottom">
+                  <a href={project.link} className="project-name">
+                    {project.title}
+                  </a>
                   <p className="line-clamp-3">{project.description}</p>
                   <div className="tech-tags">
                     {project.techStack.map((tech, index) => (
@@ -902,12 +900,6 @@ const App = () => {
                     ))}
                   </div>
                   <div className="links">
-                    {project.link && (
-                      <a href={project.link} className="link">
-                        <i className="fas fa-external-link-alt"></i>
-                        <span>Live</span>
-                      </a>
-                    )}
                     {project.github && (
                       <a href={project.github} className="link">
                         <i className="fab fa-github"></i>
@@ -922,8 +914,8 @@ const App = () => {
                     )}
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -1001,7 +993,7 @@ const App = () => {
           </div>
         </section>
       </main>
-    </>
+    </div>
   );
 };
 
