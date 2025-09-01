@@ -1,5 +1,6 @@
 "use client";
 import { Context } from "@/components/context";
+import TestimonialSection from "@/components/testimonies";
 import Image from "next/image";
 import React, { useState, useEffect, useContext } from "react";
 
@@ -959,7 +960,8 @@ const App = () => {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="section">
+        <TestimonialSection />
+        {/* <section id="testimonials" className="section">
           <div className="container">
             <h3 className="section-title">Testimonials</h3>
             <div className="testimonials-grid">
@@ -991,7 +993,7 @@ const App = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
     </div>
   );
