@@ -16,18 +16,17 @@ const TestimonialCarousel = () => {
     const swiper = useSwiper();
 
     return (
-      <button onClick={() => swiper.slideNext()}>
-        Slide to the next slide
-      </button>
+      <i
+        className="fas fa-chevron-right"
+        onClick={() => swiper.slideNext()}
+      ></i>
     );
   }
-    function SlidePrevButton() {
+  function SlidePrevButton() {
     const swiper = useSwiper();
 
     return (
-      <button onClick={() => swiper.slidePrev()}>
-        Slide to the previous slide
-      </button>
+      <i className="fas fa-chevron-left" onClick={() => swiper.slidePrev()}></i>
     );
   }
   const testimonials = [
@@ -47,7 +46,6 @@ const TestimonialCarousel = () => {
       title: "Owner, Local Bakery",
     },
   ];
-  
 
   return (
     <>
@@ -69,18 +67,7 @@ const TestimonialCarousel = () => {
               <div className="testimonial-card">
                 {/* Quote Icon SVG */}
                 <div className="quote-icon-wrapper">
-                  <svg
-                    width="100%"
-                    height="100%"
-                    viewBox="0 0 100 100"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M25 0V50H0V0H25ZM100 0V50H75V0H100Z"
-                      fill="currentColor"
-                    />
-                  </svg>
+                  <h1>"</h1>
                 </div>
 
                 <p className="testimonial-text">{testimonial.text}</p>
@@ -92,10 +79,12 @@ const TestimonialCarousel = () => {
               </div>
             </SwiperSlide>
           ))}
-          {/* <SlidePrevButton></SlidePrevButton>
-           <SlideNextButton></SlideNextButton> */}
+          <div className="controllers">
+            {" "}
+            <SlidePrevButton></SlidePrevButton>
+            <SlideNextButton></SlideNextButton>
+          </div>
         </Swiper>
-       
       </section>
     </>
   );
