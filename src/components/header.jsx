@@ -8,15 +8,10 @@ export default function Header({
   setTheme,
   setIsAboutModalOpen,
   setIsContactModalOpen,
+  themes,
+  selectTheme,
+  setSelectTheme,
 }) {
-  const [selectTheme, setSelectTheme] = useState();
-  const themes = [
-    { name: "light" },
-    { name: "dark" },
-    { name: "forest" },
-    { name: "orange" },
-    { name: "purple" },
-  ];
   return (
     <header>
       <div className="headerInner">
@@ -48,38 +43,39 @@ export default function Header({
           </div>
         </nav>
         <div className="header-right">
-          <ul className="theme-select">
-            <div className={`themes ${selectTheme ? "show" : ""}`}>
-              {themes.map((item) => {
-                return (
-                  <li
-                    onClick={() => {
-                      setTheme(item.name);
-                    }}
-                    key={item.name}
-                    className={theme == item.name ? "hide" : item.name}
-                  >
-                    {item.name}
-                  </li>
-                );
-              })}
-            </div>
-           {selectTheme? <li
-              className="active"
-              onClick={() => {
-                setSelectTheme(false);
-              }}
-            >
-              {theme} <i className="fas fa-chevron-down"></i>
-            </li>: <li
-              className="active"
-              onClick={() => {
-                setSelectTheme(true);
-              }}
-            >
-              {theme} <i className="fas fa-chevron-up"></i>
-            </li>}
-          </ul>
+               <ul className="theme-select">
+                      <div className={`themes ${selectTheme ? "show" : ""}`}>
+                        {themes.map((item) => {
+                          return (
+                            <li
+                              onClick={() => {
+                                setTheme(item.name)
+                                handleThemeChange({target:{value:item.name}})
+                              }}
+                              key={item.name}
+                              className={theme == item.name ? "hide" : item.name}
+                            >
+                              {item.name}
+                            </li>
+                          );
+                        })}
+                      </div>
+                     {selectTheme? <li
+                        className="active"
+                        onClick={() => {
+                          setSelectTheme(false);
+                        }}
+                      >
+                        {theme} <i className="fas fa-chevron-down"></i>
+                      </li>: <li
+                        className="active"
+                        onClick={() => {
+                          setSelectTheme(true);
+                        }}
+                      >
+                        {theme} <i className="fas fa-chevron-up"></i>
+                      </li>}
+                    </ul>
           <button
             onClick={() => {
               setIsContactModalOpen(true);

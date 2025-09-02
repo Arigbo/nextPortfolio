@@ -5,7 +5,15 @@ import Header from "@/components/header";
 import "@/styles/custom.scss";
 import { useEffect, useState } from "react";
 export default function RootLayout({ children }) {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState();
+  const [selectTheme, setSelectTheme] = useState();
+  const themes = [
+    { name: "light" },
+    { name: "dark" },
+    { name: "forest" },
+    { name: "orange" },
+    { name: "purple" },
+  ];
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
@@ -13,7 +21,7 @@ export default function RootLayout({ children }) {
     if (typeof window !== "undefined") {
       const savedTheme = localStorage.getItem("theme") || "blue";
       setTheme(savedTheme);
-
+      document.body.classList.add(savedTheme);
       const root = document.documentElement;
       localStorage.setItem("theme", savedTheme);
     }
@@ -33,9 +41,9 @@ export default function RootLayout({ children }) {
       viewBox="0 0 180 180"
       xmlns="http://www.w3.org/2000/svg"
     >
-        <path d="M 50 20 L 130 90 L 50 160" />
-        <path d="M 130 20 L 50 90 L 130 160" />
-      </svg>
+      <path d="M 50 20 L 130 90 L 50 160" />
+      <path d="M 130 20 L 50 90 L 130 160" />
+    </svg>
   );
   return (
     <html lang="en">
@@ -47,7 +55,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className={theme}>
+      <body className={theme} onClickCapture={() => setSelectTheme(false)}>
         <Context.Provider
           value={{
             theme,
@@ -59,6 +67,9 @@ export default function RootLayout({ children }) {
           }}
         >
           <Header
+            themes={themes}
+            setSelectTheme={setSelectTheme}
+            selectTheme={selectTheme}
             logo={logo}
             name={name}
             theme={theme}

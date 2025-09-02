@@ -90,8 +90,7 @@ const allProjects = [
     link: "https://ancients-gold.vercel.app/",
     github: "https://github.com/Arigbo/ancients",
     docs: "https://docs.ecommerce-platform.com",
-    imageUrl:
-      "/ancients.png",
+    imageUrl: "/ancients.png",
     techStack: ["Aos.Js", "Node.Js", "JavaScript", "HTML5", "SCSS"],
     status: "finished",
   },
@@ -859,7 +858,7 @@ const App = () => {
                   setIsContactModalOpen(true);
                 }}
               >
-                View My Work
+                Let's Talk
               </button>
 
               <a
@@ -868,7 +867,7 @@ const App = () => {
                   setIsAboutModalOpen(true);
                 }}
               >
-                <button className="learn-more-button">Learn More</button>
+                <button className="learn-more-button">About Me</button>
               </a>
             </div>
           </div>
