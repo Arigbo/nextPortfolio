@@ -27,7 +27,16 @@ export default function RootLayout({ children }) {
   };
 
   const name = "Arigbo Jesse";
-  const logo = <div className="logo">LD</div>;
+  const logo = (
+    <svg
+      className="logo-svg"
+      viewBox="0 0 180 180"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+        <path d="M 50 20 L 130 90 L 50 160" />
+        <path d="M 130 20 L 50 90 L 130 160" />
+      </svg>
+  );
   return (
     <html lang="en">
       <head>

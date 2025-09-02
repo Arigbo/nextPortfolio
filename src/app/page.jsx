@@ -15,6 +15,11 @@ const techStackData = {
       name: "JavaScript",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
     },
+
+    {
+      name: "TypeScript",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    },
     {
       name: "SCSS",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg",
@@ -28,6 +33,7 @@ const techStackData = {
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
     },
   ],
+
   backend: [
     {
       name: "Node.js",
@@ -69,51 +75,50 @@ const techMap = [...techStackData.frontend, ...techStackData.backend].reduce(
 const allProjects = [
   {
     id: "p1",
-    title: "Modern E-commerce Platform",
-    companyLogoUrl: "https://placehold.co/100x100/1E293B/a855f7?text=E-Logo",
+    title: "Ancients",
+    companyLogoUrl: "/ancients.png",
     description:
-      "This is a comprehensive e-commerce platform built from the ground up. It includes a robust user authentication system, a secure shopping cart, and an admin dashboard for product management. The front-end is powered by React for a fast and dynamic user experience, while the back-end uses Node.js and Express to handle API requests and business logic. Data is stored in a MongoDB database, ensuring scalability and flexibility.",
+      "Innovate Solutions is a forward-thinking IT firm dedicated to bridging the gap between technology and everyday life. We specialize in developing practical, user-centric software and digital platforms that solve the unique challenges faced by local communities and businesses. Our team is passionate about harnessing the power of technology to improve efficiency, connect people, and drive local growth, turning everyday problems into innovative, impactful solutions.",
     features: [
-      "User authentication and authorization",
-      "Shopping cart and secure checkout",
-      "Product listing and search functionality",
-      "Admin dashboard for CRUD operations",
-      "Order history and tracking",
+      "Custom Software Development",
+      "Mobile and Web Applications",
+      "IT Consultation and Strategy",
+      "Data Analysis for Local Insights",
+      "Cloud and Infrastructure Solutions",
+      "User Experience (UX) Design",
     ],
-    link: "#",
-    github: "https://github.com/ArigboJesse/ecommerce-platform",
+    link: "https://ancients-gold.vercel.app/",
+    github: "https://github.com/Arigbo/ancients",
     docs: "https://docs.ecommerce-platform.com",
     imageUrl:
-      "https://placehold.co/600x400/1E293B/a855f7?text=E-commerce+Platform",
-    techStack: ["React", "Next.js", "Node.js", "Express", "MongoDB"],
+      "/ancients.png",
+    techStack: ["Aos.Js", "Node.Js", "JavaScript", "HTML5", "SCSS"],
     status: "finished",
   },
   {
     id: "p2",
-    title: "Interactive Data Dashboard",
+    title: "Ralonic",
     companyLogoUrl: "https://placehold.co/100x100/1E293B/a855f7?text=D-Logo",
     description:
-      "An interactive data visualization dashboard designed to handle and display complex datasets. It fetches data from a PostgreSQL database and uses the D3.js library to create dynamic charts and graphs. The application is optimized for performance, ensuring a smooth experience even with large volumes of data. Python is used on the back-end for data processing and analysis.",
+      "   Ralonick is a fast growing construction company rapidly                  spreading its frontiers across Nigeria, with sole interest\n                      in operation and maintenance of production facilities,\n                      local and foreign procurement of oil & gas materials and\n                      consultation. It is a registered private limited liability\n                      company under the Nigeria Law. Our operation is within the\n                      framework of commercial and industrial activities,\n                      developing and carrying out basic and detailed service in\n                      Engineering, Procurement, Construction and Equipment\n                      leasing in Land and Marine. We adopt a system of Total\n                      quality Management (TQM) at a reasonable cost and within\n                      the shortest possible time, in conjunction with our\n                      technical partners. We provide end to end service in the\n                      design, engineering, procurement, fabrication,\n                      installation, repair and support of Glass fiber Reinforced\n                      Epoxy (GRE) Polyester (GRP) and Vinylester Pipe system and\n                      products",
     features: [
-      "Real-time data fetching and display",
-      "Interactive charts (bar, line, pie) using D3.js",
-      "Customizable dashboard widgets",
-      "Data filtering and sorting",
-      "Responsive design for various screen sizes",
+      "Engineering, Procurement, and Construction (EPC).",
+      "Geographic Focus.",
+      "Operations & Maintenance.",
     ],
-    link: "#",
-    github: "https://github.com/ArigboJesse/data-dashboard",
+    link: "https://ralonic.vercel.app/",
+    github: "https://github.com/Arigbo/ralonick",
     docs: "https://docs.data-dashboard.com",
-    imageUrl: "https://placehold.co/600x400/1E293B/a855f7?text=Data+Viz",
-    techStack: ["React", "D3.js", "Python", "PostgreSQL"],
+    imageUrl: "/ralonic.png",
+    techStack: ["Next.Js", "Node.Js", "TypeScript"],
     status: "finished",
   },
   {
     id: "p3",
-    title: "Collaborative Task Management Tool",
+    title: "Harishi",
     companyLogoUrl: "https://placehold.co/100x100/1E293B/a855f7?text=T-Logo",
     description:
-      "A real-time collaborative task management tool for teams. It allows multiple users to work on the same project simultaneously, with updates reflected instantly across all devices. The application uses WebSockets for real-time communication and is built on a React front-end with a Node.js/Express back-end. The state management is handled efficiently with React's Context API.",
+      "At our company, we're dedicated to crafting the highest\n                      quality beverages possible. We take pride in our products,\n                      and we hope that you enjoy them as much as we do. Thank\n                      you for visiting our website! If you have any questions or\n                      feedback, please don't hesitate to contact us. We're\n                      always happy to hear from our customers.",
     features: [
       "Real-time task and project updates",
       "Multi-user collaboration",
@@ -121,36 +126,12 @@ const allProjects = [
       "User notifications for project changes",
       "Drag-and-drop interface for task organization",
     ],
-    link: "#",
-    github: "https://github.com/ArigboJesse/task-management-tool",
+    link: "https://harishi.vercel.app/",
+    github: "https://github.com/Arigbo/harishi",
     docs: "https://docs.task-management-tool.com",
-    imageUrl: "https://placehold.co/600x400/1E293B/a855f7?text=Task+Manager",
-    techStack: ["React", "Node.js", "WebSockets", "Context API", "Express"],
+    imageUrl: "/harishi.png",
+    techStack: ["Aos.Js", "Node.Js", "JavaScript", "HTML5", "SCSS", "CSS"],
     status: "in-progress",
-  },
-];
-
-// Static data for testimonials
-const testimonials = [
-  {
-    name: "Sarah Chen",
-    title: "Product Manager, Innovate Inc.",
-    quote:
-      "Working with Arigbo was a fantastic experience. Their ability to quickly grasp complex requirements and deliver high-quality code was impressive. The project was completed ahead of schedule and exceeded our expectations.",
-    social: [
-      { platform: "X", handle: "@sarahchen", url: "#" },
-      { platform: "LinkedIn", handle: "sarah-chen", url: "#" },
-    ],
-  },
-  {
-    name: "Michael Davis",
-    title: "CTO, Global Tech Solutions",
-    quote:
-      "Arigbo's expertise in full-stack development is second to none. They were an invaluable asset to our team, bringing innovative solutions and a commitment to clean, maintainable code. Highly recommended.",
-    social: [
-      { platform: "Facebook", handle: "michael.davis", url: "#" },
-      { platform: "Threads", handle: "michaelthreads", url: "#" },
-    ],
   },
 ];
 
@@ -460,7 +441,7 @@ const App = () => {
                       <i className="fa-solid fa-map-pin info-icon"></i>
                       <div>
                         <p className="info-label">Location:</p>
-                        <p className="info-value">San Francisco, CA</p>
+                        <p className="info-value">RS, Nigeria</p>
                       </div>
                     </div>
                     <div className="info-item">
@@ -475,7 +456,8 @@ const App = () => {
                       <div>
                         <p className="info-label">Education:</p>
                         <p className="info-value">
-                          B.S. in Computer Science from Stanford University
+                          B.S. in Computer Science from University of Port
+                          Harcourt
                         </p>
                       </div>
                     </div>
@@ -486,12 +468,12 @@ const App = () => {
                       <div>
                         <p className="info-label">GitHub:</p>
                         <a
-                          href="https://github.com/ArigboJesse"
+                          href="https://github.com/Arigbo"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="info-link"
                         >
-                          github.com/ArigboJesse
+                          github.com/Arigbo
                         </a>
                       </div>
                     </div>
@@ -505,7 +487,7 @@ const App = () => {
                           rel="noopener noreferrer"
                           className="info-link"
                         >
-                          linkedin.com/in/ArigboJesse
+                          ArigboJesse
                         </a>
                       </div>
                     </div>
@@ -514,12 +496,12 @@ const App = () => {
                       <div>
                         <p className="info-label">X:</p>
                         <a
-                          href="https://x.com/ArigboJesse"
+                          href=" x.com/anc13nt2?s=09"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="info-link"
                         >
-                          x.com/ArigboJesse
+                          @anc13nt2
                         </a>
                       </div>
                     </div>
@@ -533,7 +515,7 @@ const App = () => {
                           rel="noopener noreferrer"
                           className="info-link"
                         >
-                          facebook.com/ArigboJesse
+                          Arigbo Jesse
                         </a>
                       </div>
                     </div>
@@ -547,7 +529,7 @@ const App = () => {
                           rel="noopener noreferrer"
                           className="info-link"
                         >
-                          threads.net/@ArigboJesse
+                          @ArigboJesse
                         </a>
                       </div>
                     </div>
@@ -559,18 +541,22 @@ const App = () => {
             {/* New Content Describing me, skills, and journey */}
             <div className="section-space">
               {/* My Toolkit */}
-              <div>
+              <div className="subsection">
                 <h4 className="subsection-title">My Toolkit</h4>
                 <p className="subsection-desc">
                   I specialize in a modern, comprehensive toolkit that allows me
                   to build applications efficiently. My primary stack revolves
-                  around **React** for dynamic, component-based front-ends and
-                  **Node.js with Express** for building fast, scalable APIs. I'm
-                  proficient in utilizing **PostgreSQL** and **MongoDB** for
-                  flexible data storage solutions. For development, I rely on
-                  tools like **Git** for version control, **Webpack** for asset
-                  bundling, and **Docker** for containerization to ensure a
-                  consistent development environment.
+                  around <span className="info-link">Next.Js</span> for dynamic,
+                  component-based front-ends and
+                  <span className="info-link"> Node.js</span> with{" "}
+                  <span className="info-link">Express</span> for building fast,
+                  scalable APIs. I'm proficient in utilizing{" "}
+                  <span className="info-link">MongoDB</span> for flexible data
+                  storage solutions. For development, I rely on tools like{" "}
+                  <span className="info-link">Git</span> for version control,
+                  Webpack for asset bundling, and{" "}
+                  <span className="info-link">Docker</span> for containerization
+                  to ensure a consistent development environment.
                 </p>
               </div>
 
@@ -613,11 +599,14 @@ const App = () => {
                     My journey isn't just about code; it's also about people. I
                     believe in continuous learning and collaboration, which is
                     why I actively participate in tech events and conferences.
-                    I've had the pleasure of attending events like **React
-                    Conf** and **Node.js Summit**, where I've met inspiring
-                    developers, product managers, and mentors. These connections
-                    have enriched my understanding of the industry and have led
-                    to exciting new opportunities.
+                    I've had the pleasure of attending events like{" "}
+                    <span className="info-link">GoogleDevfest</span>,{" "}
+                    <span className="info-link">GoogleBuildWithAi</span>,{" "}
+                    <span className="info-link">GoogleI/O</span> and{" "}
+                    <span className="info-link">GoogleExtend</span> where I've
+                    met inspiring developers, product managers, and mentors.
+                    These connections have enriched my understanding of the
+                    industry and have led to exciting new opportunities.
                   </p>
 
                   <div className="photo-grid">
@@ -784,6 +773,8 @@ const App = () => {
                 src={selectedProject.imageUrl}
                 alt={`Image of ${selectedProject.title}`}
                 className="project-image"
+                width={200}
+                height={200}
               />
 
               <p className="project-desc">{selectedProject.description}</p>
