@@ -51,10 +51,11 @@ body {
       }
     }
     .about,
-    .project,.contact{
+    .project,
+    .contact {
       &-modal-inner {
-      background-color: $rootBg;
-    }
+        background-color: $rootBg;
+      }
     }
     select {
       background-color: $rootBg;
@@ -65,7 +66,8 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button,.cv-button {
+    .project-link-button,
+    .cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -95,7 +97,19 @@ body {
     .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
-
+    .footer-link {
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroFrom,
+          $heroTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
     .tech-category-title,
     .header,
     .links .link,
@@ -167,10 +181,11 @@ body {
       }
     }
     .about,
-    .project,.contact{
+    .project,
+    .contact {
       &-modal-inner {
-      background-color: $rootBg;
-    }
+        background-color: $rootBg;
+      }
     }
     select {
       background-color: $rootBg;
@@ -181,7 +196,8 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button,.cv-button {
+    .project-link-button,
+    .cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -211,7 +227,19 @@ body {
     .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
-
+    .footer-link {
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroFrom,
+          $heroTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
     .tech-category-title,
     .header,
     .links .link,
@@ -283,10 +311,11 @@ body {
       }
     }
     .about,
-    .project,.contact{
+    .project,
+    .contact {
       &-modal-inner {
-      background-color: $rootBg;
-    }
+        background-color: $rootBg;
+      }
     }
     select {
       background-color: $rootBg;
@@ -297,7 +326,8 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button,.cv-button {
+    .project-link-button,
+    .cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -327,7 +357,19 @@ body {
     .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
-
+    .footer-link {
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroFrom,
+          $heroTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
     .tech-category-title,
     .header,
     .links .link,
@@ -399,10 +441,11 @@ body {
       }
     }
     .about,
-    .project,.contact{
+    .project,
+    .contact {
       &-modal-inner {
-      background-color: $rootBg;
-    }
+        background-color: $rootBg;
+      }
     }
     select {
       background-color: $rootBg;
@@ -413,7 +456,8 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button,.cv-button {
+    .project-link-button,
+    .cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -443,7 +487,19 @@ body {
     .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
-
+    .footer-link {
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroFrom,
+          $heroTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
     .tech-category-title,
     .header,
     .links .link,
@@ -515,10 +571,11 @@ body {
       }
     }
     .about,
-    .project,.contact{
+    .project,
+    .contact {
       &-modal-inner {
-      background-color: $rootBg;
-    }
+        background-color: $rootBg;
+      }
     }
     select {
       background-color: $rootBg;
@@ -529,7 +586,8 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button,.cv-button {
+    .project-link-button,
+    .cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -559,7 +617,19 @@ body {
     .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
-
+    .footer-link {
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroFrom,
+          $heroTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
     .tech-category-title,
     .header,
     .links .link,
@@ -631,10 +701,11 @@ body {
       }
     }
     .about,
-    .project,.contact{
+    .project,
+    .contact {
       &-modal-inner {
-      background-color: $rootBg;
-    }
+        background-color: $rootBg;
+      }
     }
     select {
       background-color: $rootBg;
@@ -645,7 +716,8 @@ body {
       }
     }
     .gradient-button,
-    .project-link-button,.cv-button {
+    .project-link-button,
+    .cv-button {
       color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
@@ -675,7 +747,19 @@ body {
     .link {
       color: linear-gradient(to right, $heroFrom, $heroTo);
     }
-
+    .footer-link {
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $heroFrom,
+          $heroTo
+        ); /* Pink to Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+      }
+    }
     .tech-category-title,
     .header,
     .links .link,

@@ -439,7 +439,7 @@ const App = () => {
                   scalable back-end systems.
                 </p>
 
-                <div>
+                <div className="subsection">
                   <h4 className="subsection-title">My Journey</h4>
                   <p className="subsection-desc">
                     My fascination with technology began with building simple
@@ -582,11 +582,13 @@ const App = () => {
                 <div className="collaborators-list">
                   {collaborators.map((collab, index) => (
                     <div key={index} className="collaborator-card">
-                      <img
+                 <div className="collaborator-photo-container">
+                       <img
                         src={collab.photo}
                         alt={collab.name}
                         className="collaborator-photo"
                       />
+                 </div>
                       <div className="collaborator-info">
                         <p className="collaborator-name">{collab.name}</p>
                         <p className="collaborator-handle">{collab.handle}</p>
