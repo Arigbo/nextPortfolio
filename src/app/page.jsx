@@ -769,7 +769,7 @@ const App = () => {
               </svg>
             </button>
 
-            <div className="project-modal-text">
+            <div className="project-modal-inner-inner">
               <h3 className="project-title">{selectedProject.title}</h3>
               <img
                 src={selectedProject.imageUrl}
