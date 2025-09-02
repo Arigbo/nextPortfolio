@@ -579,7 +579,8 @@ const App = () => {
                 <h4 className="subsection-title">
                   People I've Collaborated With
                 </h4>
-                <div className="collaborators-list">
+        <div className="collaborators-list">
+                  <div className="collaborators-list-inner">
                   {collaborators.map((collab, index) => (
                     <div key={index} className="collaborator-card">
                  <div className="collaborator-photo-container">
@@ -599,6 +600,7 @@ const App = () => {
                     </div>
                   ))}
                 </div>
+        </div>
               </div>
 
               {/* Community & Connections */}
