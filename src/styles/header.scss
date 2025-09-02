@@ -64,7 +64,7 @@ header {
         position: fixed;
         z-index: 60;
         top: 90vh;
-        right: 1rem;
+        right: 2rem;
         transition: border-color 0.3s;
         display: flex;
         flex-direction: column;
@@ -77,12 +77,12 @@ header {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding-inline: 0.6rem;
+          padding-inline: 0.7rem;
           padding-block: 0.7rem;
           text-transform: capitalize;
-          font-size: 16px;
+          font-size: 1.1rem;
           width: 5rem;
-          font-weight: 400;
+          font-weight: 600;
           cursor: pointer;
         }
         .active {
@@ -91,7 +91,7 @@ header {
           justify-content: space-between;
           gap: 0.5rem;
           i {
-            font-size: 9px;
+            font-size: 0.9rem;
           }
         }
         .themes {
