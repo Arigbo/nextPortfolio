@@ -844,7 +844,7 @@ const App = () => {
               Hello, I'm <span className="name">Arigbo Jesse</span>
             </h1>
             <h2 className="hero-subtitle">
-              Full-Stack Developer & Entrepreneur
+              Full-Stack Developer
             </h2>
             <p className="hero-desc">
               I build high-performance web applications from the ground up,
