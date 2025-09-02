@@ -146,6 +146,9 @@
           font-size: 4.5rem;
           display: block;
         }
+        .name{
+            font-family: "JetBrains Mono", monospace;
+        }
       }
 
       @keyframes fadeInDown {
@@ -165,7 +168,7 @@
         align-items: center;
         width: 100%;
         font-size: 1.5rem;
-        font-weight: 600;
+        font-weight: 500;
         animation: fadeIn 1.5s ease-out;
         @media (min-width: 768px) {
           font-size: 1.875rem;
@@ -384,7 +387,7 @@
     grid-template-columns: 1fr;
     gap: 3rem;
     width: 100%;
-padding-block: 4rem;
+    padding-block: 4rem;
     .tech-category {
       display: flex;
       flex-direction: column;
