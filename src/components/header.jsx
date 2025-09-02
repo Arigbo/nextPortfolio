@@ -1,11 +1,22 @@
+import { useState } from "react";
+
 export default function Header({
   name,
   logo,
   handleThemeChange,
   theme,
+  setTheme,
   setIsAboutModalOpen,
   setIsContactModalOpen,
 }) {
+  const [selectTheme, setSelectTheme] = useState();
+  const themes = [
+    { name: "light" },
+    { name: "dark" },
+    { name: "forest" },
+    { name: "orange" },
+    { name: "purple" },
+  ];
   return (
     <header>
       <div className="headerInner">
@@ -37,18 +48,38 @@ export default function Header({
           </div>
         </nav>
         <div className="header-right">
-          <select
-            onChange={handleThemeChange}
-            value={theme}
-            className="theme-select"
-          >
-            <option value="blue">Blue</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="forest">Forest</option>
-            <option value="purple">Purple</option>
-            <option value="orange">Orange</option>
-          </select>
+          <ul className="theme-select">
+            <div className={`themes ${selectTheme ? "show" : ""}`}>
+              {themes.map((item) => {
+                return (
+                  <li
+                    onClick={() => {
+                      setTheme(item.name);
+                    }}
+                    key={item.name}
+                    className={theme == item.name ? "hide" : item.name}
+                  >
+                    {item.name}
+                  </li>
+                );
+              })}
+            </div>
+           {selectTheme? <li
+              className="active"
+              onClick={() => {
+                setSelectTheme(false);
+              }}
+            >
+              {theme} <i className="fas fa-chevron-down"></i>
+            </li>: <li
+              className="active"
+              onClick={() => {
+                setSelectTheme(true);
+              }}
+            >
+              {theme} <i className="fas fa-chevron-up"></i>
+            </li>}
+          </ul>
           <button
             onClick={() => {
               setIsContactModalOpen(true);

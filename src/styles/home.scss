@@ -45,26 +45,6 @@
   }
 
   /* Contact modal */
-  .contact-modal-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-    input,
-    textarea {
-      width: 95%;
-      padding-inline: 1rem;
-      border-radius: 0.2rem;
-      border: 1px solid;
-    }
-    input {
-      height: 2.5rem;
-    }
-    textarea {
-      padding-block: 0.5rem;
-    }
-  }
 
   .underline-hover::after {
     content: "";
@@ -87,7 +67,6 @@
     align-items: center;
     gap: 2rem;
     width: 100%;
-padding-block-end: 2rem;
     .hero {
       position: relative;
       display: flex;
@@ -222,13 +201,7 @@ padding-block-end: 2rem;
         width: 100%;
         gap: 1rem;
         .view-work-button {
-          border-radius: 9999px;
-          font-size: 1.125rem;
-          font-weight: 600;
           color: white;
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-            0 4px 6px -4px rgba(0, 0, 0, 0.1);
-          transform: scale(1);
           transition: transform 0.3s, background-image 0.3s;
           animation: fadeInUp 2.5s ease-out;
           &:hover {
@@ -237,13 +210,6 @@ padding-block-end: 2rem;
         }
 
         .learn-more-button {
-          padding-left: 2rem;
-          padding-right: 2rem;
-          padding-top: 0.75rem;
-          padding-bottom: 0.75rem;
-          border-radius: 9999px;
-          font-size: 1.125rem;
-          font-weight: 700;
           border: 1px solid;
           transition: transform 0.3s;
           animation: fadeInUp 2.5s ease-out;
@@ -265,7 +231,7 @@ padding-block-end: 2rem;
       }
     }
     section {
-      min-height: 60vh;
+      min-height: 80vh;
       justify-content: center;
       display: flex;
       flex-direction: column;
@@ -380,7 +346,6 @@ padding-block-end: 2rem;
             font-weight: 500;
             background-color: #1e293b;
             padding-inline: 0.5rem;
-            
           }
         }
         .links {
@@ -419,12 +384,12 @@ padding-block-end: 2rem;
     grid-template-columns: 1fr;
     gap: 3rem;
     width: 100%;
-
+padding-block: 4rem;
     .tech-category {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 1.5rem;
       width: 100%;
       &-title {
         font-size: 1.5rem;

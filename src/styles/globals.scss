@@ -13,10 +13,18 @@ body {
   button {
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 0;
     border: 0;
     height: 2.5rem;
-    padding-inline: 1rem;
+    padding-inline: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+       border-radius: 9999px;
+    @media (min-width: 768px) {
+      height: 2.6rem;
+      font-size: 1.125rem;
+    }
   }
   .gradient-button {
     color: white;
@@ -68,11 +76,19 @@ body {
     .gradient-button,
     .project-link-button,
     .cv-button {
-      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    .themes li{
+      background-color: $rootBg;
+    }
+    li{
+      &.active{
+        background-color: $cardBg;
+        color:$rootText;
       }
     }
     header {
@@ -198,11 +214,19 @@ body {
     .gradient-button,
     .project-link-button,
     .cv-button {
-      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    .themes li{
+      background-color: $rootBg;
+    }
+    li{
+      &.active{
+        background-color: $cardBg;
+        color:$rootText;
       }
     }
     header {
@@ -328,11 +352,19 @@ body {
     .gradient-button,
     .project-link-button,
     .cv-button {
-      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    .themes li{
+      background-color: $rootBg;
+    }
+    li{
+      &.active{
+        background-color: $cardBg;
+        color:$rootText;
       }
     }
     header {
@@ -458,11 +490,19 @@ body {
     .gradient-button,
     .project-link-button,
     .cv-button {
-      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    .themes li{
+      background-color: $rootBg;
+    }
+    li{
+      &.active{
+        background-color: $cardBg;
+        color:$rootText;
       }
     }
     header {
@@ -588,11 +628,19 @@ body {
     .gradient-button,
     .project-link-button,
     .cv-button {
-      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    .themes li{
+      background-color: $rootBg;
+    }
+    li{
+      &.active{
+        background-color: $cardBg;
+        color:$rootText;
       }
     }
     header {
@@ -718,11 +766,19 @@ body {
     .gradient-button,
     .project-link-button,
     .cv-button {
-      color: $rootText;
       transition: all 0.8s ease;
       background: linear-gradient(to right, $heroFrom, $heroTo);
       &:hover {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
+      }
+    }
+    .themes li{
+      background-color: $rootBg;
+    }
+    li{
+      &.active{
+        background-color: $cardBg;
+        color:$rootText;
       }
     }
     header {

@@ -579,28 +579,28 @@ const App = () => {
                 <h4 className="subsection-title">
                   People I've Collaborated With
                 </h4>
-        <div className="collaborators-list">
+                <div className="collaborators-list">
                   <div className="collaborators-list-inner">
-                  {collaborators.map((collab, index) => (
-                    <div key={index} className="collaborator-card">
-                 <div className="collaborator-photo-container">
-                       <img
-                        src={collab.photo}
-                        alt={collab.name}
-                        className="collaborator-photo"
-                      />
-                 </div>
-                      <div className="collaborator-info">
-                        <p className="collaborator-name">{collab.name}</p>
-                        <p className="collaborator-handle">{collab.handle}</p>
-                        <p className="collaborator-collaboration">
-                          {collab.collaboration}
-                        </p>
+                    {collaborators.map((collab, index) => (
+                      <div key={index} className="collaborator-card">
+                        <div className="collaborator-photo-container">
+                          <img
+                            src={collab.photo}
+                            alt={collab.name}
+                            className="collaborator-photo"
+                          />
+                        </div>
+                        <div className="collaborator-info">
+                          <p className="collaborator-name">{collab.name}</p>
+                          <p className="collaborator-handle">{collab.handle}</p>
+                          <p className="collaborator-collaboration">
+                            {collab.collaboration}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-        </div>
               </div>
 
               {/* Community & Connections */}
@@ -717,37 +717,42 @@ const App = () => {
                 />
               </svg>
             </button>
-            <h3 className="about-title">Get In Touch</h3>
-            <p className="about-desc">
-              Have a project in mind or just want to say hi? Feel free to reach
-              out!
-            </p>
-            <form onSubmit={handleContactSubmit} className="contact-modal-form">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                className="form-input"
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                className="form-input"
-                required
-              />
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                rows="6"
-                className="form-textarea"
-                required
-              ></textarea>
-              <button type="submit" className="gradient-button">
-                Send Message
-              </button>
-            </form>
+            <div className="contact-modal-inner-inner">
+              <h3 className="about-title">Get In Touch</h3>
+              <p className="about-desc">
+                Have a project in mind or just want to say hi? Feel free to
+                reach out!
+              </p>
+              <form
+                onSubmit={handleContactSubmit}
+                className="contact-modal-form"
+              >
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  className="form-input"
+                  required
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  className="form-input"
+                  required
+                />
+                <textarea
+                  name="message"
+                  placeholder="Your Message"
+                  rows="6"
+                  className="form-textarea"
+                  required
+                ></textarea>
+                <button type="submit" className="gradient-button">
+                  Send Message
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       )}
@@ -844,7 +849,6 @@ const App = () => {
       )}
       <main>
         <section id="home" className="hero">
-
           <div className="hero-content">
             <h1 className="hero-title">
               Hello, I'm <span className="name">Arigbo Jesse</span>
@@ -858,11 +862,15 @@ const App = () => {
               problems and create seamless user experiences.
             </p>
             <div className="hero-buttons">
-              <a href="#projects">
-                <button className="view-work-button gradient-button">
-                  View My Work
-                </button>
-              </a>
+              <button
+                className="view-work-button gradient-button"
+                onClick={() => {
+                  setIsContactModalOpen(true);
+                }}
+              >
+                View My Work
+              </button>
+
               <a
                 href="#about"
                 onClick={() => {
@@ -926,38 +934,36 @@ const App = () => {
 
         {/* Tech Stack Section */}
         <section id="stack" className="section">
-          <div className="container">
-            <h3 className="section-title">Tech Stack</h3>
-            <div className="tech-grid">
-              <div className="tech-category">
-                <h4 className="tech-category-title">Frontend</h4>
-                <div className="tech-icons">
-                  {techStackData.frontend.map((tech) => (
-                    <div key={tech.name} className="tech-icon">
-                      <img
-                        src={tech.logo}
-                        alt={`${tech.name} logo`}
-                        className="tech-logo"
-                      />
-                      <span className="tech-name">{tech.name}</span>
-                    </div>
-                  ))}
-                </div>
+          <h3 className="section-title">Tech Stack</h3>
+          <div className="tech-grid">
+            <div className="tech-category">
+              <h4 className="tech-category-title">Frontend</h4>
+              <div className="tech-icons">
+                {techStackData.frontend.map((tech) => (
+                  <div key={tech.name} className="tech-icon">
+                    <img
+                      src={tech.logo}
+                      alt={`${tech.name} logo`}
+                      className="tech-logo"
+                    />
+                    <span className="tech-name">{tech.name}</span>
+                  </div>
+                ))}
               </div>
-              <div className="tech-category">
-                <h4 className="tech-category-title">Backend</h4>
-                <div className="tech-icons">
-                  {techStackData.backend.map((tech) => (
-                    <div key={tech.name} className="tech-icon">
-                      <img
-                        src={tech.logo}
-                        alt={`${tech.name} logo`}
-                        className="tech-logo"
-                      />
-                      <span className="tech-name">{tech.name}</span>
-                    </div>
-                  ))}
-                </div>
+            </div>
+            <div className="tech-category">
+              <h4 className="tech-category-title">Backend</h4>
+              <div className="tech-icons">
+                {techStackData.backend.map((tech) => (
+                  <div key={tech.name} className="tech-icon">
+                    <img
+                      src={tech.logo}
+                      alt={`${tech.name} logo`}
+                      className="tech-logo"
+                    />
+                    <span className="tech-name">{tech.name}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
