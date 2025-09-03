@@ -21,8 +21,6 @@ export default function RootLayout({ children }) {
     if (typeof window !== "undefined") {
       const savedTheme = localStorage.getItem("theme") || "blue";
       setTheme(savedTheme);
-      document.body.classList.add(savedTheme);
-      const root = document.documentElement;
       localStorage.setItem("theme", savedTheme);
     }
   }, []);

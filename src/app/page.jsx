@@ -495,7 +495,7 @@ const App = () => {
                       <div>
                         <p className="info-label">X:</p>
                         <a
-                          href=" x.com/anc13nt2?s=09"
+                          href="x.com/anc13nt2?s=09"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="info-link"
@@ -529,6 +529,34 @@ const App = () => {
                           className="info-link"
                         >
                           @ArigboJesse
+                        </a>
+                      </div>
+                    </div>
+                    <div className="info-item">
+                      <i className="far fa-envelope info-icon"></i>
+                      <div>
+                        <p className="info-label">Email:</p>
+                        <a
+                          href="mailto:arigbojesse@gmail.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="info-link"
+                        >
+                          arigbojesse@gmail.com
+                        </a>
+                      </div>
+                    </div>
+                    <div className="info-item">
+                      <i className="fa-brands fa-whatsapp info-icon"></i>
+                      <div>
+                        <p className="info-label">WhatsApp:</p>
+                        <a
+                          href="https://wa.me/2348109432202"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="info-link"
+                        >
+                          +2348109432202
                         </a>
                       </div>
                     </div>
@@ -843,9 +871,7 @@ const App = () => {
             <h1 className="hero-title">
               Hello, I'm <span className="name">Arigbo Jesse</span>
             </h1>
-            <h2 className="hero-subtitle">
-              Full-Stack Developer
-            </h2>
+            <h2 className="hero-subtitle">Full-Stack Developer</h2>
             <p className="hero-desc">
               I build high-performance web applications from the ground up,
               blending clean code with creative design to solve real-world

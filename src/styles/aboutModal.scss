@@ -281,6 +281,13 @@
           flex-direction: column;
           gap: 1rem;
         }
+        &-right{
+            display: grid;
+  grid-template-columns: repeat(2, 1fr);
+@media (min-width: 768px) {
+  display: flex;
+}
+        }
       }
       &-icon {
         font-size: 1rem;
