@@ -75,10 +75,10 @@ const techMap = [...techStackData.frontend, ...techStackData.backend].reduce(
 const allProjects = [
   {
     id: "p1",
-    title: "Ancients",
-    companyLogoUrl: "/ancients.png",
+    title: "Evolve",
+    companyLogoUrl: "Evolve",
     description:
-      "Innovate Solutions is a forward-thinking IT firm dedicated to bridging the gap between technology and everyday life. We specialize in developing practical, user-centric software and digital platforms that solve the unique challenges faced by local communities and businesses. Our team is passionate about harnessing the power of technology to improve efficiency, connect people, and drive local growth, turning everyday problems into innovative, impactful solutions.",
+      "Evolve was born from a simple idea: to fix online education. We were tired of passive video tutorials and outdated curricula that left learners with a certificate but no practical skills. Our founders, a group of seasoned software engineers, wanted to create a platform that mimicked the real-world experience of a development team.\n Today, our courses are centered around building a single, challenging project from start to finish. We provide direct mentorship, a vibrant community, and a roadmap that prepares you for a real-world career",
     features: [
       "Custom Software Development",
       "Mobile and Web Applications",
@@ -87,11 +87,11 @@ const allProjects = [
       "Cloud and Infrastructure Solutions",
       "User Experience (UX) Design",
     ],
-    link: "https://ancients-gold.vercel.app/",
-    github: "https://github.com/Arigbo/ancients",
-    docs: "https://docs.ecommerce-platform.com",
-    imageUrl: "/ancients.png",
-    techStack: ["Aos.Js", "Node.Js", "JavaScript", "HTML5", "SCSS"],
+    link: "https://evolve-fawn.vercel.app/",
+    github: "https://github.com/Arigbo/evolve",
+    docs: "https://github.com/Arigbo/evolve",
+    imageUrl: "/evolve.png",
+    techStack: ["Next.Js", "SCSS"],
     status: "finished",
   },
   {

@@ -19,7 +19,7 @@
       p {
         font-weight: 400;
         font-size: 1.05rem;
-        span{
+        span {
           font-weight: 700;
         }
       }
@@ -100,9 +100,8 @@
           gap: 1rem;
 
           &-list {
-            
-              width: 100%;
-              overflow-x: auto;
+            width: 100%;
+            overflow-x: auto;
             &-inner {
               width: fit-content;
               display: flex;
@@ -281,12 +280,12 @@
           flex-direction: column;
           gap: 1rem;
         }
-        &-right{
-            display: grid;
-  grid-template-columns: repeat(2, 1fr);
-@media (min-width: 768px) {
-  display: flex;
-}
+        &-right {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          @media (min-width: 768px) {
+            display: flex;
+          }
         }
       }
       &-icon {
