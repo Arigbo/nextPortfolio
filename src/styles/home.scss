@@ -146,8 +146,8 @@
           font-size: 4.5rem;
           display: block;
         }
-        .name{
-            font-family: "JetBrains Mono", monospace;
+        .name {
+          font-family: "JetBrains Mono", monospace;
         }
       }
 
@@ -429,6 +429,9 @@
   @media (min-width: 1024px) {
     .tech-grid {
       grid-template-columns: 1fr 1fr;
+      .tech-category:last-child {
+        grid-column: 1/3;
+      }
     }
   }
   .testimonials-grid {

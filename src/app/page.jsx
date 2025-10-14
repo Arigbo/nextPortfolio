@@ -32,6 +32,30 @@ const techStackData = {
       name: "CSS3",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
     },
+    {
+      name: "Aos.Js",
+      logo: "https://aosjs.dev/images/logo.png",
+    },
+    {
+      name: "Axios",
+      logo: "https://axios-http.com/assets/logo.svg",
+    },
+    {
+      name: "Material UI",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
+    },
+    {
+      name: "Webpack",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webpack/webpack-original.svg",
+    },
+    {
+      name: "Next.js",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+    },
+    {
+      name: "Date-fns",
+      logo: "https://date-fns.org/img/favicon-32x32.png",
+    },
   ],
 
   backend: [
@@ -43,10 +67,7 @@ const techStackData = {
       name: "Express",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
     },
-    {
-      name: "Next.js",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-    },
+
     {
       name: "MongoDB",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
@@ -56,8 +77,51 @@ const techStackData = {
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
     },
     {
-      name: "Python",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+      name: "Postman",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg",
+    },
+    {
+      name: "Docker",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+    },
+    {
+      name: "Firebase",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+    },
+    {
+      name: "Supabase",
+      logo: "https://seeklogo.com/images/S/supabase-logo-EEA3F1A0D1-seeklogo.com.png",
+    },
+    {
+      name: "Jotai",
+      logo: "https://jotai.org/static/favicon.ico",
+    },
+    {
+      name: "Tanstack Query",
+      logo: "https://tanstack.com/query/v4/img/favicon.png",
+    },
+  ],
+  extra: [
+    {
+      name: "Git",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+    },
+    {
+      name: "GitHub",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+    },
+
+    {
+      name: "Jest",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg",
+    },
+    {
+      name: "React Testing Library",
+      logo: "https://testing-library.com/img/octopus-64x64.png",
+    },
+    {
+      name: "Vercel",
+      logo: "https://cdn.worldvectorlogo.com/logos/vercel.svg",
     },
   ],
 };
@@ -130,6 +194,33 @@ const allProjects = [
     docs: "https://docs.task-management-tool.com",
     imageUrl: "/harishi.png",
     techStack: ["Aos.Js", "Node.Js", "JavaScript", "HTML5", "SCSS", "CSS"],
+    status: "in-progress",
+  },
+  {
+    id: "p4",
+    title: "Weather App",
+    companyLogoUrl: "https://placehold.co/100x100/1E293B/a855f7?text=W-Logo",
+    description:
+      "A web application that provides weather updates and forecasts.",
+    features: [
+      "Real-time weather updates",
+      "7-day weather forecasts",
+      "Location-based weather information",
+    ],
+    link: "https://weather.vercel.app/",
+    github: "https://github.com/Arigbo/weather-app",
+    docs: "https://docs.weather-app.com",
+    imageUrl: "/weather-app.png",
+    techStack: [
+      "Next.Js",
+      "Node.Js",
+      "TypeScript",
+      "SCSS",
+      "Axios",
+      "openweathermapapi",
+      "Jotai",
+      "Date-fns",
+    ],
     status: "in-progress",
   },
 ];
@@ -971,6 +1062,21 @@ const App = () => {
               <h4 className="tech-category-title">Backend</h4>
               <div className="tech-icons">
                 {techStackData.backend.map((tech) => (
+                  <div key={tech.name} className="tech-icon">
+                    <img
+                      src={tech.logo}
+                      alt={`${tech.name} logo`}
+                      className="tech-logo"
+                    />
+                    <span className="tech-name">{tech.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="tech-category">
+              <h4 className="tech-category-title">Extras</h4>
+              <div className="tech-icons">
+                {techStackData.extra.map((tech) => (
                   <div key={tech.name} className="tech-icon">
                     <img
                       src={tech.logo}
