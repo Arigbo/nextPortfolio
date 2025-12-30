@@ -422,14 +422,6 @@ const App = () => {
 
   const yearsOfExperience = calculateYearsOfExperience();
 
-  const handleCVDownload = () => {
-    setModal({
-      show: true,
-      message: "This is a demo. A PDF download would be triggered here.",
-      type: "info",
-    });
-  };
-
   const handleContactSubmit = (e) => {
     e.preventDefault();
     setModal({
@@ -835,9 +827,11 @@ const App = () => {
             </div>
 
             <div>
-              <button onClick={handleCVDownload} className="cv-button">
+              <button className="cv-button">
                 <i className="fa-solid fa-file-arrow-down"></i>
-                <span>Download CV</span>
+                <a href="/Resume.pdf" download>
+                  Download CV
+                </a>
               </button>
             </div>
           </div>
