@@ -278,22 +278,15 @@ const allProjects = [
 const communityPhotos = [
   {
     id: "photo-1",
-    imgUrl: "https://placehold.co/800x600/4a5568/ffffff?text=Tech+Meetup",
-    altText: "Group photo at a tech meetup.",
-    people: [
-      { name: "Alice", handle: "@tech_alice" },
-      { name: "Bob", handle: "@dev_bob" },
-    ],
+    imgUrl: "/devfest-alone.jpg",
+    altText: "Me at DevFestPH2025.",
+    people: [{ name: "Me", handle: "@anc13nt2" }],
   },
   {
     id: "photo-2",
-    imgUrl: "https://placehold.co/800x600/2c5282/ffffff?text=Hackathon+Team",
-    altText: "Team photo after a hackathon.",
-    people: [
-      { name: "Charlie", handle: "@code_charlie" },
-      { name: "Dana", handle: "@hacker_dana" },
-      { name: "Eve", handle: "@eve_devs" },
-    ],
+    imgUrl: "/me-andrea.jpg",
+    altText: "Me and Andrea at a DevfestPH25 event.",
+    people: [{ name: "Andrea", handle: "@globalAndrea" }],
   },
   {
     id: "photo-3",
@@ -545,7 +538,7 @@ const App = () => {
                 /> */}
                 <Image
                   className="about-image"
-                  src="/dp.jpg"
+                  src="/image.jpg.jpg"
                   width={400}
                   height={600}
                   alt="Your profile"
