@@ -12,10 +12,16 @@ export default function Header({
   selectTheme,
   setSelectTheme,
 }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <header>
       <div className="headerInner">
-        <div className="logo">
+        <div
+          className="logo"
+          onClick={() => {
+            setIsMenuOpen(true);
+          }}
+        >
           <h1>{logo}</h1>
         </div>
         <nav className="nav">
@@ -24,7 +30,7 @@ export default function Header({
               <span>Projects</span>
             </a>
             <a
-              href="#about"
+              href="/about"
               onClick={() => {
                 setIsAboutModalOpen(true);
               }}
@@ -43,39 +49,43 @@ export default function Header({
           </div>
         </nav>
         <div className="header-right">
-               <ul className="theme-select">
-                      <div className={`themes ${selectTheme ? "show" : ""}`}>
-                        {themes.map((item) => {
-                          return (
-                            <li
-                              onClick={() => {
-                                setTheme(item.name)
-                                handleThemeChange({target:{value:item.name}})
-                              }}
-                              key={item.name}
-                              className={theme == item.name ? "hide" : item.name}
-                            >
-                              {item.name}
-                            </li>
-                          );
-                        })}
-                      </div>
-                     {selectTheme? <li
-                        className="active"
-                        onClick={() => {
-                          setSelectTheme(false);
-                        }}
-                      >
-                        {theme} <i className="fas fa-chevron-down"></i>
-                      </li>: <li
-                        className="active"
-                        onClick={() => {
-                          setSelectTheme(true);
-                        }}
-                      >
-                        {theme} <i className="fas fa-chevron-up"></i>
-                      </li>}
-                    </ul>
+          <ul className="theme-select">
+            <div className={`themes ${selectTheme ? "show" : ""}`}>
+              {themes.map((item) => {
+                return (
+                  <li
+                    onClick={() => {
+                      setTheme(item.name);
+                      handleThemeChange({ target: { value: item.name } });
+                    }}
+                    key={item.name}
+                    className={theme == item.name ? "hide" : item.name}
+                  >
+                    {item.name}
+                  </li>
+                );
+              })}
+            </div>
+            {selectTheme ? (
+              <li
+                className="active"
+                onClick={() => {
+                  setSelectTheme(false);
+                }}
+              >
+                {theme} <i className="fas fa-chevron-down"></i>
+              </li>
+            ) : (
+              <li
+                className="active"
+                onClick={() => {
+                  setSelectTheme(true);
+                }}
+              >
+                {theme} <i className="fas fa-chevron-up"></i>
+              </li>
+            )}
+          </ul>
           <button
             onClick={() => {
               setIsContactModalOpen(true);
@@ -84,6 +94,20 @@ export default function Header({
           >
             Let's Talk
           </button>
+        </div>
+      </div>
+      <div
+        className={`menu-overlay ${isMenuOpen ? "show" : ""}`}
+        onClick={() => {
+          setIsMenuOpen(false);
+        }}
+      >
+        <div className="menu">
+          {" "}
+          <a href="/">Home</a>
+          <a href="/">Projects</a>
+          <a href="/about">About</a>
+          <a href="/">Contact</a>
         </div>
       </div>
     </header>

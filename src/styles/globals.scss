@@ -7,6 +7,47 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  .handle {
+    &-overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.3s ease-in-out;
+    }
+    &-text {
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+    }
+  }
+  section {
+    min-height: 80vh;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    gap: 1rem;
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .section-title {
+        font-size: 3rem;
+      }
+    }
+  }
   a {
     text-decoration: none;
   }
@@ -20,7 +61,7 @@ body {
     padding-inline: 1.5rem;
     font-size: 0.9rem;
     font-weight: 600;
-       border-radius: 9999px;
+    border-radius: 9999px;
     @media (min-width: 768px) {
       height: 2.6rem;
       font-size: 1.125rem;
@@ -30,6 +71,8 @@ body {
     color: white;
   }
   &.light {
+    $menuBg: #ffffff;
+    $menuText: #1f2937;
     $rootBg: #f3f4f6;
     $rootText: #1f2937;
     $navBg: rgba(255, 255, 255, 0.9);
@@ -50,6 +93,13 @@ body {
     $placeholderColor: #a0aec0;
     background-color: $rootBg;
     color: $rootText;
+
+    .menu {
+      background-color: $menuBg;
+      a {
+        color: $menuText;
+      }
+    }
     a {
       color: $rootText;
     }
@@ -82,13 +132,13 @@ body {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
       }
     }
-    .themes li{
+    .themes li {
       background-color: $rootBg;
     }
-    li{
-      &.active{
+    li {
+      &.active {
         background-color: $cardBg;
-        color:$rootText;
+        color: $rootText;
       }
     }
     header {
@@ -168,6 +218,8 @@ body {
     }
   }
   &.dark {
+    $menuBg: #0a0f24;
+    $menuText: #cbd5e1;
     $rootBg: #030712;
     $rootText: #f3f4f6;
     $navBg: rgba(3, 7, 18, 0.9);
@@ -188,6 +240,12 @@ body {
     $placeholderColor: #6b7280;
     background-color: $rootBg;
     color: $rootText;
+    .menu {
+      background-color: $menuBg;
+      a {
+        color: $menuText;
+      }
+    }
     a {
       color: $rootText;
     }
@@ -220,13 +278,13 @@ body {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
       }
     }
-    .themes li{
+    .themes li {
       background-color: $rootBg;
     }
-    li{
-      &.active{
+    li {
+      &.active {
         background-color: $cardBg;
-        color:$rootText;
+        color: $rootText;
       }
     }
     header {
@@ -306,6 +364,8 @@ body {
     }
   }
   &.blue {
+    $menuBg: #0a172f;
+    $menuText: #cbd5e1;
     $rootBg: #020617;
     $rootText: #e2e8f0;
     $navBg: rgba(7, 8, 13, 0.9);
@@ -326,6 +386,12 @@ body {
     $placeholderColor: #64748b;
     background-color: $rootBg;
     color: $rootText;
+    .menu {
+      background-color: $menuBg;
+      a {
+        color: $menuText;
+      }
+    }
     a {
       color: $rootText;
     }
@@ -358,13 +424,13 @@ body {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
       }
     }
-    .themes li{
+    .themes li {
       background-color: $rootBg;
     }
-    li{
-      &.active{
+    li {
+      &.active {
         background-color: $cardBg;
-        color:$rootText;
+        color: $rootText;
       }
     }
     header {
@@ -444,6 +510,8 @@ body {
     }
   }
   &.forest {
+    $menuBg: #0a1f14;
+    $menuText: #d1fae5;
     $rootBg: #1f2937;
     $rootText: #e5e7eb;
     $navBg: rgba(31, 41, 55, 0.9);
@@ -464,6 +532,12 @@ body {
     $placeholderColor: #a0aec0;
     background-color: $rootBg;
     color: $rootText;
+    .menu {
+      background-color: $menuBg;
+      a {
+        color: $menuText;
+      }
+    }
     a {
       color: $rootText;
     }
@@ -496,13 +570,13 @@ body {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
       }
     }
-    .themes li{
+    .themes li {
       background-color: $rootBg;
     }
-    li{
-      &.active{
+    li {
+      &.active {
         background-color: $cardBg;
-        color:$rootText;
+        color: $rootText;
       }
     }
     header {
@@ -582,6 +656,8 @@ body {
     }
   }
   &.purple {
+    $menuBg: #1e0a2a;
+    $menuText: #e9d5ff;
     $rootBg: #0f031a;
     $rootText: #f3e8ff;
     $navBg: rgba(15, 3, 26, 0.9);
@@ -602,6 +678,12 @@ body {
     $placeholderColor: #a78bfa;
     background-color: $rootBg;
     color: $rootText;
+    .menu {
+      background-color: $menuBg;
+      a {
+        color: $menuText;
+      }
+    }
     a {
       color: $rootText;
     }
@@ -634,13 +716,13 @@ body {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
       }
     }
-    .themes li{
+    .themes li {
       background-color: $rootBg;
     }
-    li{
-      &.active{
+    li {
+      &.active {
         background-color: $cardBg;
-        color:$rootText;
+        color: $rootText;
       }
     }
     header {
@@ -720,6 +802,8 @@ body {
     }
   }
   &.orange {
+    $menuBg: #2c0a00;
+    $menuText: #ffedd5;
     $rootBg: #2c0a00;
     $rootText: #ffedd5;
     $navBg: rgba(44, 10, 0, 0.9);
@@ -740,6 +824,12 @@ body {
     $placeholderColor: #ea580c;
     background-color: $rootBg;
     color: $rootText;
+    .menu {
+      background-color: $menuBg;
+      a {
+        color: $menuText;
+      }
+    }
     a {
       color: $rootText;
     }
@@ -772,13 +862,13 @@ body {
         background: linear-gradient(to right, $heroHoverFrom, $heroHoverTo);
       }
     }
-    .themes li{
+    .themes li {
       background-color: $rootBg;
     }
-    li{
-      &.active{
+    li {
+      &.active {
         background-color: $cardBg;
-        color:$rootText;
+        color: $rootText;
       }
     }
     header {

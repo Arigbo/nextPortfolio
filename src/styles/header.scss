@@ -10,6 +10,38 @@ header {
   right: 0;
   z-index: 40;
   height: 4rem;
+  .menu-overlay {
+    position: fixed;
+    top: -100vh;
+    left: 0;
+    right: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.268);
+    .menu {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 1rem;
+      padding: 1rem 1rem;
+      transition: all 0.3s ease;
+    }
+    &.show {
+      top: 4rem;
+    }
+    a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 1.2rem;
+      font-weight: 600;
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
   .headerInner {
     display: flex;
     justify-content: space-between;
