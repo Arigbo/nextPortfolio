@@ -597,7 +597,7 @@ const App = () => {
         </section>
 
         {/* Testimonials Section */}
-        <TestimonialSection />
+        {/* <TestimonialSection /> */}
         {/* <section id="testimonials" className="section">
           <div className="container">
             <h3 className="section-title">Testimonials</h3>

@@ -31,9 +31,9 @@ const TestimonialCarousel = () => {
   }
   const testimonials = [
     {
-      text: "Working with Jesse was an absolute pleasure. They took our vague ideas and transformed them into a beautiful, functional design that perfectly captured our brand. Their attention to detail and commitment to quality are truly impressive.",
+      text: "Working with Jesse was an absolute pleasure. He took our vague ideas and transformed them into a beautiful, functional design that perfectly captured our brand. Their attention to detail and commitment to quality are truly impressive.",
       author: "Ralonic",
-      title: "CEO, Creative Solutions",
+      title: "CEO, Ububa",
       socials: [],
     },
     {
