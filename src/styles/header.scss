@@ -38,6 +38,9 @@ header {
         color: var(--primary-color);
       }
     }
+    .active {
+      color: var(--primary-color);
+    }
     @media (min-width: 768px) {
       display: none;
     }

@@ -6,13 +6,19 @@ export default function Header({
   handleThemeChange,
   theme,
   setTheme,
-  setIsAboutModalOpen,
   setIsContactModalOpen,
   themes,
   selectTheme,
   setSelectTheme,
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const nav = [
+    { name: "Home", link: "/" },
+    { name: "About", link: "/about" },
+    { name: "Projects", link: "#projects" },
+    { name: "Contact", link: "#contact" },
+  ];
+  const path = window.location.pathname;
   return (
     <header>
       <div className="headerInner">
@@ -26,26 +32,19 @@ export default function Header({
         </div>
         <nav className="nav">
           <div className="nav-items">
-            <a href="#projects" className="nav-link underline-hover">
-              <span>Projects</span>
-            </a>
-            <a
-              href="/about"
-              onClick={() => {
-                setIsAboutModalOpen(true);
-              }}
-              className="nav-link underline-hover"
-            >
-              <span>About</span>
-            </a>
-            <a
-              onClick={() => {
-                setIsContactModalOpen(true);
-              }}
-              className="nav-link underline-hover"
-            >
-              <span>Contact</span>
-            </a>
+            {nav.map((item) => {
+              return (
+                <a
+                  key={item.name}
+                  href={item.link}
+                  className={`nav-link underline-hover ${
+                    path === item.link ? "active" : ""
+                  }`}
+                >
+                  {item.name}
+                </a>
+              );
+            })}
           </div>
         </nav>
         <div className="header-right">

@@ -176,26 +176,26 @@ const allProjects = [
     techStack: ["Next.Js", "Node.Js", "TypeScript"],
     status: "finished",
   },
-  {
-    id: "p3",
-    title: "Harishi",
-    companyLogoUrl: "https://placehold.co/100x100/1E293B/a855f7?text=T-Logo",
-    description:
-      "At our company, we're dedicated to crafting the highest\n                      quality beverages possible. We take pride in our products,\n                      and we hope that you enjoy them as much as we do. Thank\n                      you for visiting our website! If you have any questions or\n                      feedback, please don't hesitate to contact us. We're\n                      always happy to hear from our customers.",
-    features: [
-      "Real-time task and project updates",
-      "Multi-user collaboration",
-      "Task assignment and status tracking",
-      "User notifications for project changes",
-      "Drag-and-drop interface for task organization",
-    ],
-    link: "https://harishi.vercel.app/",
-    github: "https://github.com/Arigbo/harishi",
-    docs: "https://docs.task-management-tool.com",
-    imageUrl: "/harishi.png",
-    techStack: ["Aos.Js", "Node.Js", "JavaScript", "HTML5", "SCSS", "CSS"],
-    status: "in-progress",
-  },
+  // {
+  //   id: "p3",
+  //   title: "Harishi",
+  //   companyLogoUrl: "https://placehold.co/100x100/1E293B/a855f7?text=T-Logo",
+  //   description:
+  //     "At our company, we're dedicated to crafting the highest\n                      quality beverages possible. We take pride in our products,\n                      and we hope that you enjoy them as much as we do. Thank\n                      you for visiting our website! If you have any questions or\n                      feedback, please don't hesitate to contact us. We're\n                      always happy to hear from our customers.",
+  //   features: [
+  //     "Real-time task and project updates",
+  //     "Multi-user collaboration",
+  //     "Task assignment and status tracking",
+  //     "User notifications for project changes",
+  //     "Drag-and-drop interface for task organization",
+  //   ],
+  //   link: "https://harishi.vercel.app/",
+  //   github: "https://github.com/Arigbo/harishi",
+  //   docs: "https://docs.task-management-tool.com",
+  //   imageUrl: "/harishi.png",
+  //   techStack: ["Aos.Js", "Node.Js", "JavaScript", "HTML5", "SCSS", "CSS"],
+  //   status: "in-progress",
+  // },
   {
     id: "p4",
     title: "Weather App",
@@ -223,25 +223,25 @@ const allProjects = [
     ],
     status: "Finished",
   },
-  {
-    id: "p5",
-    title: "Harishi",
-    companyLogoUrl: "https://placehold.co/100x100/1E293B/a855f7?text=T-Logo",
-    description:
-      "Shop for the best beverages online. Reliable delivery. Great prices. Customer satisfaction guaranteed.",
-    features: [
-      "Wide selection of beverages",
-      "Secure online ordering",
-      "Fast and reliable delivery",
-      "Customer reviews and ratings",
-    ],
-    link: "https://harishi.vercel.app/",
-    github: "https://github.com/Arigbo/harishi",
-    docs: "https://docs.beverage-ecommerce.com",
-    imageUrl: "/harishi.png",
-    techStack: ["Next.Js", "Node.Js", "TypeScript", "SCSS", "Axios"],
-    status: "Finished",
-  },
+  // {
+  //   id: "p5",
+  //   title: "Harishi",
+  //   companyLogoUrl: "https://placehold.co/100x100/1E293B/a855f7?text=T-Logo",
+  //   description:
+  //     "Shop for the best beverages online. Reliable delivery. Great prices. Customer satisfaction guaranteed.",
+  //   features: [
+  //     "Wide selection of beverages",
+  //     "Secure online ordering",
+  //     "Fast and reliable delivery",
+  //     "Customer reviews and ratings",
+  //   ],
+  //   link: "https://harishi.vercel.app/",
+  //   github: "https://github.com/Arigbo/harishi",
+  //   docs: "https://docs.beverage-ecommerce.com",
+  //   imageUrl: "/harishi.png",
+  //   techStack: ["Next.Js", "Node.Js", "TypeScript", "SCSS", "Axios"],
+  //   status: "Finished",
+  // },
   {
     id: "p6",
     title: "Lodger",
@@ -312,21 +312,6 @@ const App = () => {
 
   return (
     <div className="portfolio">
-      {/* General Purpose Modal for messages */}
-      {modal.show && (
-        <div className="about-modal-overlay">
-          <div>
-            <p>{modal.message}</p>
-            <button
-              onClick={() => setModal({ ...modal, show: false })}
-              className="gradient-button modal-button"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* Contact Modal */}
       {isContactModalOpen && (
         <div className="contact-modal-overlay">
@@ -503,12 +488,7 @@ const App = () => {
                 Let's Talk
               </button>
 
-              <a
-                href="#about"
-                onClick={() => {
-                  setIsAboutModalOpen(true);
-                }}
-              >
+              <a href="/about">
                 <button className="learn-more-button">About Me</button>
               </a>
             </div>
