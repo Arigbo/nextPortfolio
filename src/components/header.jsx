@@ -1,3 +1,4 @@
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Header({
@@ -18,7 +19,7 @@ export default function Header({
     { name: "Projects", link: "#projects" },
     { name: "Contact", link: "#contact" },
   ];
-  const path = window.location.pathname;
+  const path = usePathname();
   return (
     <header>
       <div className="headerInner">

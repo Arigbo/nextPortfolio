@@ -32,49 +32,21 @@ const TestimonialCarousel = () => {
   const testimonials = [
     {
       text: "Working with Jesse was an absolute pleasure. They took our vague ideas and transformed them into a beautiful, functional design that perfectly captured our brand. Their attention to detail and commitment to quality are truly impressive.",
-      author: "Jane Doe",
+      author: "Ralonic",
       title: "CEO, Creative Solutions",
-      socials: [
-        {
-          socialName: "f",
-          link: "#",
-          handle: "@janedoe ",
-        },
-        {
-          socialName: "x",
-          link: "#",
-          handle: "@janedoe",
-        },
-      ],
+      socials: [],
     },
     {
       text: "I highly recommend Jesse for any project that requires a meticulous and skilled developer. They handled complex integrations with ease and delivered a robust, clean solution ahead of schedule. An absolute professional.",
       author: "John Smith",
       title: "Founder, Innovate Tech",
-      socials: [
-        {
-          socialName: "f",
-          link: "#",
-          handle: "@johnsmith",
-        },
-        {
-          socialName: "x",
-          link: "#",
-          handle: "@johnsmith",
-        },
-      ],
+      socials: [],
     },
     {
       text: "The entire process was seamless. Jesse is an excellent communicator and made sure I was informed every step of the way. The final result for my website exceeded my expectations, and I've already received so many compliments on the design.",
       author: "Alex Chen",
       title: "Owner, Local Bakery",
-      socials: [
-        {
-          socialName: "f",
-          link: "#",
-          handle: "@alexchen",
-        },
-      ],
+      socials: [],
     },
   ];
 
@@ -107,16 +79,20 @@ const TestimonialCarousel = () => {
                   <p className="author-name">{testimonial.author}</p>
                   <p className="author-title">{testimonial.title}</p>
                   <p className="author-socials">
-                    {testimonial.socials.map((item) => {
-                      return (
-                        <span key={item.socialName}>
-                          <strong>{item.socialName}: </strong>
-                          <a href={item.link} className="info-link">
-                            {item.handle}
-                          </a>
-                        </span>
-                      );
-                    })}
+                    {testimonial.socials.length > 0 ? (
+                      testimonial.socials.map((item) => {
+                        return (
+                          <span key={item.socialName}>
+                            <strong>{item.socialName}: </strong>
+                            <a href={item.link} className="info-link">
+                              {item.handle}
+                            </a>
+                          </span>
+                        );
+                      })
+                    ) : (
+                      <span>No socials available</span>
+                    )}
                   </p>
                 </div>
               </div>
