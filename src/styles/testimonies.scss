@@ -1,0 +1,134 @@
+.swiper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &-wrapper {
+    align-items: center;
+  }
+  &-slide {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.testimonial-card {
+  padding-inline: 8rem;
+  padding-block: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  position: relative;
+}
+
+.quote-icon-wrapper {
+  position: absolute;
+  opacity: 0.8;
+  top: 0.3rem;
+  left: 6rem;
+  h1 {
+    font-family: "Rock 3D", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 3rem;
+    color: rgba(246, 238, 238, 0.82);
+  }
+}
+
+.testimonial-text {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  font-weight: 200;
+}
+
+.author-info {
+  padding-top: 1rem;
+  border-top: 1px solid grey;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 100%;
+}
+
+.author-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.author-title {
+  font-size: 0.8rem;
+  color: #a0a0a0;
+  margin: 0.25rem 0 0;
+}
+.author-socials{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+    strong{
+        font-weight: 500;
+    }
+}
+.swiper-scrollbar.swiper-scrollbar-horizontal {
+  display: none;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  display: none;
+  &::after {
+    display: none;
+  }
+}
+.controllers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 600;
+  right: 0;
+  bottom: 7rem;
+  left: 0;
+  i {
+    font-size: 30px;
+    cursor: pointer;
+  }
+}
+/* Mobile-first approach, with overrides for larger screens */
+@media (max-width: 768px) {
+    .testimonial-card{
+        padding-inline: 1.4rem;
+    }
+  .testimonial-text {
+    font-size: 0.95rem;
+  }
+  .quote-icon-wrapper {
+    left: 0.2rem;
+    h1 {
+      font-size: 2.5rem;
+    }
+  }
+  .author-info {
+    padding-top: 0.6rem;
+  }
+  .author-name {
+    font-size: 0.9rem;
+  }
+  .author-title {
+    font-size: 0.75rem;
+  }
+  .author-socials{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8rem;
+    strong{
+        font-weight: 500;
+    }
+  }
+  .controllers{
+    display: none;
+  }
+}

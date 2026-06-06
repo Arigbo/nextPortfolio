@@ -1,0 +1,22 @@
+@use "./home.scss";
+@use "./header.scss";
+@use "./modal.scss";
+@use "./globals.scss";
+@use "./aboutModal.scss";
+@use "./contactModal.scss";
+@use "./testimonies.scss";
+@use "./footer.scss";
+@use "./community.scss";
+@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Funnel+Display:wght@300..800&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
+
+.details-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: 1.8fr 1fr;
+  }
+}
+

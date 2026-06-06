@@ -1,0 +1,259 @@
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  height: 4rem;
+  .menu-overlay {
+    position: fixed;
+    top: -100vh;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    .menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 3rem 2rem;
+      background-color: var(--menu-bg);
+      color: var(--menu-text);
+      transition: all 0.3s ease;
+      width: 100%;
+      height: 70vh;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--nav-shadow);
+    }
+    
+    &.show {
+      top: 4rem;
+    }
+    
+    a {
+      text-decoration: none;
+      color: var(--menu-text);
+      font-size: 1.4rem;
+      font-weight: 600;
+      transition: color 0.2s ease;
+      
+      &:hover {
+        color: var(--accent-color);
+      }
+      
+      &.active {
+        color: var(--accent-color);
+      }
+    }
+    
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+  .headerInner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      height: 2.5rem;
+      width: 2rem;
+      border-radius: 0.4rem;
+      .logo-svg {
+        width: 100%;
+        height: 100%;
+        animation: spin 20s linear infinite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        path {
+          fill: none;
+          stroke: currentColor;
+          stroke-width: 20;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+      }
+    }
+    nav {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      .nav-items {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 2rem;
+        justify-content: center;
+      }
+      @media (min-width: 768px) {
+        display: flex;
+      }
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .theme-select-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .theme-trigger-button {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.4rem 0.9rem;
+          border-radius: 9999px;
+          border: 1px solid var(--border-color);
+          background-color: var(--card-bg);
+          color: var(--root-text);
+          font-size: 0.9rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          text-transform: capitalize;
+          box-shadow: var(--card-shadow);
+
+          &:hover {
+            border-color: var(--accent-color);
+            background-color: rgba(var(--root-text), 0.02);
+          }
+
+          .theme-icon {
+            color: var(--accent-color);
+            font-size: 0.95rem;
+          }
+
+          .arrow-icon {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            transition: transform 0.2s ease;
+            &.rotate {
+              transform: rotate(180deg);
+            }
+          }
+        }
+
+        .theme-options-dropdown {
+          position: absolute;
+          top: calc(100% + 0.5rem);
+          right: 0;
+          z-index: 100;
+          min-width: 11rem;
+          background-color: var(--menu-bg);
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+          box-shadow: var(--nav-shadow);
+          padding: 0.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+          animation: slideDownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+          .theme-option {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--menu-text);
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            text-transform: capitalize;
+            justify-content: flex-start;
+            transition: all 0.15s ease;
+
+            &:hover {
+              background-color: rgba(var(--accent-color), 0.08);
+              color: var(--root-text);
+            }
+
+            &.active {
+              background-color: rgba(var(--accent-color), 0.12);
+              color: var(--accent-color);
+              font-weight: 600;
+            }
+
+            .theme-dot {
+              width: 0.75rem;
+              height: 0.75rem;
+              border-radius: 50%;
+              border: 1px solid rgba(0, 0, 0, 0.15);
+
+              &.light { background-color: #f8fafc; border-color: #cbd5e1; }
+              &.dark { background-color: #030712; }
+              &.blue { background-color: #38bdf8; }
+              &.forest { background-color: #34d399; }
+              &.orange { background-color: #f97316; }
+              &.purple { background-color: #a855f7; }
+            }
+
+            .check-icon {
+              margin-left: auto;
+              font-size: 0.75rem;
+              color: var(--accent-color);
+            }
+          }
+        }
+      }
+
+      @keyframes slideDownFade {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .talk-button {
+        height: 2rem;
+        border-radius: 0.5rem;
+        width: 100%;
+      }
+
+      .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        color: var(--root-text);
+        font-size: 1.25rem;
+        cursor: pointer;
+        padding: 0.25rem;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: var(--accent-color);
+        }
+
+        @media (min-width: 768px) {
+          display: none !important;
+        }
+      }
+    }
+  }
+}

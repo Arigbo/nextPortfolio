@@ -1,0 +1,71 @@
+.contact {
+  &-modal {
+    &-overlay {
+      width: 100%;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(3, 7, 18, 0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      transition: opacity 0.3s;
+    }
+    &-inner {
+      position: relative;
+      padding-block: 3rem;
+      border-radius: 1rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border-width: 1px;
+      max-width: 95%;
+      transform: scale(1);
+      transition: all 0.3s;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 85%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      border: 1px solid;
+      @media (min-width: 768px) {
+        width: 50%;
+      }
+      &-inner {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 90%;
+        gap: 0.8rem;
+      }
+      .contact-modal-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        width: 95%;
+        input,
+        textarea {
+          width: 95%;
+          padding-inline: 1rem;
+          border-radius: 0.2rem;
+          border: 1px solid;
+          transition: all 0.5s ease;
+          &:hover{
+            &::placeholder{
+              color: black;
+            }
+          }
+        }
+        input {
+          height: 2.5rem;
+        }
+        textarea {
+          padding-block: 0.5rem;
+        }
+      }
+    }
+  }
+}
