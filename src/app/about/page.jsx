@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { communityCategories } from "@/lib/communityData";
+import ClientToolkit from "@/components/ClientToolkit";
 import "@/styles/about.scss";
 
 export const metadata = {
@@ -151,11 +152,7 @@ export default function About() {
           I specialise in a modern, comprehensive tech stack — building end-to-end full-stack systems
           with clean architecture, transactional pipelines, and performance-first thinking.
         </p>
-        <div className="toolkit-cloud">
-          {toolkit.map((t) => (
-            <span key={t} className="toolkit-chip">{t}</span>
-          ))}
-        </div>
+        <ClientToolkit toolkit={toolkit} />
       </section>
 
       {/* ══════════════════════════════════════════

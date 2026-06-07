@@ -299,33 +299,314 @@ a.bio-fact-value {
 
 /* ── Toolkit ──────────────────────────────────────────────── */
 .about-toolkit {
-  align-items: center;
-  text-align: center;
+  align-items: stretch;
+  text-align: left;
+}
+
+.toolkit-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  width: 100%;
+  align-items: start;
+
+  @media (min-width: 900px) {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3.5rem;
+  }
+}
+
+.toolkit-left {
+  width: 100%;
 }
 
 .toolkit-cloud {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  justify-content: center;
+  gap: 0.75rem;
+  justify-content: flex-start;
   width: 100%;
+
+  @media (max-width: 899px) {
+    justify-content: center;
+  }
 }
 
 .toolkit-chip {
-  padding: 0.45rem 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
   border-radius: 9999px;
   border: 1.5px solid var(--border-color);
   background: var(--card-bg);
+  color: var(--root-text);
+  font-family: inherit;
   font-size: 0.85rem;
   font-weight: 700;
-  cursor: default;
-  transition: border-color 0.25s, box-shadow 0.25s, color 0.25s;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
 
-  &:hover {
+  .chip-logo {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+
+  &:hover, &.active {
     border-color: var(--accent-color);
     color: var(--accent-color);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 15%, transparent);
+    transform: translateY(-2px);
+    background: color-mix(in srgb, var(--accent-color) 6%, var(--card-bg));
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent-color) 12%, transparent);
+
+    .chip-logo {
+      opacity: 1;
+    }
   }
+
+  &.has-projects {
+    border-style: solid;
+  }
+}
+
+.toolkit-right {
+  width: 100%;
+  position: sticky;
+  top: 6rem;
+}
+
+.toolkit-detail-card {
+  width: 100%;
+  min-height: 290px;
+  border-radius: 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--accent-color), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  &.has-content {
+    justify-content: flex-start;
+    border-color: color-mix(in srgb, var(--accent-color) 35%, var(--border-color));
+    
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  .detail-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    animation: fadeIn 0.25s ease-out;
+  }
+
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .detail-logo-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent-color) 20%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+
+    .detail-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    &.fallback {
+      color: var(--accent-color);
+      font-size: 1.25rem;
+    }
+  }
+
+  .detail-category {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+  }
+
+  .detail-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 0.15rem 0 0;
+    color: var(--root-text);
+  }
+
+  .detail-desc {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .detail-projects-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .projects-section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+
+    i {
+      font-size: 0.85rem;
+      color: var(--accent-color);
+    }
+  }
+
+  .detail-projects-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .detail-project-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--accent-color) 5%, var(--card-bg));
+    border: 1px solid var(--border-color);
+    font-size: 0.82rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+
+    .project-badge-img {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    .project-badge-name {
+      opacity: 0.9;
+    }
+
+    .badge-arrow {
+      font-size: 0.65rem;
+      opacity: 0;
+      transform: translateX(-3px);
+      transition: all 0.2s ease;
+      color: var(--accent-color);
+    }
+
+    &:hover {
+      background: color-mix(in srgb, var(--accent-color) 12%, var(--card-bg));
+      border-color: var(--accent-color);
+      transform: translateY(-1px);
+
+      .project-badge-name {
+        color: var(--accent-color);
+      }
+
+      .badge-arrow {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  }
+
+  .no-projects-text {
+    font-size: 0.85rem;
+    opacity: 0.55;
+    line-height: 1.5;
+    margin: 0;
+    font-style: italic;
+  }
+
+  /* Placeholder state */
+  .detail-card-placeholder {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    animation: fadeIn 0.3s ease-out;
+
+    .placeholder-icon {
+      font-size: 2.2rem;
+      color: color-mix(in srgb, var(--accent-color) 35%, transparent);
+    }
+
+    h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--root-text);
+    }
+
+    p {
+      font-size: 0.88rem;
+      opacity: 0.6;
+      line-height: 1.6;
+      margin: 0;
+      max-width: 280px;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite ease-in-out;
 }
 
 /* ── Collaborator horizontal scroll ──────────────────────── */
