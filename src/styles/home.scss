@@ -113,6 +113,8 @@
 .hero {
   position: relative;
   width: 100%;
+  max-width: none;
+  margin: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -127,6 +129,23 @@
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
+    background: var(--root-bg);
+
+    /* Smooth fade to the next section */
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 15vh;
+      z-index: 5;
+      background: linear-gradient(to bottom, transparent, var(--root-bg));
+      pointer-events: none;
+      body.light &{
+        background: transparent;
+      }
+    }
   }
 
   .hero-bg-image {
@@ -138,17 +157,47 @@
     background-image: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&auto=format&fit=crop&q=80");
     background-size: cover;
     background-position: center;
-    opacity: 0.28;
-    filter: blur(1.5px) brightness(0.85);
+    opacity: 1; /* 100% opacity */
+    filter: blur(1.5px) brightness(0.65); /* dark starfield image background */
     will-change: transform;
-
-    body.light & { opacity: 0.12; }
+    transition: opacity 0.5s ease;
+    z-index: 0;
   }
 
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 60% 50%, transparent 20%, var(--root-bg) 80%);
+    z-index: 1;
+    background: none; /* remove background color radial gradient */
+  }
+
+  /* ── Glowing Blobs ── */
+  .hero-blob {
+    display: none;
+  }
+
+  /* ── Subtle grid overlay ── */
+  .hero-grid {
+    display: none;
+  }
+
+  /* ── Blob Animations ── */
+  @keyframes blob-float-1 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(40px, 30px) scale(1.1); }
+    100% { transform: translate(-20px, 50px) scale(0.95); }
+  }
+
+  @keyframes blob-float-2 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(-50px, -40px) scale(0.9); }
+    100% { transform: translate(30px, 20px) scale(1.05); }
+  }
+
+  @keyframes blob-float-3 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(30px, -50px) scale(1.15); }
+    100% { transform: translate(-40px, 30px) scale(0.85); }
   }
 
   /* ── Content grid ── */
@@ -345,6 +394,20 @@
       opacity: 0.9;
       white-space: pre;
       overflow: hidden;
+
+      .token-keyword {
+        color: #c084fc;
+        font-weight: 700;
+        body.light & { color: #7c3aed; }
+      }
+      .token-property {
+        color: #60a5fa;
+        body.light & { color: #2563eb; }
+      }
+      .token-string {
+        color: #34d399;
+        body.light & { color: #059669; }
+      }
     }
   }
 
@@ -379,6 +442,53 @@
   @keyframes bounce-down {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50%       { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* Light mode overrides since the background is dark */
+  body.light & {
+    color: #ffffff;
+
+    .hero-title:not(.name) {
+      color: #ffffff;
+    }
+
+    .hero-role {
+      color: #f8fafc;
+      .cursor-blink {
+        color: var(--accent-color);
+      }
+    }
+
+    .hero-desc {
+      color: #cbd5e1;
+    }
+
+    .avail-pill {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .stat-label {
+      color: #cbd5e1;
+      opacity: 0.7;
+    }
+
+    .hero-ghost-btn {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.3);
+      
+      &:hover {
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+      }
+    }
+
+    .scroll-indicator {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.3);
+      &:hover { border-color: var(--accent-color); color: var(--accent-color); }
+    }
   }
 }
 

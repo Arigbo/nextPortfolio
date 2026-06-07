@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useOnScreen } from "@/hooks/useOnScreen";
 import "@/styles/contact.scss";
 
 const SOCIALS = [
@@ -38,13 +39,19 @@ export default function ContactPage() {
     "aria-label": label,
   });
 
+  const [heroRef, heroVisible] = useOnScreen(0.01);
+  const [gridRef, gridVisible] = useOnScreen(0.08);
+
   return (
     <div className="contact-page">
 
       {/* ══════════════════════════════════════
           HERO
       ══════════════════════════════════════ */}
-      <div className="contact-hero">
+      <div
+        ref={heroRef}
+        className={`contact-hero reveal-on-screen ${heroVisible ? "revealed" : ""}`}
+      >
         <p className="contact-hero-label">Get In Touch</p>
         <h1 className="contact-hero-title">
           Let's Build Something <span className="contact-hero-accent">Incredible</span>
@@ -57,7 +64,10 @@ export default function ContactPage() {
       {/* ══════════════════════════════════════
           MAIN GRID
       ══════════════════════════════════════ */}
-      <div className="contact-grid">
+      <div
+        ref={gridRef}
+        className={`contact-grid reveal-on-screen ${gridVisible ? "revealed" : ""}`}
+      >
 
         {/* ── Left panel ── */}
         <aside className="contact-left">

@@ -34,7 +34,7 @@ function useTypewriter(words, speed = 80, pause = 1800) {
 
 export default function ClientHome() {
   const { setIsContactModalOpen } = useContext(Context);
-  const heroRef = useRef(null);
+  const [heroRef, heroVisible] = useOnScreen(0.01);
   const heroBgRef = useRef(null);
   const role = useTypewriter(ROLES);
 
@@ -82,12 +82,16 @@ export default function ClientHome() {
         <section ref={heroRef} id="home" className="hero" aria-label="Introduction">
           <div className="hero-bg-container">
             <div ref={heroBgRef} className="hero-bg-image" />
+            <div className="hero-blob hero-blob-1" />
+            <div className="hero-blob hero-blob-2" />
+            <div className="hero-blob hero-blob-3" />
+            <div className="hero-grid" />
             <div className="hero-overlay" />
           </div>
 
           <div className="hero-content">
             {/* Left column */}
-            <div className="hero-left">
+            <div className={`hero-left reveal-on-screen ${heroVisible ? "revealed" : ""}`}>
               {/* Availability pill */}
               <div className="avail-pill">
                 <span className="avail-dot" />
@@ -139,23 +143,24 @@ export default function ClientHome() {
             </div>
 
             {/* Right column — decorative code block */}
-            <div className="hero-right" aria-hidden="true">
+            <div className={`hero-right reveal-on-screen ${heroVisible ? "revealed" : ""}`} aria-hidden="true">
               <div className="code-card">
                 <div className="code-dots">
                   <span /><span /><span />
                 </div>
-                <pre className="code-snippet">{`const jesse = {
-  name: "Arigbo Jesse",
-  role: "Full-Stack Engineer",
-  stack: [
-    "Next.js", "React",
-    "Node.js", "Firebase",
-    "PostgreSQL", "Redis",
-  ],
-  passion: "Clean code &
-            great UX",
-  status: "Available 🚀",
-};`}</pre>
+                <pre className="code-snippet">
+                  <span className="token-keyword">const</span> jesse = {"{"}
+                  {"\n  "}<span className="token-property">name</span>: <span className="token-string">"Arigbo Jesse"</span>,
+                  {"\n  "}<span className="token-property">role</span>: <span className="token-string">"Full-Stack Engineer"</span>,
+                  {"\n  "}<span className="token-property">stack</span>: [
+                  {"\n    "}<span className="token-string">"Next.js"</span>, <span className="token-string">"React"</span>,
+                  {"\n    "}<span className="token-string">"Node.js"</span>, <span className="token-string">"Firebase"</span>,
+                  {"\n    "}<span className="token-string">"PostgreSQL"</span>, <span className="token-string">"Redis"</span>,
+                  {"\n  "}],
+                  {"\n  "}<span className="token-property">passion</span>: <span className="token-string">"Clean code & great UX"</span>,
+                  {"\n  "}<span className="token-property">status</span>: <span className="token-string">"Available 🚀"</span>,
+                  {"\n"}{"}"};
+                </pre>
               </div>
             </div>
           </div>

@@ -66,6 +66,10 @@ export default function ClientProjects() {
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
 
+  const [heroRef, heroVisible] = useOnScreen(0.05);
+  const [controlsRef, controlsVisible] = useOnScreen(0.05);
+  const [gridRef, gridVisible] = useOnScreen(0.05);
+
   const filtered = allProjects.filter((p) => {
     const matchCat = filter === "All" || p.category === filter;
     const q = search.toLowerCase();
@@ -79,21 +83,31 @@ export default function ClientProjects() {
     <div className="projects-page">
 
       {/* ── Page Hero ── */}
-      <div className="projects-hero">
-        <p className="projects-hero-label">Portfolio</p>
-        <h1 className="projects-hero-title">My Projects</h1>
-        <p className="projects-hero-sub">
-          A curated collection of web applications, platforms, and client tools I've engineered.
-          Click any card to explore the full case study.
-        </p>
-        <div className="projects-hero-badge">
-          <i className="fa-solid fa-layer-group" />
-          {allProjects.length} Projects
+      <div
+        ref={heroRef}
+        className={`projects-hero reveal-on-screen ${heroVisible ? "revealed" : ""}`}
+      >
+        <div className="projects-hero-bg" />
+        <div className="projects-hero-overlay" />
+        <div className="projects-hero-content">
+          <p className="projects-hero-label">Portfolio</p>
+          <h1 className="projects-hero-title">My Projects</h1>
+          <p className="projects-hero-sub">
+            A curated collection of web applications, platforms, and client tools I've engineered.
+            Click any card to explore the full case study.
+          </p>
+          <div className="projects-hero-badge">
+            <i className="fa-solid fa-layer-group" />
+            <span>{allProjects.length} Projects</span>
+          </div>
         </div>
       </div>
 
       {/* ── Filter & Search bar ── */}
-      <div className="projects-controls">
+      <div
+        ref={controlsRef}
+        className={`projects-controls reveal-on-screen ${controlsVisible ? "revealed" : ""}`}
+      >
         {/* Search */}
         <div className="search-wrap">
           <i className="fas fa-search search-icon" />
@@ -134,13 +148,19 @@ export default function ClientProjects() {
 
       {/* ── Grid ── */}
       {filtered.length > 0 ? (
-        <div className="projects-grid-full">
+        <div
+          ref={gridRef}
+          className={`projects-grid-full reveal-on-screen ${gridVisible ? "revealed" : ""}`}
+        >
           {filtered.map((p, i) => (
             <ProjectCard key={p.id} project={p} index={i} />
           ))}
         </div>
       ) : (
-        <div className="projects-empty">
+        <div
+          ref={gridRef}
+          className={`projects-empty reveal-on-screen ${gridVisible ? "revealed" : ""}`}
+        >
           <i className="fa-solid fa-magnifying-glass" />
           <h3>No projects found</h3>
           <p>Try adjusting your search or filter.</p>

@@ -5,69 +5,109 @@
 @import "../styles/home.scss";          /* reuse .reveal-on-screen */
 
 .projects-page {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-block: 0 5rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-block: 0 5rem;
   gap: 2.5rem;
 }
 
 /* ── Hero ─────────────────────────────────────────────────── */
 .projects-hero {
+  position: relative;
   width: 100%;
-  text-align: center;
-  padding-block-start: 6rem;
+  min-height: 400px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  align-items: flex-end;
+  overflow: hidden;
+  margin-block-end: 1rem;
+
+  @media (min-width: 768px) { min-height: 480px; }
+
+  .projects-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url("https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80");
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.4) saturate(1.1);
+    transform: scale(1.04);
+  }
+
+  .projects-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 20%,
+      rgba(var(--bg-rgb, 3,7,18), 0.6) 65%,
+      var(--root-bg) 100%
+    );
+  }
+
+  .projects-hero-content {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .projects-hero-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    margin: 0;
+  }
+
+  .projects-hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: white;
+    margin: 0;
+    line-height: 1.05;
+  }
+
+  .projects-hero-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    margin: 0;
+    max-width: 540px;
+    line-height: 1.6;
+  }
+
+  .projects-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.35rem 1.1rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-block-start: 0.5rem;
+    width: fit-content;
+
+    i { color: var(--accent-color); }
+  }
 }
 
-.projects-hero-label {
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent-color);
-  margin: 0;
-}
-
-.projects-hero-title {
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  margin: 0;
-  background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
-.projects-hero-sub {
-  font-size: 1.05rem;
-  opacity: 0.72;
-  max-width: 560px;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.projects-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 1.1rem;
-  border-radius: 9999px;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg);
-  font-size: 0.82rem;
-  font-weight: 700;
-  margin-block-start: 0.5rem;
-
-  i { color: var(--accent-color); }
+.projects-controls,
+.projects-count,
+.projects-grid-full,
+.projects-empty {
+  width: 90% !important;
+  max-width: 1200px !important;
 }
 
 /* ── Controls ─────────────────────────────────────────────── */
