@@ -6,7 +6,7 @@ export const metadata = {
   openGraph: {
     title: "Arigbo Jesse | Full-Stack Software Engineer & Builder",
     description: "Discover high-performance full-stack web applications and developer tools built by Arigbo Jesse.",
-    url: "https://arigbojesse.dev"
+    url: "https://arigbo-jesse.vercel.app"
   }
 };
 

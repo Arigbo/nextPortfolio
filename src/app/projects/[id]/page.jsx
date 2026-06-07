@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
       type: "article",
       title: `${project.title} | Arigbo Jesse Portfolio`,
       description: project.description,
-      url: `https://arigbojesse.dev/projects/${id}`,
+      url: `https://arigbo-jesse.vercel.app/projects/${id}`,
       images: [{ url: project.imageUrl, alt: project.title }]
     },
     twitter: { card: "summary_large_image", title: `${project.title} | Arigbo Jesse Portfolio`, description: project.description, images: [project.imageUrl] }

@@ -6,7 +6,7 @@ export const metadata = {
   openGraph: {
     title: "Projects Portfolio | Arigbo Jesse",
     description: "Explore a curated showcase of web applications, SaaS platforms, API integrations, and open source projects engineered by Arigbo Jesse.",
-    url: "https://arigbojesse.dev/projects"
+    url: "https://arigbo-jesse.vercel.app/projects"
   }
 };
 

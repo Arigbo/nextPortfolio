@@ -10,11 +10,11 @@ export const metadata = {
   keywords: ["Arigbo Jesse", "Full-Stack Developer", "Next.js Portfolio", "Software Engineer", "Web Developer", "React Developer", "Firebase", "Paystack Developer"],
   authors: [{ name: "Arigbo Jesse" }],
   creator: "Arigbo Jesse",
-  metadataBase: new URL("https://arigbojesse.dev"),
+  metadataBase: new URL("https://arigbo-jesse.vercel.app"),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://arigbojesse.dev",
+    url: "https://arigbo-jesse.vercel.app",
     title: "Arigbo Jesse | Full-Stack Software Engineer & Builder",
     description: "Explore the full-stack projects, workshops, and community contributions of Arigbo Jesse.",
     siteName: "Arigbo Jesse Portfolio"

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: `${category.title} Community Engagement | Arigbo Jesse`,
       description: category.description,
-      url: `https://arigbojesse.dev/community/${id}`,
+      url: `https://arigbo-jesse.vercel.app/community/${id}`,
       images: [
         {
           url: category.coverImage,
