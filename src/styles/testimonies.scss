@@ -1,18 +1,32 @@
-.swiper {
+/* ============================================================
+   TESTIMONIALS SECTION — Original Design with Custom Carousel
+   ============================================================ */
+
+.testimonial-section-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  &-wrapper {
-    align-items: center;
-  }
-  &-slide {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+}
+
+.testimonial-carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.testimonial-carousel-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.testimonial-carousel-slide {
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .testimonial-card {
@@ -22,6 +36,8 @@
   flex-direction: column;
   gap: 0.6rem;
   position: relative;
+  width: 100%;
+  max-width: 800px;
 }
 
 .quote-icon-wrapper {
@@ -35,6 +51,7 @@
     font-style: normal;
     font-size: 3rem;
     color: rgba(246, 238, 238, 0.82);
+    margin: 0;
   }
 }
 
@@ -63,25 +80,17 @@
   color: #a0a0a0;
   margin: 0.25rem 0 0;
 }
-.author-socials{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-size: 1rem;
-    strong{
-        font-weight: 500;
-    }
-}
-.swiper-scrollbar.swiper-scrollbar-horizontal {
-  display: none;
-}
-.swiper-button-next,
-.swiper-button-prev {
-  display: none;
-  &::after {
-    display: none;
+
+.author-socials {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  strong {
+    font-weight: 500;
   }
 }
+
 .controllers {
   display: flex;
   align-items: center;
@@ -91,16 +100,52 @@
   right: 0;
   bottom: 7rem;
   left: 0;
+  pointer-events: none; /* Let clicks pass through empty spaces of this absolute container */
+
   i {
     font-size: 30px;
     cursor: pointer;
+    pointer-events: auto; /* Re-enable pointer events for the buttons */
   }
 }
+
+/* Pagination Dots */
+.testimonial-dots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  width: 100%;
+
+  .testimonial-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-color, #e2e8f0);
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &.active {
+      width: 18px;
+      border-radius: 9999px;
+      background: var(--accent-color, #2563eb);
+    }
+
+    &:not(.active):hover {
+      background: var(--accent-color, #2563eb);
+      opacity: 0.6;
+    }
+  }
+}
+
 /* Mobile-first approach, with overrides for larger screens */
 @media (max-width: 768px) {
-    .testimonial-card{
-        padding-inline: 1.4rem;
-    }
+  .testimonial-card {
+    padding-inline: 1.4rem;
+  }
   .testimonial-text {
     font-size: 0.95rem;
   }
@@ -119,16 +164,16 @@
   .author-title {
     font-size: 0.75rem;
   }
-  .author-socials{
+  .author-socials {
     display: flex;
     align-items: center;
     gap: 1rem;
     font-size: 0.8rem;
-    strong{
-        font-weight: 500;
+    strong {
+      font-weight: 500;
     }
   }
-  .controllers{
+  .controllers {
     display: none;
   }
 }

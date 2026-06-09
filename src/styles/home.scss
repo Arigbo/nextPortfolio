@@ -17,17 +17,6 @@
   gap: 0;
 }
 
-/* ── Reveal animation ─────────────────────────────────────── */
-.reveal-on-screen {
-  opacity: 0;
-  transform: translateY(36px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-  &.revealed {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* ── Shared section shell ─────────────────────────────────── */
 .home-section {

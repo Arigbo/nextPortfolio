@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { communityCategories } from "@/lib/communityData";
 import ClientToolkit from "@/components/ClientToolkit";
@@ -50,11 +50,35 @@ const yearsExp = (() => { const y = new Date().getFullYear() - 2022; return y > 
 
 export default function ClientAbout() {
   const [heroRef, heroVisible] = useOnScreen(0.01);
+  const heroBgRef = useRef(null);
   const [introRef, introVisible] = useOnScreen(0.08);
   const [toolkitRef, toolkitVisible] = useOnScreen(0.08);
   const [collabRef, collabVisible] = useOnScreen(0.08);
   const [commRef, commVisible] = useOnScreen(0.08);
   const [memberRef, memberVisible] = useOnScreen(0.08);
+
+  /* Parallax + mouse parallax */
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!heroBgRef.current) return;
+      const scrolled = window.scrollY;
+      heroBgRef.current.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0) scale(${1 + scrolled * 0.0003})`;
+    };
+    const handleMouse = (e) => {
+      if (!heroBgRef.current || !heroRef.current) return;
+      const xOff = (e.clientX / window.innerWidth - 0.5);
+      const yOff = (e.clientY / window.innerHeight - 0.5);
+      const s = window.scrollY;
+      heroBgRef.current.style.transform = `translate3d(${xOff * -25}px, ${yOff * -25 + s * 0.3}px, 0) scale(1.04)`;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    heroRef.current?.addEventListener("mousemove", handleMouse);
+    const hero = heroRef.current;
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      hero?.removeEventListener("mousemove", handleMouse);
+    };
+  }, [heroRef]);
 
   return (
     <div className="about-page">
@@ -66,7 +90,7 @@ export default function ClientAbout() {
         ref={heroRef}
         className={`about-hero reveal-on-screen ${heroVisible ? "revealed" : ""}`}
       >
-        <div className="about-hero-bg" />
+        <div ref={heroBgRef} className="about-hero-bg" />
         <div className="about-hero-overlay" />
         <div className="about-hero-content">
           <p className="about-hero-label">The Human Behind the Code</p>

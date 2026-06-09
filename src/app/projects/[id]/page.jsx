@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { allProjects, techMap } from "@/lib/projectsData";
 import "@/styles/project-detail.scss";
+import ClientProjectHeroParallax from "@/components/ClientProjectHeroParallax";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -46,6 +47,7 @@ export default async function ProjectDetailsPage({ params }) {
 
   return (
     <div className="proj-detail-page">
+      <ClientProjectHeroParallax />
 
       {/* ════════════════════════════════════════
           FULL-BLEED HERO BANNER

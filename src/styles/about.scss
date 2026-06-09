@@ -39,6 +39,9 @@
       rgba(var(--bg-rgb, 3,7,18), 0.6) 65%,
       var(--root-bg) 100%
     );
+      body.light &{
+        background: transparent;
+      }
   }
 
   .about-hero-content {

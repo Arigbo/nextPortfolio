@@ -127,6 +127,9 @@ export default function ClientCommunityGallery({ category }) {
   const [visibleCount, setVisibleCount] = useState(INITIAL_BATCH);
   const [heroLoaded,   setHeroLoaded]   = useState(false);
 
+  const heroRef = useRef(null);
+  const heroBgRef = useRef(null);
+
   /* Lightbox state */
   const [activePhoto, setActivePhoto] = useState(null);
   const [photoIndex,  setPhotoIndex]  = useState(0);
@@ -136,6 +139,29 @@ export default function ClientCommunityGallery({ category }) {
   useEffect(() => {
     const t = setTimeout(() => setHeroLoaded(true), 80);
     return () => clearTimeout(t);
+  }, []);
+
+  /* Parallax + mouse parallax */
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!heroBgRef.current) return;
+      const scrolled = window.scrollY;
+      heroBgRef.current.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0) scale(${1 + scrolled * 0.0003})`;
+    };
+    const handleMouse = (e) => {
+      if (!heroBgRef.current || !heroRef.current) return;
+      const xOff = (e.clientX / window.innerWidth - 0.5);
+      const yOff = (e.clientY / window.innerHeight - 0.5);
+      const s = window.scrollY;
+      heroBgRef.current.style.transform = `translate3d(${xOff * -25}px, ${yOff * -25 + s * 0.3}px, 0) scale(1.04)`;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    heroRef.current?.addEventListener("mousemove", handleMouse);
+    const hero = heroRef.current;
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      hero?.removeEventListener("mousemove", handleMouse);
+    };
   }, []);
 
   /* Reset on category change */
@@ -187,13 +213,14 @@ export default function ClientCommunityGallery({ category }) {
   return (
     <>
       {/* ═══ Hero banner ═══ */}
-      <div className="gallery-hero">
+      <div className="gallery-hero" ref={heroRef}>
         <div
+          ref={heroBgRef}
           className="gallery-hero-bg"
           style={{
             backgroundImage: `url(${category.coverImage})`,
-            transform: heroLoaded ? "scale(1)" : "scale(1.06)",
-            transition: "transform 0.8s ease-out",
+            transform: heroLoaded ? undefined : "scale(1.06)",
+            transition: heroLoaded ? "none" : "transform 0.8s ease-out",
           }}
         />
         <div className="gallery-hero-content">

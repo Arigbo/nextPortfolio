@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { allProjects } from "@/lib/projectsData";
 import { useOnScreen } from "@/hooks/useOnScreen";
@@ -67,8 +67,32 @@ export default function ClientProjects() {
   const [search, setSearch] = useState("");
 
   const [heroRef, heroVisible] = useOnScreen(0.05);
+  const heroBgRef = useRef(null);
   const [controlsRef, controlsVisible] = useOnScreen(0.05);
   const [gridRef, gridVisible] = useOnScreen(0.05);
+
+  /* Parallax + mouse parallax */
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!heroBgRef.current) return;
+      const scrolled = window.scrollY;
+      heroBgRef.current.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0) scale(${1 + scrolled * 0.0003})`;
+    };
+    const handleMouse = (e) => {
+      if (!heroBgRef.current || !heroRef.current) return;
+      const xOff = (e.clientX / window.innerWidth - 0.5);
+      const yOff = (e.clientY / window.innerHeight - 0.5);
+      const s = window.scrollY;
+      heroBgRef.current.style.transform = `translate3d(${xOff * -25}px, ${yOff * -25 + s * 0.3}px, 0) scale(1.04)`;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    heroRef.current?.addEventListener("mousemove", handleMouse);
+    const hero = heroRef.current;
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      hero?.removeEventListener("mousemove", handleMouse);
+    };
+  }, [heroRef]);
 
   const filtered = allProjects.filter((p) => {
     const matchCat = filter === "All" || p.category === filter;
@@ -87,7 +111,7 @@ export default function ClientProjects() {
         ref={heroRef}
         className={`projects-hero reveal-on-screen ${heroVisible ? "revealed" : ""}`}
       >
-        <div className="projects-hero-bg" />
+        <div ref={heroBgRef} className="projects-hero-bg" />
         <div className="projects-hero-overlay" />
         <div className="projects-hero-content">
           <p className="projects-hero-label">Portfolio</p>

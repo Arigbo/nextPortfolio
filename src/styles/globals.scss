@@ -319,3 +319,59 @@ body {
     }
   }
 }
+
+/* ══════════════════════════════════════════
+   REVEAL ON SCROLL ANIMATIONS
+══════════════════════════════════════════ */
+.reveal-on-screen {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+
+  &.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Variant: Fade Left */
+  &.fade-left {
+    transform: translateX(-40px);
+    &.revealed {
+      transform: translateX(0);
+    }
+  }
+
+  /* Variant: Fade Right */
+  &.fade-right {
+    transform: translateX(40px);
+    &.revealed {
+      transform: translateX(0);
+    }
+  }
+
+  /* Variant: Zoom In */
+  &.zoom-in {
+    transform: scale(0.92);
+    &.revealed {
+      transform: scale(1);
+    }
+  }
+
+  /* Variant: Pure Fade (no movement) */
+  &.fade-in {
+    transform: none;
+  }
+}
+
+/* Staggered Transition Delays */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+.delay-600 { transition-delay: 600ms; }
+.delay-700 { transition-delay: 700ms; }
+.delay-800 { transition-delay: 800ms; }
+

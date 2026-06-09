@@ -1,34 +1,12 @@
-import React, { useEffect, useRef } from "react";
-// Import Swiper React components
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+"use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import { useSwiper } from "swiper/react";
+import React, { useState, useEffect, useRef } from "react";
 
 const TestimonialCarousel = () => {
-  function SlideNextButton() {
-    const swiper = useSwiper();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const autoPlayTimer = useRef(null);
 
-    return (
-      <i
-        className="fas fa-chevron-right"
-        onClick={() => swiper.slideNext()}
-      ></i>
-    );
-  }
-  function SlidePrevButton() {
-    const swiper = useSwiper();
-
-    return (
-      <i className="fas fa-chevron-left" onClick={() => swiper.slidePrev()}></i>
-    );
-  }
   const testimonials = [
     {
       text: "Working with Jesse was an absolute pleasure. He took our vague ideas and transformed them into a beautiful, functional design that perfectly captured our brand. Their attention to detail and commitment to quality are truly impressive.",
@@ -50,23 +28,49 @@ const TestimonialCarousel = () => {
     },
   ];
 
+  const nextSlide = () => {
+    setActiveIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevSlide = () => {
+    setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  const goToSlide = (idx) => {
+    setActiveIndex(idx);
+  };
+
+  useEffect(() => {
+    if (isPaused) {
+      if (autoPlayTimer.current) clearInterval(autoPlayTimer.current);
+      return;
+    }
+
+    autoPlayTimer.current = setInterval(() => {
+      nextSlide();
+    }, 6000);
+
+    return () => {
+      if (autoPlayTimer.current) clearInterval(autoPlayTimer.current);
+    };
+  }, [isPaused, activeIndex]);
+
   return (
-    <>
-      <section className="testimonial-section-container">
-        <h2 className="section-title">What Our Clients Say</h2>
-        <Swiper
-          // install Swiper modules
-          modules={[Navigation, Pagination, Scrollbar, A11y]}
-          spaceBetween={50}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
+    <section className="testimonial-section-container">
+      <div 
+        className="testimonial-carousel-viewport"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        <div 
+          className="testimonial-carousel-track"
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
           {testimonials.map((testimonial, index) => (
-            <SwiperSlide key={index}>
+            <div 
+              key={index}
+              className={`testimonial-carousel-slide ${index === activeIndex ? "active" : ""}`}
+            >
               <div className="testimonial-card">
                 {/* Quote Icon SVG */}
                 <div className="quote-icon-wrapper">
@@ -96,16 +100,31 @@ const TestimonialCarousel = () => {
                   </p>
                 </div>
               </div>
-            </SwiperSlide>
+            </div>
           ))}
-          <div className="controllers">
-            {" "}
-            <SlidePrevButton></SlidePrevButton>
-            <SlideNextButton></SlideNextButton>
-          </div>
-        </Swiper>
-      </section>
-    </>
+        </div>
+
+        {/* Controllers */}
+        <div className="controllers">
+          <i className="fas fa-chevron-left" onClick={prevSlide} role="button" aria-label="Previous slide"></i>
+          <i className="fas fa-chevron-right" onClick={nextSlide} role="button" aria-label="Next slide"></i>
+        </div>
+
+        {/* Pagination Dots */}
+        <div className="testimonial-dots" role="tablist">
+          {testimonials.map((_, idx) => (
+            <button
+              key={idx}
+              className={`testimonial-dot ${idx === activeIndex ? "active" : ""}`}
+              onClick={() => goToSlide(idx)}
+              role="tab"
+              aria-selected={idx === activeIndex}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
