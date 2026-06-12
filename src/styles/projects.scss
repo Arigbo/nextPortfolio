@@ -13,7 +13,7 @@
   gap: 2.5rem;
 }
 
-/* ── Hero ─────────────────────────────────────────────────── */
+/* ── Hero — Animated Gradient Mesh ───────────────────────── */
 .projects-hero {
   position: relative;
   width: 100%;
@@ -25,33 +25,88 @@
 
   @media (min-width: 768px) { min-height: 480px; }
 
-  .projects-hero-bg {
+  .projects-hero-bg-wrap {
     position: absolute;
     inset: 0;
-    background-image: url("https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80");
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.4) saturate(1.1);
-    transform: scale(1.04);
+    z-index: 0;
+    overflow: hidden;
+    background: var(--root-bg);
+    will-change: transform;
   }
 
   .projects-hero-overlay {
     position: absolute;
     inset: 0;
+    z-index: 2;
     background: linear-gradient(
       to bottom,
-      transparent 20%,
-      rgba(var(--bg-rgb, 3,7,18), 0.6) 65%,
+      rgba(var(--bg-rgb, 3,7,18), 0.3) 0%,
+      rgba(var(--bg-rgb, 3,7,18), 0.1) 40%,
+      rgba(var(--bg-rgb, 3,7,18), 0.5) 75%,
       var(--root-bg) 100%
     );
-         body.light &{
-        background: transparent;
-      }
+    pointer-events: none;
+    body.light & {
+      background: linear-gradient(
+        to bottom,
+        rgba(248,250,252, 0.4) 0%,
+        rgba(248,250,252, 0.1) 40%,
+        rgba(248,250,252, 0.5) 75%,
+        var(--root-bg) 100%
+      );
+    }
+  }
+
+  /* Floating code bracket shapes */
+  .projects-code-shapes {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .code-shape {
+    position: absolute;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 800;
+    color: var(--accent-color);
+    opacity: 0.12;
+    will-change: transform;
+    user-select: none;
+  }
+
+  .code-shape-1 {
+    font-size: 4rem;
+    top: 18%;
+    right: 12%;
+    animation: shape-float-1 14s ease-in-out infinite;
+  }
+
+  .code-shape-2 {
+    font-size: 3rem;
+    top: 55%;
+    left: 8%;
+    animation: shape-float-2 18s ease-in-out infinite;
+  }
+
+  .code-shape-3 {
+    font-size: 2.5rem;
+    bottom: 25%;
+    right: 30%;
+    animation: shape-float-3 16s ease-in-out infinite;
+  }
+
+  .code-shape-4 {
+    font-size: 3.5rem;
+    top: 30%;
+    left: 35%;
+    animation: shape-float-1 20s ease-in-out infinite reverse;
   }
 
   .projects-hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
@@ -74,14 +129,18 @@
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 900;
     letter-spacing: -0.04em;
-    color: white;
     margin: 0;
     line-height: 1.05;
+    background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
   }
 
   .projects-hero-sub {
     font-size: 1rem;
-    color: rgba(255,255,255,0.75);
+    opacity: 0.75;
     margin: 0;
     max-width: 540px;
     line-height: 1.6;
@@ -93,9 +152,9 @@
     gap: 0.55rem;
     padding: 0.35rem 1.1rem;
     border-radius: 9999px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.08);
-    color: white;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
     font-size: 0.82rem;
     font-weight: 700;
     margin-block-start: 0.5rem;
@@ -103,6 +162,19 @@
 
     i { color: var(--accent-color); }
   }
+}
+
+/* Sticky controls glassmorphism */
+.projects-controls {
+  position: sticky;
+  top: 4.5rem;
+  z-index: 10;
+  background: color-mix(in srgb, var(--root-bg) 80%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+  transition: background 0.3s, box-shadow 0.3s;
 }
 
 .projects-controls,
@@ -250,9 +322,10 @@
   border: 1px solid var(--border-color);
   box-shadow: var(--card-shadow);
   transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
 
   &:hover {
-    transform: translateY(-8px);
     box-shadow: 0 28px 50px rgba(0,0,0,0.22);
 
     img { transform: scale(1.07); }

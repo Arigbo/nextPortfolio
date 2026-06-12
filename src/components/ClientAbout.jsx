@@ -2,10 +2,16 @@
 
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { communityCategories } from "@/lib/communityData";
 import ClientToolkit from "@/components/ClientToolkit";
 import { useOnScreen } from "@/hooks/useOnScreen";
+import { useHeroScrollAway } from "@/hooks/useScrollProgress";
+import { useStaggerReveal } from "@/hooks/useParallax";
 import "@/styles/about.scss";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const communities = [
   { name: "GDG Community", social: [{ platform: "whatsapp", url: "#" }, { platform: "X", url: "#" }, { platform: "facebook", url: "#" }, { platform: "linkedin", url: "#" }, { platform: "instagram", url: "#" }, { platform: "Discord", url: "#" }] },
@@ -49,50 +55,138 @@ function getCommunityIcon(name) {
 const yearsExp = (() => { const y = new Date().getFullYear() - 2022; return y > 0 ? y : 1; })();
 
 export default function ClientAbout() {
-  const [heroRef, heroVisible] = useOnScreen(0.01);
+  const heroRef = useRef(null);
+  const heroContentRef = useRef(null);
   const heroBgRef = useRef(null);
+  const timelineRef = useRef(null);
+  const communityGridRef = useRef(null);
+  const memberGridRef = useRef(null);
+  const collabTrackRef = useRef(null);
+
   const [introRef, introVisible] = useOnScreen(0.08);
   const [toolkitRef, toolkitVisible] = useOnScreen(0.08);
   const [collabRef, collabVisible] = useOnScreen(0.08);
   const [commRef, commVisible] = useOnScreen(0.08);
   const [memberRef, memberVisible] = useOnScreen(0.08);
 
-  /* Parallax + mouse parallax */
+  /* GSAP: Hero scroll-away */
+  useHeroScrollAway(heroRef, heroContentRef, heroBgRef);
+
+  /* GSAP: Community cards stagger */
+  useStaggerReveal(communityGridRef, ".cat-card-link", {
+    start: "top 85%",
+    stagger: 0.1,
+    y: 50,
+  });
+
+  /* GSAP: Membership cards stagger */
+  useStaggerReveal(memberGridRef, ".membership-card", {
+    start: "top 85%",
+    stagger: 0.08,
+    y: 40,
+  });
+
+  /* GSAP: Hero entrance + timeline reveals */
   useEffect(() => {
-    const handleScroll = () => {
-      if (!heroBgRef.current) return;
-      const scrolled = window.scrollY;
-      heroBgRef.current.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0) scale(${1 + scrolled * 0.0003})`;
-    };
-    const handleMouse = (e) => {
-      if (!heroBgRef.current || !heroRef.current) return;
-      const xOff = (e.clientX / window.innerWidth - 0.5);
-      const yOff = (e.clientY / window.innerHeight - 0.5);
-      const s = window.scrollY;
-      heroBgRef.current.style.transform = `translate3d(${xOff * -25}px, ${yOff * -25 + s * 0.3}px, 0) scale(1.04)`;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    heroRef.current?.addEventListener("mousemove", handleMouse);
-    const hero = heroRef.current;
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      hero?.removeEventListener("mousemove", handleMouse);
-    };
-  }, [heroRef]);
+    if (typeof window === "undefined") return;
+
+    const ctx = gsap.context(() => {
+      // Hero entrance timeline
+      const tl = gsap.timeline({ delay: 0.2 });
+      tl.fromTo(".about-hero-label", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" })
+        .fromTo(".about-hero-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.2")
+        .fromTo(".about-hero-sub", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, "-=0.2")
+        .fromTo(".about-avatar-wrap", { y: 40, opacity: 0, scale: 0.95 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" }, "-=0.3");
+
+      // Timeline items — staggered from alternating sides
+      if (timelineRef.current) {
+        const items = timelineRef.current.querySelectorAll(".timeline-item");
+        items.forEach((item, i) => {
+          const fromX = i % 2 === 0 ? -30 : 30;
+          gsap.fromTo(
+            item,
+            { x: fromX, opacity: 0 },
+            {
+              x: 0,
+              opacity: 1,
+              duration: 0.7,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: item,
+                start: "top 88%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        });
+      }
+
+      // Bio facts reveal
+      gsap.utils.toArray(".bio-fact-row").forEach((row, i) => {
+        gsap.fromTo(
+          row,
+          { x: -20, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.5,
+            delay: i * 0.08,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+
+      // Collaborator cards — horizontal scroll linked to vertical scroll
+      if (collabTrackRef.current) {
+        const track = collabTrackRef.current;
+        const scrollWidth = track.scrollWidth - track.clientWidth;
+        if (scrollWidth > 0) {
+          gsap.to(track, {
+            scrollLeft: scrollWidth,
+            ease: "none",
+            scrollTrigger: {
+              trigger: track,
+              start: "top 70%",
+              end: "bottom 30%",
+              scrub: 1.5,
+            },
+          });
+        }
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <div className="about-page">
 
       {/* ══════════════════════════════════════════
-          HERO BANNER
+          HERO BANNER — Animated Gradient Mesh
       ══════════════════════════════════════════ */}
-      <div
-        ref={heroRef}
-        className={`about-hero reveal-on-screen ${heroVisible ? "revealed" : ""}`}
-      >
-        <div ref={heroBgRef} className="about-hero-bg" />
+      <div ref={heroRef} className="about-hero">
+        <div ref={heroBgRef} className="about-hero-bg-wrap">
+          <div className="gradient-mesh-bg">
+            <div className="mesh-blob mesh-blob-1" />
+            <div className="mesh-blob mesh-blob-2" />
+            <div className="mesh-blob mesh-blob-3" />
+          </div>
+          <div className="hero-floating-shapes">
+            <div className="shape shape-circle shape-1" />
+            <div className="shape shape-hex shape-2" />
+            <div className="shape shape-diamond shape-3" />
+            <div className="shape shape-circle shape-4" />
+            <div className="shape shape-hex shape-5" />
+          </div>
+          <div className="hero-dot-grid" />
+        </div>
         <div className="about-hero-overlay" />
-        <div className="about-hero-content">
+        <div className="about-hero-content" ref={heroContentRef}>
           <p className="about-hero-label">The Human Behind the Code</p>
           <h1 className="about-hero-title">More About Me</h1>
           <p className="about-hero-sub">
@@ -157,7 +251,7 @@ export default function ClientAbout() {
         </div>
 
         {/* Right — Timeline */}
-        <div className="about-timeline">
+        <div className="about-timeline" ref={timelineRef}>
           <h2 className="about-section-title">My Journey</h2>
           <div className="timeline">
             {timelineEvents.map((ev, i) => (
@@ -196,7 +290,7 @@ export default function ClientAbout() {
         className={`about-section reveal-on-screen ${collabVisible ? "revealed" : ""}`}
       >
         <h2 className="about-section-title centered">People I've Collaborated With</h2>
-        <div className="collab-scroll-track">
+        <div className="collab-scroll-track" ref={collabTrackRef}>
           {collaborators.map((c, i) => (
             <div key={i} className="collab-card">
               <img src={c.photo} alt={c.name} className="collab-photo" />
@@ -214,7 +308,7 @@ export default function ClientAbout() {
           COMMUNITY GALLERIES
       ══════════════════════════════════════════ */}
       <section
-        ref={commRef}
+        ref={(el) => { commRef.current = el; }}
         id="community"
         className={`about-section reveal-on-screen ${commVisible ? "revealed" : ""}`}
         style={{ scrollMarginTop: "5rem" }}
@@ -224,7 +318,7 @@ export default function ClientAbout() {
           My journey isn't just about code — it's about people. Explore galleries from meetups,
           hackathons, workshops, and virtual gatherings I've attended.
         </p>
-        <div className="community-cat-grid">
+        <div className="community-cat-grid" ref={communityGridRef}>
           {communityCategories.map((cat) => (
             <Link key={cat.id} href={`/community/${cat.id}`} className="cat-card-link">
               <div className="cat-card">
@@ -251,11 +345,11 @@ export default function ClientAbout() {
           MEMBERSHIPS
       ══════════════════════════════════════════ */}
       <section
-        ref={memberRef}
+        ref={(el) => { memberRef.current = el; }}
         className={`about-section reveal-on-screen ${memberVisible ? "revealed" : ""}`}
       >
         <h2 className="about-section-title centered">Active Memberships & Networks</h2>
-        <div className="membership-grid">
+        <div className="membership-grid" ref={memberGridRef}>
           {communities.map((c, i) => (
             <div key={i} className="membership-card">
               <div className="membership-icon">{getCommunityIcon(c.name)}</div>

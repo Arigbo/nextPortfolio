@@ -2,14 +2,35 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { allProjects } from "@/lib/projectsData";
 import { useOnScreen } from "@/hooks/useOnScreen";
+import { useHeroScrollAway } from "@/hooks/useScrollProgress";
+import { useStaggerReveal } from "@/hooks/useParallax";
 import "@/styles/projects.scss";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const CATEGORIES = ["All", "Full-Stack", "Frontend"];
 
 function ProjectCard({ project, index }) {
   const [ref, isVisible] = useOnScreen(0.05);
+  const cardRef = useRef(null);
+
+  /* 3D tilt on hover */
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    cardRef.current.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-8px)`;
+  };
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return;
+    cardRef.current.style.transform = "perspective(800px) rotateY(0) rotateX(0) translateY(0)";
+  };
 
   return (
     <Link
@@ -17,7 +38,12 @@ function ProjectCard({ project, index }) {
       href={`/projects/${project.id}`}
       className={`proj-card-link reveal-on-screen ${isVisible ? "revealed" : ""}`}
     >
-      <article className="proj-card">
+      <article
+        className="proj-card"
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
         {/* Number badge */}
         <span className="proj-num">
           {String(index + 1).padStart(2, "0")}
@@ -66,33 +92,53 @@ export default function ClientProjects() {
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
 
-  const [heroRef, heroVisible] = useOnScreen(0.05);
+  const heroRef = useRef(null);
+  const heroContentRef = useRef(null);
   const heroBgRef = useRef(null);
-  const [controlsRef, controlsVisible] = useOnScreen(0.05);
-  const [gridRef, gridVisible] = useOnScreen(0.05);
+  const gridRef = useRef(null);
 
-  /* Parallax + mouse parallax */
+  const [controlsRef, controlsVisible] = useOnScreen(0.05);
+
+  /* GSAP: Hero scroll-away */
+  useHeroScrollAway(heroRef, heroContentRef, heroBgRef);
+
+  /* GSAP: Staggered card reveals */
+  useStaggerReveal(gridRef, ".proj-card-link", {
+    start: "top 88%",
+    stagger: 0.08,
+    y: 50,
+    duration: 0.7,
+  });
+
+  /* GSAP: Hero entrance + sticky controls */
   useEffect(() => {
-    const handleScroll = () => {
-      if (!heroBgRef.current) return;
-      const scrolled = window.scrollY;
-      heroBgRef.current.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0) scale(${1 + scrolled * 0.0003})`;
-    };
-    const handleMouse = (e) => {
-      if (!heroBgRef.current || !heroRef.current) return;
-      const xOff = (e.clientX / window.innerWidth - 0.5);
-      const yOff = (e.clientY / window.innerHeight - 0.5);
-      const s = window.scrollY;
-      heroBgRef.current.style.transform = `translate3d(${xOff * -25}px, ${yOff * -25 + s * 0.3}px, 0) scale(1.04)`;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    heroRef.current?.addEventListener("mousemove", handleMouse);
-    const hero = heroRef.current;
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      hero?.removeEventListener("mousemove", handleMouse);
-    };
-  }, [heroRef]);
+    if (typeof window === "undefined") return;
+
+    const ctx = gsap.context(() => {
+      // Hero entrance
+      const tl = gsap.timeline({ delay: 0.2 });
+      tl.fromTo(".projects-hero-label", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" })
+        .fromTo(".projects-hero-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.2")
+        .fromTo(".projects-hero-sub", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, "-=0.2")
+        .fromTo(".projects-hero-badge", { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, "-=0.2");
+
+      // Floating code bracket shapes — parallax depth
+      gsap.utils.toArray(".code-shape").forEach((shape, i) => {
+        gsap.to(shape, {
+          y: -60 - i * 20,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".projects-hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   const filtered = allProjects.filter((p) => {
     const matchCat = filter === "All" || p.category === filter;
@@ -106,14 +152,31 @@ export default function ClientProjects() {
   return (
     <div className="projects-page">
 
-      {/* ── Page Hero ── */}
-      <div
-        ref={heroRef}
-        className={`projects-hero reveal-on-screen ${heroVisible ? "revealed" : ""}`}
-      >
-        <div ref={heroBgRef} className="projects-hero-bg" />
+      {/* ── Page Hero — Animated Gradient Mesh ── */}
+      <div ref={heroRef} className="projects-hero">
+        <div ref={heroBgRef} className="projects-hero-bg-wrap">
+          <div className="gradient-mesh-bg">
+            <div className="mesh-blob mesh-blob-1" />
+            <div className="mesh-blob mesh-blob-2" />
+            <div className="mesh-blob mesh-blob-3" />
+          </div>
+          <div className="hero-floating-shapes">
+            <div className="shape shape-circle shape-1" />
+            <div className="shape shape-hex shape-2" />
+            <div className="shape shape-diamond shape-3" />
+            <div className="shape shape-circle shape-4" />
+          </div>
+          {/* Floating code bracket shapes */}
+          <div className="projects-code-shapes">
+            <span className="code-shape code-shape-1">&lt;/&gt;</span>
+            <span className="code-shape code-shape-2">{ "{}" }</span>
+            <span className="code-shape code-shape-3">( )</span>
+            <span className="code-shape code-shape-4">[ ]</span>
+          </div>
+          <div className="hero-dot-grid" />
+        </div>
         <div className="projects-hero-overlay" />
-        <div className="projects-hero-content">
+        <div className="projects-hero-content" ref={heroContentRef}>
           <p className="projects-hero-label">Portfolio</p>
           <h1 className="projects-hero-title">My Projects</h1>
           <p className="projects-hero-sub">
@@ -174,17 +237,14 @@ export default function ClientProjects() {
       {filtered.length > 0 ? (
         <div
           ref={gridRef}
-          className={`projects-grid-full reveal-on-screen ${gridVisible ? "revealed" : ""}`}
+          className="projects-grid-full"
         >
           {filtered.map((p, i) => (
             <ProjectCard key={p.id} project={p} index={i} />
           ))}
         </div>
       ) : (
-        <div
-          ref={gridRef}
-          className={`projects-empty reveal-on-screen ${gridVisible ? "revealed" : ""}`}
-        >
+        <div className="projects-empty reveal-on-screen revealed">
           <i className="fa-solid fa-magnifying-glass" />
           <h3>No projects found</h3>
           <p>Try adjusting your search or filter.</p>

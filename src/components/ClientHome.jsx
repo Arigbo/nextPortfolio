@@ -2,10 +2,16 @@
 
 import React, { useContext, useRef, useEffect, useState } from "react";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Context } from "@/components/context";
 import TestimonialSection from "@/components/testimonies";
 import { allProjects, techStackData } from "@/lib/projectsData";
 import { useOnScreen } from "@/hooks/useOnScreen";
+import { useHeroScrollAway } from "@/hooks/useScrollProgress";
+import { useStaggerReveal } from "@/hooks/useParallax";
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* Animated typing cursor for hero tagline */
 const ROLES = ["Full-Stack Engineer", "Cloud Architect", "UI/UX Craftsman", "Open-Source Advocate"];
@@ -32,42 +38,137 @@ function useTypewriter(words, speed = 80, pause = 1800) {
   return text;
 }
 
+/* Animated counter hook */
+function useCountUp(target, duration = 2, triggerRef) {
+  const [count, setCount] = useState(0);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (!triggerRef?.current || hasAnimated.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const start = performance.now();
+          const step = (now) => {
+            const elapsed = (now - start) / (duration * 1000);
+            const progress = Math.min(elapsed, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            setCount(Math.floor(eased * target));
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(triggerRef.current);
+    return () => observer.disconnect();
+  }, [target, duration, triggerRef]);
+
+  return count;
+}
+
 export default function ClientHome() {
   const { setIsContactModalOpen } = useContext(Context);
-  const [heroRef, heroVisible] = useOnScreen(0.01);
+  const heroRef = useRef(null);
+  const heroContentRef = useRef(null);
   const heroBgRef = useRef(null);
   const role = useTypewriter(ROLES);
 
+  const projectsGridRef = useRef(null);
+  const stackSecRef = useRef(null);
+  const testisSecRef = useRef(null);
+  const statsRef = useRef(null);
+
   const [projectsSecRef, projectsVisible] = useOnScreen(0.08);
-  const [stackSecRef, stackVisible] = useOnScreen(0.08);
-  const [testisSecRef, testisVisible] = useOnScreen(0.08);
+  const [stackVisRef, stackVisible] = useOnScreen(0.08);
+  const [testisVisRef, testisVisible] = useOnScreen(0.08);
 
   const featuredProjects = allProjects.slice(0, 3);
   const totalProjects = allProjects.length;
   const yearsExp = new Date().getFullYear() - 2022 || 1;
   const totalTech = techStackData.frontend.length + techStackData.backend.length;
 
-  /* Parallax + mouse parallax */
+  // Animated counters
+  const countProjects = useCountUp(totalProjects, 2, statsRef);
+  const countYears = useCountUp(yearsExp, 1.5, statsRef);
+  const countTech = useCountUp(totalTech, 2, statsRef);
+
+  /* GSAP: Hero scroll-away effect */
+  useHeroScrollAway(heroRef, heroContentRef, heroBgRef);
+
+  /* GSAP: Staggered project card reveals */
+  useStaggerReveal(projectsGridRef, ".project-card-link", {
+    start: "top 85%",
+    stagger: 0.12,
+    y: 60,
+    duration: 0.8,
+  });
+
+  /* GSAP: Section parallax depth */
   useEffect(() => {
-    const handleScroll = () => {
-      if (!heroBgRef.current) return;
-      const scrolled = window.scrollY;
-      heroBgRef.current.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0) scale(${1 + scrolled * 0.0003})`;
-    };
-    const handleMouse = (e) => {
-      if (!heroBgRef.current || !heroRef.current) return;
-      const xOff = (e.clientX / window.innerWidth - 0.5);
-      const yOff = (e.clientY / window.innerHeight - 0.5);
-      const s = window.scrollY;
-      heroBgRef.current.style.transform = `translate3d(${xOff * -25}px, ${yOff * -25 + s * 0.3}px, 0) scale(1.04)`;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    heroRef.current?.addEventListener("mousemove", handleMouse);
-    const hero = heroRef.current;
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      hero?.removeEventListener("mousemove", handleMouse);
-    };
+    if (typeof window === "undefined") return;
+
+    const ctx = gsap.context(() => {
+      // Section header text reveals
+      gsap.utils.toArray(".section-header").forEach((header) => {
+        gsap.fromTo(
+          header,
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: header,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+
+      // Tech ticker speed-linking to scroll velocity
+      const ticker = document.querySelector(".tech-ticker-track");
+      if (ticker) {
+        ScrollTrigger.create({
+          trigger: ".tech-ticker-wrapper",
+          start: "top bottom",
+          end: "bottom top",
+          onUpdate: (self) => {
+            const velocity = Math.abs(self.getVelocity());
+            const speedMultiplier = 1 + Math.min(velocity / 2000, 3);
+            ticker.style.animationDuration = `${35 / speedMultiplier}s`;
+          },
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  /* GSAP: Hero entrance timeline */
+  useEffect(() => {
+    if (typeof window === "undefined" || !heroContentRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ delay: 0.3 });
+
+      tl.fromTo(".avail-pill", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" })
+        .fromTo(".hero-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, "-=0.3")
+        .fromTo(".hero-role", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, "-=0.3")
+        .fromTo(".hero-desc", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, "-=0.2")
+        .fromTo(".hero-buttons", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, "-=0.2")
+        .fromTo(".hero-stats", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, "-=0.2")
+        .fromTo(".code-card", { x: 40, opacity: 0, rotateY: -8 }, { x: 0, opacity: 1, rotateY: 0, duration: 0.8, ease: "power3.out" }, "-=0.5");
+    }, heroContentRef);
+
+    return () => ctx.revert();
   }, []);
 
   const allTech = [...techStackData.frontend, ...techStackData.backend];
@@ -77,21 +178,31 @@ export default function ClientHome() {
       <main className="home-main">
 
         {/* ═══════════════════════════════════════
-            HERO — Split layout
+            HERO — Split layout with animated gradient mesh
         ═══════════════════════════════════════ */}
         <section ref={heroRef} id="home" className="hero" aria-label="Introduction">
-          <div className="hero-bg-container">
-            <div ref={heroBgRef} className="hero-bg-image" />
-            <div className="hero-blob hero-blob-1" />
-            <div className="hero-blob hero-blob-2" />
-            <div className="hero-blob hero-blob-3" />
-            <div className="hero-grid" />
-            <div className="hero-overlay" />
+          {/* Animated gradient mesh background */}
+          <div className="hero-bg-container" ref={heroBgRef}>
+            <div className="gradient-mesh-bg">
+              <div className="mesh-blob mesh-blob-1" />
+              <div className="mesh-blob mesh-blob-2" />
+              <div className="mesh-blob mesh-blob-3" />
+            </div>
+            <div className="hero-floating-shapes">
+              <div className="shape shape-circle shape-1" />
+              <div className="shape shape-hex shape-2" />
+              <div className="shape shape-diamond shape-3" />
+              <div className="shape shape-circle shape-4" />
+              <div className="shape shape-hex shape-5" />
+              <div className="shape shape-diamond shape-6" />
+            </div>
+            <div className="hero-dot-grid" />
+            <div className="hero-mesh-overlay" />
           </div>
 
-          <div className="hero-content">
+          <div className="hero-content" ref={heroContentRef}>
             {/* Left column */}
-            <div className={`hero-left reveal-on-screen ${heroVisible ? "revealed" : ""}`}>
+            <div className="hero-left">
               {/* Availability pill */}
               <div className="avail-pill">
                 <span className="avail-dot" />
@@ -127,15 +238,15 @@ export default function ClientHome() {
                 </Link>
               </div>
 
-              {/* Stats row */}
-              <div className="hero-stats">
+              {/* Stats row — animated counters */}
+              <div className="hero-stats" ref={statsRef}>
                 {[
-                  { value: `${totalProjects}+`, label: "Projects Built" },
-                  { value: `${yearsExp}+`, label: "Years Coding" },
-                  { value: `${totalTech}+`, label: "Technologies" },
+                  { value: countProjects, suffix: "+", label: "Projects Built" },
+                  { value: countYears, suffix: "+", label: "Years Coding" },
+                  { value: countTech, suffix: "+", label: "Technologies" },
                 ].map((s) => (
                   <div key={s.label} className="stat-item">
-                    <span className="stat-value">{s.value}</span>
+                    <span className="stat-value">{s.value}{s.suffix}</span>
                     <span className="stat-label">{s.label}</span>
                   </div>
                 ))}
@@ -143,7 +254,7 @@ export default function ClientHome() {
             </div>
 
             {/* Right column — decorative code block */}
-            <div className={`hero-right reveal-on-screen ${heroVisible ? "revealed" : ""}`} aria-hidden="true">
+            <div className="hero-right" aria-hidden="true">
               <div className="code-card">
                 <div className="code-dots">
                   <span /><span /><span />
@@ -175,9 +286,9 @@ export default function ClientHome() {
             FEATURED PROJECTS
         ═══════════════════════════════════════ */}
         <section
-          ref={projectsSecRef}
+          ref={(el) => { projectsSecRef.current = el; }}
           id="projects"
-          className={`home-section reveal-on-screen ${projectsVisible ? "revealed" : ""}`}
+          className={`home-section parallax-section reveal-on-screen ${projectsVisible ? "revealed" : ""}`}
         >
           <div className="section-header">
             <p className="section-label">Selected Work</p>
@@ -187,7 +298,7 @@ export default function ClientHome() {
             </p>
           </div>
 
-          <div className="projects-grid">
+          <div className="projects-grid" ref={projectsGridRef}>
             {featuredProjects.map((project, i) => (
               <Link
                 key={project.id}
@@ -240,9 +351,9 @@ export default function ClientHome() {
             TECH TICKER STRIP
         ═══════════════════════════════════════ */}
         <section
-          ref={stackSecRef}
+          ref={(el) => { stackVisRef.current = el; stackSecRef.current = el; }}
           id="stack"
-          className={`home-section reveal-on-screen ${stackVisible ? "revealed" : ""}`}
+          className={`home-section parallax-section reveal-on-screen ${stackVisible ? "revealed" : ""}`}
         >
           <div className="section-header">
             <p className="section-label">Expertise</p>
@@ -277,9 +388,9 @@ export default function ClientHome() {
             TESTIMONIALS
         ═══════════════════════════════════════ */}
         <section
-          ref={testisSecRef}
+          ref={(el) => { testisVisRef.current = el; testisSecRef.current = el; }}
           id="testimonials"
-          className={`home-section reveal-on-screen ${testisVisible ? "revealed" : ""}`}
+          className={`home-section parallax-section reveal-on-screen ${testisVisible ? "revealed" : ""}`}
         >
           <div className="section-header">
             <p className="section-label">Kind Words</p>

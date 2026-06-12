@@ -111,7 +111,7 @@
   justify-content: center;
   overflow: hidden;
 
-  /* ── Parallax background ── */
+  /* ── Parallax background — animated gradient mesh ── */
   .hero-bg-container {
     position: absolute;
     inset: 0;
@@ -119,74 +119,6 @@
     overflow: hidden;
     pointer-events: none;
     background: var(--root-bg);
-
-    /* Smooth fade to the next section */
-    &::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 15vh;
-      z-index: 5;
-      background: linear-gradient(to bottom, transparent, var(--root-bg));
-      pointer-events: none;
-      body.light &{
-        background: transparent;
-      }
-    }
-  }
-
-  .hero-bg-image {
-    width: 110%;
-    height: 110%;
-    position: absolute;
-    top: -5%;
-    left: -5%;
-    background-image: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&auto=format&fit=crop&q=80");
-    background-size: cover;
-    background-position: center;
-    opacity: 1; /* 100% opacity */
-    filter: blur(1.5px) brightness(0.65); /* dark starfield image background */
-    will-change: transform;
-    transition: opacity 0.5s ease;
-    z-index: 0;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: none; /* remove background color radial gradient */
-  }
-
-  /* ── Glowing Blobs ── */
-  .hero-blob {
-    display: none;
-  }
-
-  /* ── Subtle grid overlay ── */
-  .hero-grid {
-    display: none;
-  }
-
-  /* ── Blob Animations ── */
-  @keyframes blob-float-1 {
-    0%   { transform: translate(0, 0) scale(1); }
-    50%  { transform: translate(40px, 30px) scale(1.1); }
-    100% { transform: translate(-20px, 50px) scale(0.95); }
-  }
-
-  @keyframes blob-float-2 {
-    0%   { transform: translate(0, 0) scale(1); }
-    50%  { transform: translate(-50px, -40px) scale(0.9); }
-    100% { transform: translate(30px, 20px) scale(1.05); }
-  }
-
-  @keyframes blob-float-3 {
-    0%   { transform: translate(0, 0) scale(1); }
-    50%  { transform: translate(30px, -50px) scale(1.15); }
-    100% { transform: translate(-40px, 30px) scale(0.85); }
   }
 
   /* ── Content grid ── */

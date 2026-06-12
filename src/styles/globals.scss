@@ -375,3 +375,212 @@ body {
 .delay-700 { transition-delay: 700ms; }
 .delay-800 { transition-delay: 800ms; }
 
+/* ══════════════════════════════════════════
+   ANIMATED GRADIENT MESH — Shared Keyframes
+══════════════════════════════════════════ */
+@keyframes mesh-rotate {
+  0%   { transform: rotate(0deg) scale(1); }
+  33%  { transform: rotate(120deg) scale(1.1); }
+  66%  { transform: rotate(240deg) scale(0.95); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes mesh-rotate-reverse {
+  0%   { transform: rotate(360deg) scale(1.05); }
+  33%  { transform: rotate(240deg) scale(0.9); }
+  66%  { transform: rotate(120deg) scale(1.1); }
+  100% { transform: rotate(0deg) scale(1.05); }
+}
+
+@keyframes mesh-drift {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(30px, -20px) rotate(90deg); }
+  50%  { transform: translate(-20px, 40px) rotate(180deg); }
+  75%  { transform: translate(40px, 20px) rotate(270deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes shape-float-1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
+  25%      { transform: translate(15px, -25px) rotate(45deg); opacity: 0.7; }
+  50%      { transform: translate(-10px, -40px) rotate(90deg); opacity: 0.4; }
+  75%      { transform: translate(20px, -15px) rotate(135deg); opacity: 0.6; }
+}
+
+@keyframes shape-float-2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
+  25%      { transform: translate(-20px, 15px) rotate(-30deg); opacity: 0.6; }
+  50%      { transform: translate(25px, 30px) rotate(-60deg); opacity: 0.3; }
+  75%      { transform: translate(-15px, -20px) rotate(-90deg); opacity: 0.5; }
+}
+
+@keyframes shape-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+  33%      { transform: translate(-30px, 20px) scale(1.2); opacity: 0.55; }
+  66%      { transform: translate(20px, -30px) scale(0.8); opacity: 0.4; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes particle-drift {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+}
+
+@keyframes grid-pulse {
+  0%, 100% { opacity: 0.03; }
+  50%      { opacity: 0.08; }
+}
+
+/* ── Animated Gradient Mesh Background ─── */
+.gradient-mesh-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+
+  .mesh-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    will-change: transform;
+    pointer-events: none;
+  }
+
+  .mesh-blob-1 {
+    width: 50vw;
+    height: 50vw;
+    max-width: 600px;
+    max-height: 600px;
+    top: -15%;
+    left: -10%;
+    background: radial-gradient(circle, var(--hero-from) 0%, transparent 70%);
+    opacity: 0.35;
+    animation: mesh-rotate 20s ease-in-out infinite;
+  }
+
+  .mesh-blob-2 {
+    width: 45vw;
+    height: 45vw;
+    max-width: 550px;
+    max-height: 550px;
+    bottom: -20%;
+    right: -10%;
+    background: radial-gradient(circle, var(--hero-to) 0%, transparent 70%);
+    opacity: 0.3;
+    animation: mesh-rotate-reverse 25s ease-in-out infinite;
+  }
+
+  .mesh-blob-3 {
+    width: 35vw;
+    height: 35vw;
+    max-width: 400px;
+    max-height: 400px;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+    opacity: 0.2;
+    animation: mesh-drift 30s ease-in-out infinite;
+  }
+}
+
+/* ── Floating Geometric Shapes ─── */
+.hero-floating-shapes {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+
+  .shape {
+    position: absolute;
+    border: 1.5px solid;
+    opacity: 0;
+    will-change: transform;
+  }
+
+  .shape-circle {
+    border-radius: 50%;
+    border-color: color-mix(in srgb, var(--hero-from) 30%, transparent);
+  }
+
+  .shape-hex {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border: none;
+    background: color-mix(in srgb, var(--hero-to) 8%, transparent);
+    border: 1.5px solid color-mix(in srgb, var(--hero-to) 20%, transparent);
+  }
+
+  .shape-diamond {
+    transform: rotate(45deg);
+    border-color: color-mix(in srgb, var(--accent-color) 25%, transparent);
+  }
+
+  .shape-1 { width: 60px; height: 60px; top: 15%; left: 8%; animation: shape-float-1 12s ease-in-out infinite; }
+  .shape-2 { width: 40px; height: 40px; top: 25%; right: 12%; animation: shape-float-2 15s ease-in-out infinite; }
+  .shape-3 { width: 80px; height: 80px; bottom: 20%; left: 15%; animation: shape-float-3 18s ease-in-out infinite; }
+  .shape-4 { width: 35px; height: 35px; top: 60%; right: 25%; animation: shape-float-1 14s ease-in-out infinite reverse; }
+  .shape-5 { width: 50px; height: 50px; bottom: 30%; right: 8%; animation: shape-float-2 20s ease-in-out infinite; }
+  .shape-6 { width: 45px; height: 45px; top: 10%; left: 45%; animation: shape-float-3 16s ease-in-out infinite reverse; }
+}
+
+/* ── Dot Grid Overlay ─── */
+.hero-dot-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--root-text) 0.5px, transparent 0.5px);
+  background-size: 30px 30px;
+  opacity: 0.04;
+  animation: grid-pulse 8s ease-in-out infinite;
+}
+
+/* ── Hero Overlay Gradient ─── */
+.hero-mesh-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--bg-rgb, 3,7,18), 0.4) 0%,
+    rgba(var(--bg-rgb, 3,7,18), 0.1) 40%,
+    rgba(var(--bg-rgb, 3,7,18), 0.3) 80%,
+    var(--root-bg) 100%
+  );
+  pointer-events: none;
+  body.light & {
+    background: linear-gradient(
+      to bottom,
+      rgba(248,250,252, 0.5) 0%,
+      rgba(248,250,252, 0.15) 40%,
+      rgba(248,250,252, 0.4) 80%,
+      var(--root-bg) 100%
+    );
+  }
+}
+
+/* ── Word reveal utility ─── */
+.word-reveal {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* ── Parallax section depth ─── */
+.parallax-section {
+  will-change: transform;
+}
+
+/* ── 3D tilt card utility ─── */
+.tilt-card {
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  transform-style: preserve-3d;
+  perspective: 800px;
+}
+

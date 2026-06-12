@@ -1,32 +1,84 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * GSAP-powered parallax for project detail hero.
+ * Replaces the old manual window.scrollY approach with smooth ScrollTrigger.
+ */
 export default function ClientProjectHeroParallax() {
+  const hasInit = useRef(false);
+
   useEffect(() => {
-    const hero = document.querySelector(".proj-detail-hero");
-    const bg = document.querySelector(".proj-detail-hero-bg");
-    if (!hero || !bg) return;
+    if (typeof window === "undefined" || hasInit.current) return;
+    hasInit.current = true;
 
-    const handleScroll = () => {
-      const scrolled = window.scrollY;
-      bg.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0) scale(${1 + scrolled * 0.0003})`;
-    };
+    // Small delay to ensure DOM is painted
+    const timer = setTimeout(() => {
+      const hero = document.querySelector(".proj-detail-hero");
+      const bg = document.querySelector(".proj-detail-hero-bg");
+      const content = document.querySelector(".proj-detail-title-panel");
 
-    const handleMouse = (e) => {
-      const xOff = (e.clientX / window.innerWidth - 0.5);
-      const yOff = (e.clientY / window.innerHeight - 0.5);
-      const s = window.scrollY;
-      bg.style.transform = `translate3d(${xOff * -25}px, ${yOff * -25 + s * 0.3}px, 0) scale(1.04)`;
-    };
+      if (!hero || !bg) return;
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    hero.addEventListener("mousemove", handleMouse);
+      const ctx = gsap.context(() => {
+        // Background parallax zoom
+        gsap.to(bg, {
+          y: 100,
+          scale: 1.12,
+          filter: "brightness(0.25) blur(3px)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      hero.removeEventListener("mousemove", handleMouse);
-    };
+        // Content scroll-away
+        if (content) {
+          gsap.to(content, {
+            y: -50,
+            opacity: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: hero,
+              start: "top top",
+              end: "70% top",
+              scrub: 1,
+            },
+          });
+        }
+
+        // Mouse parallax on hero
+        const handleMouse = (e) => {
+          if (!bg) return;
+          const xOff = (e.clientX / window.innerWidth - 0.5) * -15;
+          const yOff = (e.clientY / window.innerHeight - 0.5) * -15;
+          gsap.to(bg, {
+            x: xOff,
+            duration: 0.8,
+            ease: "power2.out",
+          });
+        };
+
+        hero.addEventListener("mousemove", handleMouse);
+
+        // Cleanup mousemove on ScrollTrigger kill
+        ScrollTrigger.addEventListener("kill", () => {
+          hero.removeEventListener("mousemove", handleMouse);
+        });
+      });
+
+      return () => ctx.revert();
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return null;

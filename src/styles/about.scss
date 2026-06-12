@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-/* ── Hero banner ──────────────────────────────────────────── */
+/* ── Hero banner — Animated Gradient Mesh ──────────────────── */
 .about-hero {
   position: relative;
   width: 100%;
@@ -20,33 +20,41 @@
 
   @media (min-width: 768px) { min-height: 560px; }
 
-  .about-hero-bg {
+  .about-hero-bg-wrap {
     position: absolute;
     inset: 0;
-    background-image: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1600&auto=format&fit=crop&q=80");
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.45) saturate(1.1);
-    transform: scale(1.04);
+    z-index: 0;
+    overflow: hidden;
+    background: var(--root-bg);
+    will-change: transform;
   }
 
   .about-hero-overlay {
     position: absolute;
     inset: 0;
+    z-index: 2;
     background: linear-gradient(
       to bottom,
-      transparent 20%,
-      rgba(var(--bg-rgb, 3,7,18), 0.6) 65%,
+      rgba(var(--bg-rgb, 3,7,18), 0.3) 0%,
+      rgba(var(--bg-rgb, 3,7,18), 0.1) 40%,
+      rgba(var(--bg-rgb, 3,7,18), 0.5) 75%,
       var(--root-bg) 100%
     );
-      body.light &{
-        background: transparent;
-      }
+    pointer-events: none;
+    body.light & {
+      background: linear-gradient(
+        to bottom,
+        rgba(248,250,252, 0.4) 0%,
+        rgba(248,250,252, 0.1) 40%,
+        rgba(248,250,252, 0.5) 75%,
+        var(--root-bg) 100%
+      );
+    }
   }
 
   .about-hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
@@ -71,14 +79,18 @@
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 900;
     letter-spacing: -0.04em;
-    color: white;
     margin: 0;
     line-height: 1.05;
+    background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
   }
 
   .about-hero-sub {
     font-size: 1rem;
-    color: rgba(255,255,255,0.72);
+    opacity: 0.75;
     margin: 0;
     max-width: 540px;
     line-height: 1.6;
@@ -93,7 +105,7 @@
       position: absolute;
       right: 6%;
       bottom: 0;
-      z-index: 3;
+      z-index: 4;
       width: 280px;
     }
 

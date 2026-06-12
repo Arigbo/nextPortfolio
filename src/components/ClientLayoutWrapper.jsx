@@ -1,9 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Context } from "@/components/context";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+
+// Register GSAP plugins globally (only once)
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function ClientLayoutWrapper({ children }) {
   const [theme, setTheme] = useState();
