@@ -9,6 +9,7 @@ import ClientToolkit from "@/components/ClientToolkit";
 import { useOnScreen } from "@/hooks/useOnScreen";
 import { useHeroScrollAway } from "@/hooks/useScrollProgress";
 import { useStaggerReveal } from "@/hooks/useParallax";
+import ThreeDCanvas from "@/components/ThreeDCanvas";
 import "@/styles/about.scss";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -184,6 +185,9 @@ export default function ClientAbout() {
             <div className="shape shape-hex shape-5" />
           </div>
           <div className="hero-dot-grid" />
+          <div className="about-3d-wrap" style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none", opacity: 0.55 }}>
+            <ThreeDCanvas type="network" />
+          </div>
         </div>
         <div className="about-hero-overlay" />
         <div className="about-hero-content" ref={heroContentRef}>
@@ -196,8 +200,8 @@ export default function ClientAbout() {
         {/* Floating avatar */}
         <div className="about-avatar-wrap">
           <img
-            src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80"
-            alt="Developer at work"
+            src="/graduation.jpg"
+            alt="Arigbo Jesse Graduation Portrait"
             className="about-avatar"
           />
         </div>
@@ -244,10 +248,15 @@ export default function ClientAbout() {
             ))}
           </div>
 
-          <a href="/Resume.pdf" download className="cv-download-btn">
-            <i className="fa-solid fa-file-arrow-down" />
-            Download CV
-          </a>
+          <div style={{ display: "flex", alignItems: "center", gap: "2rem", marginTop: "2rem", flexWrap: "wrap" }}>
+            <a href="/Resume.pdf" download className="cv-download-btn" style={{ margin: 0 }}>
+              <i className="fa-solid fa-file-arrow-down" />
+              Download CV
+            </a>
+            <div className="bio-3d-graphic" style={{ width: "65px", height: "65px", opacity: 0.5 }}>
+              <ThreeDCanvas type="cube" />
+            </div>
+          </div>
         </div>
 
         {/* Right — Timeline */}
@@ -274,11 +283,17 @@ export default function ClientAbout() {
         ref={toolkitRef}
         className={`about-section about-toolkit reveal-on-screen ${toolkitVisible ? "revealed" : ""}`}
       >
-        <h2 className="about-section-title centered">My Toolkit & Engineering Philosophy</h2>
-        <p className="about-section-sub centered">
-          I specialise in a modern, comprehensive tech stack — building end-to-end full-stack systems
-          with clean architecture, transactional pipelines, and performance-first thinking.
-        </p>
+        <div className="section-header-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", maxWidth: "900px", margin: "0 auto 3rem auto" }}>
+          <div style={{ flex: 1, textAlign: "left" }}>
+            <h2 className="about-section-title" style={{ textAlign: "left", margin: 0 }}>My Toolkit & Engineering Philosophy</h2>
+            <p className="about-section-sub" style={{ textAlign: "left", margin: "1rem 0 0 0" }}>
+              I specialise in a modern, comprehensive tech stack — building end-to-end full-stack systems with clean architecture and performance-first thinking.
+            </p>
+          </div>
+          <div className="toolkit-3d-graphic" style={{ width: "75px", height: "75px", opacity: 0.6 }}>
+            <ThreeDCanvas type="torus" />
+          </div>
+        </div>
         <ClientToolkit toolkit={toolkit} />
       </section>
 
@@ -313,11 +328,17 @@ export default function ClientAbout() {
         className={`about-section reveal-on-screen ${commVisible ? "revealed" : ""}`}
         style={{ scrollMarginTop: "5rem" }}
       >
-        <h2 className="about-section-title centered">Connecting With Communities</h2>
-        <p className="about-section-sub centered">
-          My journey isn't just about code — it's about people. Explore galleries from meetups,
-          hackathons, workshops, and virtual gatherings I've attended.
-        </p>
+        <div className="section-header-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", maxWidth: "900px", margin: "0 auto 3rem auto" }}>
+          <div style={{ flex: 1, textAlign: "left" }}>
+            <h2 className="about-section-title" style={{ textAlign: "left", margin: 0 }}>Connecting With Communities</h2>
+            <p className="about-section-sub" style={{ textAlign: "left", margin: "1rem 0 0 0" }}>
+              My journey isn't just about code — it's about people. Explore galleries from meetups, hackathons, workshops, and virtual gatherings I've attended.
+            </p>
+          </div>
+          <div className="community-3d-graphic" style={{ width: "75px", height: "75px", opacity: 0.6 }}>
+            <ThreeDCanvas type="rings" />
+          </div>
+        </div>
         <div className="community-cat-grid" ref={communityGridRef}>
           {communityCategories.map((cat) => (
             <Link key={cat.id} href={`/community/${cat.id}`} className="cat-card-link">

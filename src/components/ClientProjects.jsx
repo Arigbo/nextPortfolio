@@ -8,6 +8,7 @@ import { allProjects } from "@/lib/projectsData";
 import { useOnScreen } from "@/hooks/useOnScreen";
 import { useHeroScrollAway } from "@/hooks/useScrollProgress";
 import { useStaggerReveal } from "@/hooks/useParallax";
+import ThreeDCanvas from "@/components/ThreeDCanvas";
 import "@/styles/projects.scss";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -174,6 +175,9 @@ export default function ClientProjects() {
             <span className="code-shape code-shape-4">[ ]</span>
           </div>
           <div className="hero-dot-grid" />
+          <div className="projects-3d-wrap" style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none", opacity: 0.6 }}>
+            <ThreeDCanvas type="cube" />
+          </div>
         </div>
         <div className="projects-hero-overlay" />
         <div className="projects-hero-content" ref={heroContentRef}>
@@ -194,36 +198,42 @@ export default function ClientProjects() {
       <div
         ref={controlsRef}
         className={`projects-controls reveal-on-screen ${controlsVisible ? "revealed" : ""}`}
+        style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}
       >
-        {/* Search */}
-        <div className="search-wrap">
-          <i className="fas fa-search search-icon" />
-          <input
-            type="search"
-            className="search-input"
-            placeholder="Search by title, tech, or keyword…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            aria-label="Search projects"
-          />
-          {search && (
-            <button className="search-clear" onClick={() => setSearch("")} aria-label="Clear search">
-              <i className="fa-solid fa-xmark" />
-            </button>
-          )}
-        </div>
+        <div className="projects-controls-left" style={{ display: "flex", gap: "1.25rem", flex: 1, flexWrap: "wrap", alignItems: "center" }}>
+          {/* Search */}
+          <div className="search-wrap" style={{ flex: 1, minWidth: "240px" }}>
+            <i className="fas fa-search search-icon" />
+            <input
+              type="search"
+              className="search-input"
+              placeholder="Search by title, tech, or keyword…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              aria-label="Search projects"
+            />
+            {search && (
+              <button className="search-clear" onClick={() => setSearch("")} aria-label="Clear search">
+                <i className="fa-solid fa-xmark" />
+              </button>
+            )}
+          </div>
 
-        {/* Filter chips */}
-        <div className="filter-chips" role="group" aria-label="Filter by category">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`filter-chip ${filter === cat ? "active" : ""}`}
-            >
-              {cat}
-            </button>
-          ))}
+          {/* Filter chips */}
+          <div className="filter-chips" role="group" aria-label="Filter by category" style={{ margin: 0 }}>
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`filter-chip ${filter === cat ? "active" : ""}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="controls-3d-graphic" style={{ width: "55px", height: "55px", opacity: 0.5 }}>
+          <ThreeDCanvas type="torus" />
         </div>
       </div>
 

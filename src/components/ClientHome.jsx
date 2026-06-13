@@ -10,6 +10,7 @@ import { allProjects, techStackData } from "@/lib/projectsData";
 import { useOnScreen } from "@/hooks/useOnScreen";
 import { useHeroScrollAway } from "@/hooks/useScrollProgress";
 import { useStaggerReveal } from "@/hooks/useParallax";
+import ThreeDCanvas from "@/components/ThreeDCanvas";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -198,6 +199,9 @@ export default function ClientHome() {
             </div>
             <div className="hero-dot-grid" />
             <div className="hero-mesh-overlay" />
+            <div className="hero-3d-wrap" style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none", opacity: 0.6 }}>
+              <ThreeDCanvas type="sphere" />
+            </div>
           </div>
 
           <div className="hero-content" ref={heroContentRef}>
@@ -290,12 +294,17 @@ export default function ClientHome() {
           id="projects"
           className={`home-section parallax-section reveal-on-screen ${projectsVisible ? "revealed" : ""}`}
         >
-          <div className="section-header">
-            <p className="section-label">Selected Work</p>
-            <h2 className="section-title">Featured Projects</h2>
-            <p className="section-sub">
-              A showcase of impactful web systems. Click any card for the full case study.
-            </p>
+          <div className="section-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem" }}>
+            <div>
+              <p className="section-label">Selected Work</p>
+              <h2 className="section-title">Featured Projects</h2>
+              <p className="section-sub">
+                A showcase of impactful web systems. Click any card for the full case study.
+              </p>
+            </div>
+            <div className="header-3d-graphic" style={{ width: "80px", height: "80px", opacity: 0.6 }}>
+              <ThreeDCanvas type="cube" />
+            </div>
           </div>
 
           <div className="projects-grid" ref={projectsGridRef}>
@@ -355,12 +364,17 @@ export default function ClientHome() {
           id="stack"
           className={`home-section parallax-section reveal-on-screen ${stackVisible ? "revealed" : ""}`}
         >
-          <div className="section-header">
-            <p className="section-label">Expertise</p>
-            <h2 className="section-title">My Tech Stack</h2>
-            <p className="section-sub">
-              The languages, frameworks, and infrastructure I build with daily.
-            </p>
+          <div className="section-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem" }}>
+            <div>
+              <p className="section-label">Expertise</p>
+              <h2 className="section-title">My Tech Stack</h2>
+              <p className="section-sub">
+                The languages, frameworks, and infrastructure I build with daily.
+              </p>
+            </div>
+            <div className="header-3d-graphic" style={{ width: "80px", height: "80px", opacity: 0.6 }}>
+              <ThreeDCanvas type="torus" />
+            </div>
           </div>
 
           {/* Scrolling tech ticker */}
@@ -392,9 +406,15 @@ export default function ClientHome() {
           id="testimonials"
           className={`home-section parallax-section reveal-on-screen ${testisVisible ? "revealed" : ""}`}
         >
-          <div className="section-header">
-            <p className="section-label">Kind Words</p>
-            <h2 className="section-title">Client Testimonials</h2>
+          <div className="section-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem" }}>
+            <div>
+              <p className="section-label">Kind Words</p>
+              <h2 className="section-title">Client Testimonials</h2>
+              <p className="section-sub">Feedback from partners and clients.</p>
+            </div>
+            <div className="header-3d-graphic" style={{ width: "80px", height: "80px", opacity: 0.6 }}>
+              <ThreeDCanvas type="rings" />
+            </div>
           </div>
           <TestimonialSection />
         </section>

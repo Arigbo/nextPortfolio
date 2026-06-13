@@ -3,6 +3,7 @@ import Link from "next/link";
 import { allProjects, techMap } from "@/lib/projectsData";
 import "@/styles/project-detail.scss";
 import ClientProjectHeroParallax from "@/components/ClientProjectHeroParallax";
+import ThreeDCanvas from "@/components/ThreeDCanvas";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -58,6 +59,9 @@ export default async function ProjectDetailsPage({ params }) {
           style={{ backgroundImage: `url(${project.imageUrl})` }}
         />
         <div className="proj-detail-hero-overlay" />
+        <div className="proj-detail-3d-wrap" style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none", opacity: 0.45 }}>
+          <ThreeDCanvas type="rings" />
+        </div>
 
         {/* Top breadcrumb */}
         <nav className="proj-breadcrumb" aria-label="Breadcrumb">
@@ -146,11 +150,16 @@ export default async function ProjectDetailsPage({ params }) {
           </div>
 
           {/* Project links */}
-          <div className="proj-sidebar-card">
-            <h3 className="proj-sidebar-title">
-              <i className="fa-solid fa-link" />
-              Project Links
-            </h3>
+          <div className="proj-sidebar-card" style={{ position: "relative" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+              <h3 className="proj-sidebar-title" style={{ margin: 0 }}>
+                <i className="fa-solid fa-link" />
+                Project Links
+              </h3>
+              <div className="card-3d-graphic" style={{ width: "40px", height: "40px", opacity: 0.5 }}>
+                <ThreeDCanvas type="cube" />
+              </div>
+            </div>
             <div className="proj-link-btns">
               {project.link && (
                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="proj-link-btn gradient-button">

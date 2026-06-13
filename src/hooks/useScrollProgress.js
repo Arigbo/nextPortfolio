@@ -47,33 +47,31 @@ export function useHeroScrollAway(heroRef, contentRef, bgRef) {
     if (typeof window === "undefined" || !heroRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Content fades up + scales
+      // Content subtle parallax translation (no opacity fade out)
       if (contentRef?.current) {
         gsap.to(contentRef.current, {
-          y: -80,
-          opacity: 0,
-          scale: 0.97,
-          ease: "none",
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top top",
-            end: "60% top",
-            scrub: 1.2,
-          },
-        });
-      }
-
-      // Background zooms + dims
-      if (bgRef?.current) {
-        gsap.to(bgRef.current, {
-          scale: 1.15,
-          filter: "brightness(0.3) blur(4px)",
+          y: 40,
           ease: "none",
           scrollTrigger: {
             trigger: heroRef.current,
             start: "top top",
             end: "bottom top",
-            scrub: 1,
+            scrub: true,
+          },
+        });
+      }
+
+      // Background subtle zoom and parallax translation (no brightness dimming or blur)
+      if (bgRef?.current) {
+        gsap.to(bgRef.current, {
+          y: 80,
+          scale: 1.06,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
           },
         });
       }

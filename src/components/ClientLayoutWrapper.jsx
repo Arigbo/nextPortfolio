@@ -13,14 +13,16 @@ if (typeof window !== "undefined") {
 }
 
 export default function ClientLayoutWrapper({ children }) {
-  const [theme, setTheme] = useState();
+  const [theme, setTheme] = useState("blue");
   const themes = [
-    { name: "light" },
-    { name: "dark" },
-    { name: "blue" },
-    { name: "forest" },
-    { name: "orange" },
-    { name: "purple" },
+    { name: "light",    label: "Light",    accent: "#2563eb" },
+    { name: "dark",     label: "Dark",     accent: "#7c83f5" },
+    { name: "blue",     label: "Ocean",    accent: "#64ffda" },
+    { name: "forest",   label: "Forest",   accent: "#4ade80" },
+    { name: "orange",   label: "Solar",    accent: "#ff6b35" },
+    { name: "purple",   label: "Cosmic",   accent: "#d946ef" },
+    { name: "rose",     label: "Rose",     accent: "#f43f5e" },
+    { name: "midnight", label: "Midnight", accent: "#818cf8" },
   ];
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
