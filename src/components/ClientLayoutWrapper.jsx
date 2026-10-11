@@ -1,84 +1,51 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useCallback, useEffect, useState } from "react";
 import { Context } from "@/components/context";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-
-// Register GSAP plugins globally (only once)
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import CommandPalette from "@/components/CommandPalette";
 
 export default function ClientLayoutWrapper({ children }) {
-  const [theme, setTheme] = useState("blue");
-  const themes = [
-    { name: "light",    label: "Light",    accent: "#2563eb" },
-    { name: "dark",     label: "Dark",     accent: "#7c83f5" },
-    { name: "blue",     label: "Ocean",    accent: "#64ffda" },
-    { name: "forest",   label: "Forest",   accent: "#4ade80" },
-    { name: "orange",   label: "Solar",    accent: "#ff6b35" },
-    { name: "purple",   label: "Cosmic",   accent: "#d946ef" },
-    { name: "rose",     label: "Rose",     accent: "#f43f5e" },
-    { name: "midnight", label: "Midnight", accent: "#818cf8" },
-  ];
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const [theme, setTheme] = useState("dark");
+  const [paletteOpen, setPaletteOpen] = useState(false);
 
+  // The inline script in layout.jsx already applied the theme; sync React state to it
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("theme") || "blue";
-      setTheme(savedTheme);
-      localStorage.setItem("theme", savedTheme);
-    }
+    setTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
   }, []);
 
-  const handleThemeChange = (e) => {
-    const newTheme = e.target.value;
-    setTheme(newTheme);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("theme", newTheme);
-    }
-  };
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem("theme", next); } catch {}
+      return next;
+    });
+  }, []);
 
-  const name = "Arigbo Jesse";
-  const logo = (
-    <svg
-      className="logo-svg"
-      viewBox="0 0 180 180"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M 50 20 L 130 90 L 50 160" />
-      <path d="M 130 20 L 50 90 L 130 160" />
-    </svg>
-  );
+  const openPalette = useCallback(() => setPaletteOpen(true), []);
+
+  // Ctrl/Cmd + K opens the command palette from anywhere
+  useEffect(() => {
+    const onKey = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setPaletteOpen((open) => !open);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   return (
-    <body className={theme}>
-      <Context.Provider
-        value={{
-          theme,
-          setTheme,
-          isContactModalOpen,
-          setIsContactModalOpen,
-          setIsAboutModalOpen,
-          isAboutModalOpen,
-        }}
-      >
-        <Header
-          themes={themes}
-          logo={logo}
-          name={name}
-          theme={theme}
-          setTheme={setTheme}
-          setIsContactModalOpen={setIsContactModalOpen}
-          handleThemeChange={handleThemeChange}
-          setIsAboutModalOpen={setIsAboutModalOpen}
-        />
-        {children}
-        <Footer name={name} />
+    <body>
+      <Context.Provider value={{ theme, toggleTheme, openPalette }}>
+        <a href="#main" className="skip-link">Skip to content</a>
+        <Header />
+        <main id="main">{children}</main>
+        <Footer />
+        <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
       </Context.Provider>
     </body>
   );

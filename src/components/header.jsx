@@ -1,182 +1,109 @@
-import { usePathname } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
+"use client";
 
-export default function Header({
-  name,
-  logo,
-  handleThemeChange,
-  theme,
-  setTheme,
-  setIsContactModalOpen,
-  themes,
-}) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [selectTheme, setSelectTheme] = useState(false);
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useSite } from "@/components/context";
+import Logo from "@/components/Logo";
+import { NAV, SITE, isActive } from "@/lib/site";
+
+export default function Header() {
+  const pathname = usePathname();
+  const { theme, toggleTheme, openPalette } = useSite();
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const switcherRef = useRef(null);
+  const [isMac, setIsMac] = useState(false);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (switcherRef.current && !switcherRef.current.contains(event.target)) {
-        setSelectTheme(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      window.removeEventListener("scroll", handleScroll);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    setIsMac(/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent));
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const nav = [
-    { name: "Home", link: "/" },
-    { name: "About", link: "/about" },
-    { name: "Projects", link: "/projects" },
-    { name: "Contact", link: "/contact" },
-  ];
-  const path = usePathname();
+  // Close the mobile menu on navigation, and lock scroll while it's open
+  useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
-  // Find current theme accent for the live swatch preview
-  const currentThemeData = themes.find((t) => t.name === theme);
+  const themeLabel = theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
 
   return (
-    <header className={scrolled ? "scrolled" : ""}>
-      <div className="headerInner">
-        <Link href="/" className="logo">
-          <h1>{logo}</h1>
+    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+      <div className="header-inner container">
+        <Link href="/" className="brand" aria-label={`${SITE.name} — home`}>
+          <Logo />
+          <span className="brand-path">
+            <span className="tk-prompt">~/</span>{SITE.handle}
+            <span className="brand-branch"> git:(<span>main</span>)</span>
+          </span>
         </Link>
 
-        <nav className="nav">
-          <div className="nav-items">
-            {nav.map((item) => {
-              const isActive = path === item.link;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.link}
-                  className={`nav-link underline-hover ${isActive ? "active" : ""}`}
-                >
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
+        <nav className="tabs" aria-label="Main">
+          {NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`tab ${isActive(pathname, item.href) ? "active" : ""}`}
+              aria-current={isActive(pathname, item.href) ? "page" : undefined}
+            >
+              <i className={`${item.icon} tone-${item.tone}`} aria-hidden="true" />
+              {item.file}
+            </Link>
+          ))}
         </nav>
 
-        <div className="header-right">
-          {/* ── Theme Switcher ── */}
-          <div className="theme-select-container" ref={switcherRef}>
-            <button
-              className="theme-trigger-button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectTheme(!selectTheme);
-              }}
-              aria-label="Change theme"
-              aria-expanded={selectTheme}
-            >
-              {/* Live accent swatch */}
-              <span
-                className={`theme-dot theme-swatch-preview ${theme}`}
-              />
-              <span className="theme-label-text">
-                {currentThemeData?.label || theme}
-              </span>
-              <i
-                className={`fa-solid fa-chevron-down arrow-icon ${
-                  selectTheme ? "rotate" : ""
-                }`}
-              />
-            </button>
+        <div className="header-actions">
+          <button className="search-trigger" onClick={openPalette} aria-label="Open command palette">
+            <i className="fa-solid fa-magnifying-glass" aria-hidden="true" />
+            <span className="search-trigger-text">Search…</span>
+            <kbd>{isMac ? "⌘" : "Ctrl"} K</kbd>
+          </button>
 
-            {selectTheme && (
-              <div className="theme-options-dropdown" role="listbox">
-                <p className="theme-dropdown-header">Choose Theme</p>
-                <div className="theme-options-grid">
-                  {themes.map((item) => (
-                    <button
-                      key={item.name}
-                      role="option"
-                      aria-selected={theme === item.name}
-                      className={`theme-option ${
-                        theme === item.name ? "active" : ""
-                      }`}
-                      onClick={() => {
-                        setTheme(item.name);
-                        handleThemeChange({ target: { value: item.name } });
-                        setSelectTheme(false);
-                      }}
-                    >
-                      <span className={`theme-dot ${item.name}`} />
-                      <span className="option-name">
-                        {item.label || item.name}
-                      </span>
-                      <i className="fa-solid fa-check option-check" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          <button className="icon-btn" onClick={toggleTheme} aria-label={themeLabel} title={themeLabel}>
+            <i className={theme === "dark" ? "fa-solid fa-sun" : "fa-solid fa-moon"} aria-hidden="true" />
+          </button>
 
-          {/* ── CTA Button ── */}
-          <Link href="/contact" style={{ display: "flex" }}>
-            <button
-              className="talk-button gradient-button"
-              id="header-lets-talk-btn"
-            >
-              <i className="fa-solid fa-bolt" style={{ marginRight: "0.35rem", fontSize: "0.75rem" }} />
-              Let's Talk
-            </button>
-          </Link>
-
-          {/* ── Mobile menu toggle ── */}
           <button
-            className="menu-toggle"
-            onClick={() => setIsMenuOpen(true)}
-            aria-label="Open navigation menu"
+            className="icon-btn menu-btn"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
-            <i className="fa-solid fa-bars-staggered" />
+            <i className={menuOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars"} aria-hidden="true" />
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
-      <div
-        className={`menu-overlay ${isMenuOpen ? "show" : ""}`}
-        onClick={() => setIsMenuOpen(false)}
-      >
-        <div className="menu" onClick={(e) => e.stopPropagation()}>
-          <button
-            className="close-menu"
-            style={{
-              background: "transparent",
-              border: "0",
-              color: "inherit",
-              alignSelf: "flex-end",
-              padding: "0.5rem",
-            }}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <i className="fas fa-times fa-lg" />
-          </button>
-          {nav.map((item) => (
+      {/* Mobile menu — a little shell session */}
+      <div id="mobile-menu" className={`mobile-menu ${menuOpen ? "open" : ""}`} aria-hidden={!menuOpen}>
+        <div className="mobile-menu-inner container">
+          <p className="mobile-menu-cmd"><span className="tk-prompt">❯</span> ls ~/</p>
+          {NAV.map((item, i) => (
             <Link
-              key={item.name}
-              href={item.link}
-              onClick={() => setIsMenuOpen(false)}
-              className={path === item.link ? "active" : ""}
+              key={item.href}
+              href={item.href}
+              className={`mobile-link ${isActive(pathname, item.href) ? "active" : ""}`}
+              style={{ "--i": i }}
+              tabIndex={menuOpen ? 0 : -1}
             >
-              {item.name}
+              <i className={`${item.icon} tone-${item.tone}`} aria-hidden="true" />
+              <span>{item.label}</span>
+              <span className="mobile-link-file">{item.file}</span>
             </Link>
           ))}
+          <div className="mobile-menu-foot">
+            <button className="btn btn-ghost" onClick={() => { setMenuOpen(false); openPalette(); }} tabIndex={menuOpen ? 0 : -1}>
+              <i className="fa-solid fa-magnifying-glass" /> Search
+            </button>
+            <Link href="/contact" className="btn btn-primary" tabIndex={menuOpen ? 0 : -1}>
+              Let's talk <i className="fa-solid fa-arrow-right" />
+            </Link>
+          </div>
         </div>
       </div>
     </header>

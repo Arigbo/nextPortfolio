@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 
 /* ─────────────────────────────────────────────────────────────
    Constants
@@ -68,19 +69,14 @@ function MasonryImage({ photo, index, onOpen }) {
       aria-label={status === "loaded" ? `View photo: ${photo.caption}` : undefined}
       onKeyDown={(e) => e.key === "Enter" && status === "loaded" && onOpen(photo, index)}
     >
-      {/* Shimmer skeleton while loading */}
       {isPending && (
         <div className="masonry-skeleton" aria-hidden="true">
           {status === "retrying" && (
-            <div className="retry-overlay">
-              <div className="retry-spinner" />
-              <span className="retry-text">Retry in {countdown}s</span>
-            </div>
+            <span className="retry-text mono">retrying in {countdown}s…</span>
           )}
         </div>
       )}
 
-      {/* Image — render as long as not permanently failed */}
       {status !== "failed" && (
         <img
           src={`${photo.url}${photo.url.includes("?") ? "&" : "?"}r=${retries}`}
@@ -94,23 +90,17 @@ function MasonryImage({ photo, index, onOpen }) {
         />
       )}
 
-      {/* Permanent failure tile — tap to retry */}
       {status === "failed" && (
-        <button className="masonry-failed-tile" onClick={manualRetry} aria-label="Tap to retry image">
+        <button className="masonry-failed mono" onClick={manualRetry} aria-label="Retry loading image">
           <i className="fa-solid fa-rotate-right" />
-          <span>Tap to retry</span>
+          <span>load failed — retry</span>
         </button>
       )}
 
-      {/* Caption overlay — only once loaded */}
       {status === "loaded" && (
-        <div className="gallery-overlay">
-          <div className="overlay-content">
-            <p className="photo-desc">{photo.caption}</p>
-            <div className="people-tags">
-              <span className="tag">{photo.tag}</span>
-            </div>
-          </div>
+        <div className="masonry-caption">
+          <span className="tag">{photo.tag}</span>
+          <p>{photo.caption}</p>
         </div>
       )}
     </div>
@@ -125,44 +115,9 @@ export default function ClientCommunityGallery({ category }) {
   const total  = photos.length;
 
   const [visibleCount, setVisibleCount] = useState(INITIAL_BATCH);
-  const [heroLoaded,   setHeroLoaded]   = useState(false);
-
-  const heroRef = useRef(null);
-  const heroBgRef = useRef(null);
-
-  /* Lightbox state */
   const [activePhoto, setActivePhoto] = useState(null);
   const [photoIndex,  setPhotoIndex]  = useState(0);
   const filmStripRef = useRef(null);
-
-  /* Hero entrance animation */
-  useEffect(() => {
-    const t = setTimeout(() => setHeroLoaded(true), 80);
-    return () => clearTimeout(t);
-  }, []);
-
-  /* Parallax + mouse parallax */
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!heroBgRef.current) return;
-      const scrolled = window.scrollY;
-      heroBgRef.current.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0) scale(${1 + scrolled * 0.0003})`;
-    };
-    const handleMouse = (e) => {
-      if (!heroBgRef.current || !heroRef.current) return;
-      const xOff = (e.clientX / window.innerWidth - 0.5);
-      const yOff = (e.clientY / window.innerHeight - 0.5);
-      const s = window.scrollY;
-      heroBgRef.current.style.transform = `translate3d(${xOff * -25}px, ${yOff * -25 + s * 0.3}px, 0) scale(1.04)`;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    heroRef.current?.addEventListener("mousemove", handleMouse);
-    const hero = heroRef.current;
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      hero?.removeEventListener("mousemove", handleMouse);
-    };
-  }, []);
 
   /* Reset on category change */
   useEffect(() => {
@@ -170,23 +125,27 @@ export default function ClientCommunityGallery({ category }) {
     setActivePhoto(null);
   }, [category.id]);
 
-  /* Keyboard navigation for lightbox */
+  /* Keyboard navigation + scroll lock for lightbox */
   useEffect(() => {
     if (activePhoto === null) return;
     const handler = (e) => {
-      if (e.key === "Escape")        closeLightbox();
+      if (e.key === "Escape")          closeLightbox();
       else if (e.key === "ArrowRight") nav(1);
       else if (e.key === "ArrowLeft")  nav(-1);
     };
     window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handler);
+      document.body.style.overflow = "";
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePhoto, photoIndex]);
 
-  /* Auto-scroll film strip */
+  /* Keep the active film-strip thumb centred */
   useEffect(() => {
     if (!filmStripRef.current || activePhoto === null) return;
-    const thumb = filmStripRef.current.children[photoIndex];
+    const thumb = filmStripRef.current.querySelector(".film-thumb.active");
     if (thumb) thumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
   }, [photoIndex, activePhoto]);
 
@@ -203,167 +162,103 @@ export default function ClientCommunityGallery({ category }) {
     setActivePhoto(photos[newIdx]);
   };
 
-  const loadMore = () => {
-    setVisibleCount((prev) => Math.min(prev + MORE_BATCH, total));
-  };
+  const loadMore = () => setVisibleCount((prev) => Math.min(prev + MORE_BATCH, total));
 
   const hasMore = visibleCount < total;
   const visiblePhotos = photos.slice(0, visibleCount);
+  const stripStart = Math.max(0, photoIndex - 6);
 
   return (
-    <>
-      {/* ═══ Hero banner ═══ */}
-      <div className="gallery-hero" ref={heroRef}>
-        <div
-          ref={heroBgRef}
-          className="gallery-hero-bg"
-          style={{
-            backgroundImage: `url(${category.coverImage})`,
-            transform: heroLoaded ? undefined : "scale(1.06)",
-            transition: heroLoaded ? "none" : "transform 0.8s ease-out",
-          }}
-        />
-        <div className="gallery-hero-content">
-          <nav className="gallery-hero-breadcrumb" aria-label="Breadcrumb">
-            <Link href="/about">About</Link>
-            <i className="fa-solid fa-chevron-right" />
-            <Link href="/about#community">Community</Link>
-            <i className="fa-solid fa-chevron-right" />
-            <span>{category.title}</span>
+    <div className="page container gallery">
+      {/* ═══ Header ═══ */}
+      <Reveal className="cmd-head">
+        <div>
+          <nav className="crumbs mono" aria-label="Breadcrumb">
+            <span className="tk-prompt">❯</span>
+            <span className="dim">cd</span>
+            <Link href="/about">~/about</Link>/<Link href="/about#community">community</Link>/<span className="bright">{category.id}</span>
           </nav>
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            <span className="gallery-category-icon">
-              <i className={category.icon} />
-            </span>
-            <h1 className="gallery-hero-title">{category.title}</h1>
-          </div>
-          <p className="gallery-hero-desc">{category.description}</p>
-          <div className="gallery-hero-stats">
-            <span className="stat-pill">
-              <i className="fa-solid fa-images" />
-              {total.toLocaleString()} Photos
-            </span>
-            <span className="stat-pill">
-              <i className="fa-solid fa-calendar" />
-              {category.title}
-            </span>
-          </div>
+          <h1><i className={`${category.icon} gallery-icon`} aria-hidden="true" /> {category.title}</h1>
+          <p className="cmd-sub">{category.description}</p>
         </div>
+        <p className="mono gallery-total">
+          <span className="dim">total</span> <span className="bright">{total.toLocaleString()}</span>
+        </p>
+      </Reveal>
+
+      <div className="gallery-bar mono">
+        <span className="tk-com"># showing {visibleCount.toLocaleString()} of {total.toLocaleString()} photos</span>
+        <Link href="/about#community" className="text-link">
+          <i className="fa-solid fa-arrow-left" /> cd ..
+        </Link>
       </div>
 
-      {/* ═══ Gallery body ═══ */}
-      <div className="community-page">
-
-        {/* Top bar */}
-        <div className="gallery-top-bar">
-          <p className="gallery-count-text">
-            Showing {visibleCount.toLocaleString()} of {total.toLocaleString()} photos
-          </p>
-          <Link href="/about#community" className="gallery-back-link">
-            <i className="fa-solid fa-arrow-left" />
-            All Communities
-          </Link>
-        </div>
-
-        {/* ─── Masonry grid ─── */}
-        <div className="masonry-gallery">
-          {visiblePhotos.map((photo, index) => (
-            <MasonryImage
-              key={`${category.id}-${index}`}
-              photo={photo}
-              index={index}
-              onOpen={openLightbox}
-            />
-          ))}
-        </div>
-
-        {/* ─── Load More button ─── */}
-        {hasMore && (
-          <div className="gallery-load-more-wrap">
-            <button className="gallery-load-more-btn" onClick={loadMore}>
-              <i className="fa-solid fa-plus" />
-              See More ({(total - visibleCount).toLocaleString()} remaining)
-            </button>
-          </div>
-        )}
-
-        {/* ─── All loaded message ─── */}
-        {!hasMore && total > INITIAL_BATCH && (
-          <p className="gallery-all-loaded">
-            <i className="fa-solid fa-circle-check" /> All {total.toLocaleString()} photos shown
-          </p>
-        )}
-
-        {/* ─── Back button ─── */}
-        <div className="gallery-back-wrap">
-          <Link href="/about#community">
-            <button className="gradient-button gallery-back-btn">
-              <i className="fa-solid fa-arrow-left" />
-              Back to Communities
-            </button>
-          </Link>
-        </div>
+      {/* ═══ Masonry grid ═══ */}
+      <div className="masonry">
+        {visiblePhotos.map((photo, index) => (
+          <MasonryImage
+            key={`${category.id}-${index}`}
+            photo={photo}
+            index={index}
+            onOpen={openLightbox}
+          />
+        ))}
       </div>
 
-      {/* ═══ Fullscreen Lightbox ═══ */}
+      {hasMore ? (
+        <div className="gallery-more">
+          <button className="btn" onClick={loadMore}>
+            <i className="fa-solid fa-plus" /> load more <span className="dim">({(total - visibleCount).toLocaleString()} remaining)</span>
+          </button>
+        </div>
+      ) : (
+        total > INITIAL_BATCH && (
+          <p className="gallery-done mono">
+            <span className="accent">✓</span> all {total.toLocaleString()} photos loaded
+          </p>
+        )
+      )}
+
+      {/* ═══ Lightbox ═══ */}
       {activePhoto && (
-        <div
-          className="lightbox-backdrop"
-          onClick={closeLightbox}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Photo lightbox"
-        >
-          {/* Top bar */}
-          <div className="lightbox-topbar" onClick={(e) => e.stopPropagation()}>
-            <div>
-              <p className="lightbox-category">{category.title}</p>
-              <p className="lightbox-counter">{photoIndex + 1} / {total.toLocaleString()}</p>
-            </div>
-            <button className="lightbox-close" onClick={closeLightbox} aria-label="Close lightbox">
+        <div className="lightbox" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Photo viewer">
+          <div className="lightbox-top mono" onClick={(e) => e.stopPropagation()}>
+            <span>
+              <span className="bright">{category.id}/</span>
+              <span className="dim"> {photoIndex + 1} / {total.toLocaleString()}</span>
+            </span>
+            <button className="icon-btn" onClick={closeLightbox} aria-label="Close viewer">
               <i className="fa-solid fa-xmark" />
             </button>
           </div>
 
-          {/* Prev */}
           <button
-            className="lightbox-nav prev"
+            className="lightbox-nav prev icon-btn"
             onClick={(e) => { e.stopPropagation(); nav(-1); }}
             aria-label="Previous photo"
           >
             <i className="fa-solid fa-chevron-left" />
           </button>
 
-          {/* Main image */}
-          <div className="lightbox-img-wrap" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={activePhoto.url}
-              alt={activePhoto.caption}
-              className="lightbox-img"
-            />
-            <div className="lightbox-caption">
-              <p className="lightbox-caption-text">{activePhoto.caption}</p>
-              <span className="lightbox-tag">{activePhoto.tag}</span>
-            </div>
-          </div>
+          <figure className="lightbox-stage" onClick={(e) => e.stopPropagation()}>
+            <img src={activePhoto.url} alt={activePhoto.caption} className="lightbox-img" />
+            <figcaption className="lightbox-caption">
+              <span className="tag">{activePhoto.tag}</span>
+              <p>{activePhoto.caption}</p>
+            </figcaption>
+          </figure>
 
-          {/* Next */}
           <button
-            className="lightbox-nav next"
+            className="lightbox-nav next icon-btn"
             onClick={(e) => { e.stopPropagation(); nav(1); }}
             aria-label="Next photo"
           >
             <i className="fa-solid fa-chevron-right" />
           </button>
 
-          {/* Film strip */}
-          <div
-            className="lightbox-film-strip"
-            ref={filmStripRef}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {photos.slice(Math.max(0, photoIndex - 6), photoIndex + 10).map((photo, i) => {
-              const ri = Math.max(0, photoIndex - 6) + i;
+          <div className="film-strip" ref={filmStripRef} onClick={(e) => e.stopPropagation()}>
+            {photos.slice(stripStart, photoIndex + 10).map((photo, i) => {
+              const ri = stripStart + i;
               return (
                 <img
                   key={ri}
@@ -378,6 +273,6 @@ export default function ClientCommunityGallery({ category }) {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

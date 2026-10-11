@@ -2,7 +2,9 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 import { allProjects, techMap } from "@/lib/projectsData";
+import { slugOf } from "@/lib/site";
 
 const TOOL_DESCRIPTIONS = {
   "Next.js": "Production-grade React framework for server-side rendering, static site generation, and building fast full-stack applications.",
@@ -46,123 +48,82 @@ const TOOL_CATEGORIES = {
   GraphQL: "Query Language",
 };
 
+const projectsUsing = (tool) =>
+  allProjects.filter((p) => p.techStack.some((t) => t.toLowerCase() === tool.toLowerCase()));
+
+/** Tool list on the left, a `man` page for the selected tool on the right. */
 export default function ClientToolkit({ toolkit }) {
-  const [activeTool, setActiveTool] = useState(null);
-
-  // Helper to find projects using this tool
-  const getUsedProjects = (toolName) => {
-    return allProjects.filter((project) =>
-      project.techStack.some(
-        (tech) => tech.toLowerCase() === toolName.toLowerCase()
-      )
-    );
-  };
-
-  const currentProjects = activeTool ? getUsedProjects(activeTool) : [];
-  const currentDescription = activeTool ? TOOL_DESCRIPTIONS[activeTool] : "";
-  const currentCategory = activeTool ? TOOL_CATEGORIES[activeTool] : "";
-  const currentLogo = activeTool ? techMap[activeTool.toLowerCase()] : null;
+  const [active, setActive] = useState(toolkit[0]);
+  const used = projectsUsing(active);
+  const logo = techMap[active.toLowerCase()];
 
   return (
-    <div className="toolkit-container">
-      {/* Left side: Cloud of chips */}
-      <div className="toolkit-left">
-        <div className="toolkit-cloud">
+    <div className="toolkit">
+      <Reveal className="window toolkit-list">
+        <div className="window-bar">
+          <i className="fa-solid fa-folder-tree tone-yellow" aria-hidden="true" />
+          <span className="window-title" style={{ textAlign: "left" }}>ls ./toolkit</span>
+          <span className="window-meta">{toolkit.length}</span>
+        </div>
+        <div className="window-body toolkit-items" role="listbox" aria-label="Tools">
           {toolkit.map((t) => {
-            const isHovered = activeTool === t;
-            const logoUrl = techMap[t.toLowerCase()];
-            const hasProjects = getUsedProjects(t).length > 0;
-
+            const count = projectsUsing(t).length;
+            const src = techMap[t.toLowerCase()];
             return (
               <button
                 key={t}
-                className={`toolkit-chip ${isHovered ? "active" : ""} ${
-                  hasProjects ? "has-projects" : ""
-                }`}
-                onMouseEnter={() => setActiveTool(t)}
-                onMouseLeave={() => setActiveTool(t)} // keep active or clear on leave? Let's keep the last hovered tool active for better reading, or clear.
-                // Let's clear on mouse leave so it goes back to default state
-                // Actually, let's keep last hovered active so user can click links easily, or keep it open unless they hover elsewhere.
-                // If they hover out of the whole container we can reset it, or we can just leave it at the last hovered tool!
-                // Let's reset on container mouse leave.
+                role="option"
+                aria-selected={active === t}
+                className={`tool ${active === t ? "active" : ""}`}
+                onClick={() => setActive(t)}
+                onMouseEnter={() => setActive(t)}
+                onFocus={() => setActive(t)}
               >
-                {logoUrl && (
-                  <img
-                    src={logoUrl}
-                    alt={t}
-                    className="chip-logo"
-                    width={16}
-                    height={16}
-                  />
-                )}
-                <span className="chip-text">{t}</span>
+                {src ? <img src={src} alt="" width={16} height={16} /> : <i className="fa-solid fa-cube" aria-hidden="true" />}
+                <span>{t}</span>
+                {count > 0 && <span className="tool-count">{count}</span>}
               </button>
             );
           })}
         </div>
-      </div>
+      </Reveal>
 
-      {/* Right side: Interactive glassmorphic details card */}
-      <div className="toolkit-right">
-        <div className={`toolkit-detail-card ${activeTool ? "has-content" : "empty"}`}>
-          {activeTool ? (
-            <div className="detail-card-content">
-              <div className="detail-header">
-                {currentLogo ? (
-                  <div className="detail-logo-wrap">
-                    <img src={currentLogo} alt={activeTool} className="detail-logo" />
-                  </div>
-                ) : (
-                  <div className="detail-logo-wrap fallback">
-                    <i className="fa-solid fa-code" />
-                  </div>
-                )}
-                <div>
-                  <span className="detail-category">{currentCategory}</span>
-                  <h3 className="detail-title">{activeTool}</h3>
-                </div>
-              </div>
+      <Reveal className="window man" delay={100}>
+        <div className="window-bar">
+          <i className="fa-solid fa-book tone-blue" aria-hidden="true" />
+          <span className="window-title" style={{ textAlign: "left" }}>man {active.toLowerCase().replace(/\s+/g, "-")}</span>
+        </div>
+        <div className="window-body man-body" aria-live="polite">
+          <p className="man-section">NAME</p>
+          <p className="man-text man-name">
+            {logo && <img src={logo} alt="" width={22} height={22} />}
+            <strong>{active}</strong> <span className="dim">— {TOOL_CATEGORIES[active] ?? "Tool"}</span>
+          </p>
 
-              <p className="detail-desc">{currentDescription}</p>
+          <p className="man-section">DESCRIPTION</p>
+          <p className="man-text">{TOOL_DESCRIPTIONS[active] ?? "Part of my everyday engineering toolkit."}</p>
 
-              <div className="detail-projects-section">
-                <span className="projects-section-label">
-                  <i className="fa-solid fa-diagram-project" />
-                  Project Applications
-                </span>
-                
-                {currentProjects.length > 0 ? (
-                  <div className="detail-projects-list">
-                    {currentProjects.map((p) => (
-                      <Link key={p.id} href={`/projects/${p.id}`} className="detail-project-link">
-                        <span className="project-badge">
-                          <img src={p.imageUrl} alt={p.title} className="project-badge-img" />
-                          <span className="project-badge-name">{p.title}</span>
-                          <i className="fa-solid fa-chevron-right badge-arrow" />
-                        </span>
-                      </Link>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="no-projects-text">
-                    Used across personal templates, custom scripting, database migrations, and general engineering tasks.
-                  </p>
-                )}
-              </div>
-            </div>
+          <p className="man-section">USED IN</p>
+          {used.length > 0 ? (
+            <ul className="man-text man-projects">
+              {used.map((p) => (
+                <li key={p.id}>
+                  <Link href={`/projects/${p.id}`} className="man-project">
+                    <i className="fa-solid fa-folder" aria-hidden="true" />
+                    <span>{slugOf(p.title)}/</span>
+                    <span className="dim">{p.title}</span>
+                    <i className="fa-solid fa-arrow-right man-arrow" aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           ) : (
-            <div className="detail-card-placeholder">
-              <div className="placeholder-icon">
-                <i className="fa-solid fa-hand-pointer animate-bounce" />
-              </div>
-              <h4>Interactive Stack Explorer</h4>
-              <p>
-                Hover over any tool in the cloud to discover where it was integrated, its role in the stack, and see real-world project applications.
-              </p>
-            </div>
+            <p className="man-text dim">
+              Used across personal templates, scripting, database migrations and general engineering work.
+            </p>
           )}
         </div>
-      </div>
+      </Reveal>
     </div>
   );
 }

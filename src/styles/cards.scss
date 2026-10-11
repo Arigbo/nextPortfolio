@@ -1,0 +1,107 @@
+/* ============================================================
+   PROJECT CARD (shared by home + projects)
+   ============================================================ */
+
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+
+  @media (min-width: 640px) { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 1000px) { grid-template-columns: repeat(3, 1fr); }
+}
+
+.project-grid-item { display: flex; }
+
+.pcard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.25s, transform 0.35s var(--ease), box-shadow 0.35s;
+
+  &:hover {
+    border-color: var(--accent-line);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+
+    .pcard-img img { transform: scale(1.03); }
+    .pcard-cta i { transform: translateX(4px); }
+    .pcard-title { color: var(--accent); }
+  }
+}
+
+.pcard-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+
+  > i { color: var(--yellow); font-size: 0.8rem; }
+
+  .pcard-path { color: var(--text-bright); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+}
+
+.pcard-img {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.6s var(--ease);
+  }
+}
+
+.pcard-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.15rem 1.15rem 1.25rem;
+}
+
+.pcard-cat {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.pcard-title {
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+
+.pcard-desc {
+  font-size: 0.9rem;
+  color: var(--dim);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.pcard-cta {
+  margin-top: auto;
+  padding-top: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+
+  i { margin-left: 0.25rem; font-size: 0.75em; transition: transform 0.25s var(--ease); }
+}
