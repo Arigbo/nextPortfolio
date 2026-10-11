@@ -1,11 +1,10 @@
 "use client";
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 export const Context = createContext({
-  theme: "",
-  setTheme: () => {},
-  isContactModalOpen: () => {},
-  setIsContactModalOpen: () => {},
-  isAboutModalOpen: () => {},
-  setIsAboutModalOpen: () => {},
+  theme: "dark",
+  toggleTheme: () => {},
+  openPalette: () => {},
 });
+
+export const useSite = () => useContext(Context);

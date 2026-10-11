@@ -1,9 +1,14 @@
 import React from "react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import Reveal from "@/components/Reveal";
 import { allProjects, techMap } from "@/lib/projectsData";
+import { slugOf } from "@/lib/site";
 import "@/styles/project-detail.scss";
-import ClientProjectHeroParallax from "@/components/ClientProjectHeroParallax";
-import ThreeDCanvas from "@/components/ThreeDCanvas";
+
+export function generateStaticParams() {
+  return allProjects.map((p) => ({ id: p.id }));
+}
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -25,191 +30,162 @@ export async function generateMetadata({ params }) {
 
 export default async function ProjectDetailsPage({ params }) {
   const { id } = await params;
-  const project = allProjects.find((p) => p.id === id);
-  const allProjectIds = allProjects.map((p) => p.id);
-  const currentIndex = allProjectIds.indexOf(id);
-  const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
-  const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
+  const index = allProjects.findIndex((p) => p.id === id);
+  if (index === -1) notFound();
 
-  if (!project) {
-    return (
-      <div className="proj-detail-page">
-        <div className="proj-not-found">
-          <i className="fa-solid fa-triangle-exclamation" />
-          <h2>Project Not Found</h2>
-          <p>The project you are looking for does not exist or has been moved.</p>
-          <Link href="/projects">
-            <button className="gradient-button">Back to Projects</button>
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  const project = allProjects[index];
+  const prev = allProjects[index - 1];
+  const next = allProjects[index + 1];
+  const slug = slugOf(project.title);
+  const live = Boolean(project.link);
+  const host = project.link ? project.link.replace(/^https?:\/\//, "").replace(/\/$/, "") : `${slug}.local`;
 
   return (
-    <div className="proj-detail-page">
-      <ClientProjectHeroParallax />
-
-      {/* ════════════════════════════════════════
-          FULL-BLEED HERO BANNER
-      ════════════════════════════════════════ */}
-      <div className="proj-detail-hero">
-        <div
-          className="proj-detail-hero-bg"
-          style={{ backgroundImage: `url(${project.imageUrl})` }}
-        />
-        <div className="proj-detail-hero-overlay" />
-        <div className="proj-detail-3d-wrap" style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none", opacity: 0.45 }}>
-          <ThreeDCanvas type="rings" />
-        </div>
-
-        {/* Top breadcrumb */}
-        <nav className="proj-breadcrumb" aria-label="Breadcrumb">
-          <Link href="/projects">Projects</Link>
-          <i className="fa-solid fa-chevron-right" />
-          <span>{project.title}</span>
+    <div className="page container detail">
+      {/* ── Header ── */}
+      <Reveal className="detail-head">
+        <nav className="crumbs mono" aria-label="Breadcrumb">
+          <span className="tk-prompt">❯</span>
+          <span className="dim">cd</span>
+          <Link href="/">~</Link>/<Link href="/projects">projects</Link>/<span className="bright">{slug}</span>
         </nav>
 
-        {/* Bottom glass title panel */}
-        <div className="proj-detail-title-panel">
-          <span className="proj-detail-category">{project.category}</span>
-          <h1 className="proj-detail-title">{project.title}</h1>
-          <div className="proj-detail-actions-hero">
-            {project.link && (
-              <a href={project.link} target="_blank" rel="noopener noreferrer" className="hero-action-btn primary">
-                <i className="fas fa-external-link-alt" />
-                View Live
-              </a>
-            )}
-            {project.github && (
-              <a href={project.github} target="_blank" rel="noopener noreferrer" className="hero-action-btn secondary">
-                <i className="fab fa-github" />
-                Source Code
-              </a>
-            )}
-          </div>
+        <h1 className="detail-title">{project.title}</h1>
+        <p className="detail-tagline">{project.description}</p>
+
+        <div className="detail-meta">
+          <span className={`status ${live ? "live" : "wip"}`}>{live ? "live" : "in development"}</span>
+          <span className="detail-meta-item"><i className="fa-solid fa-layer-group" /> {project.category}</span>
+          <span className="detail-meta-item"><i className="fa-solid fa-cubes" /> {project.techStack.length} technologies</span>
         </div>
-      </div>
 
-      {/* ════════════════════════════════════════
-          CONTENT GRID
-      ════════════════════════════════════════ */}
-      <div className="proj-detail-body">
+        <div className="detail-actions">
+          {project.link && (
+            <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              <i className="fa-solid fa-arrow-up-right-from-square" /> open live site
+            </a>
+          )}
+          {project.github && (
+            <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn">
+              <i className="fa-brands fa-github" /> source
+            </a>
+          )}
+          {project.docs && project.docs !== project.github && (
+            <a href={project.docs} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+              <i className="fa-solid fa-book" /> docs
+            </a>
+          )}
+        </div>
+      </Reveal>
 
-        {/* Left — main content */}
-        <div className="proj-detail-left">
-
-          {/* Overview */}
-          <div className="proj-detail-card">
-            <h2 className="proj-detail-card-title">
-              <i className="fa-solid fa-file-lines" />
-              Project Overview
-            </h2>
-            <p className="proj-detail-overview">{project.description}</p>
+      {/* ── Screenshot in a browser frame ── */}
+      <Reveal as="figure" className="window browser" delay={100}>
+        <div className="window-bar">
+          <span className="dots"><i /><i /><i /></span>
+          <span className="browser-url">
+            <i className={live ? "fa-solid fa-lock" : "fa-solid fa-circle-half-stroke"} aria-hidden="true" />
+            {host}
+          </span>
+        </div>
+        {project.link ? (
+          <a href={project.link} target="_blank" rel="noopener noreferrer" className="browser-view" aria-label={`Open ${project.title} live site`}>
+            <img src={project.imageUrl} alt={`${project.title} screenshot`} />
+          </a>
+        ) : (
+          <div className="browser-view">
+            <img src={project.imageUrl} alt={`${project.title} preview`} />
           </div>
+        )}
+      </Reveal>
 
-          {/* Key features */}
-          <div className="proj-detail-card">
-            <h2 className="proj-detail-card-title">
-              <i className="fa-solid fa-star" />
-              Key Features & Accomplishments
-            </h2>
-            <ul className="proj-features-list">
-              {project.features.map((f, i) => (
-                <li key={i} className="proj-feature-item">
-                  <span className="proj-feature-check">
-                    <i className="fa-solid fa-check" />
-                  </span>
+      {/* ── README + sidebar ── */}
+      <div className="detail-grid">
+        <Reveal className="window readme">
+          <div className="window-bar">
+            <i className="fa-brands fa-markdown tone-blue" aria-hidden="true" />
+            <span className="window-title" style={{ textAlign: "left" }}>README.md</span>
+          </div>
+          <div className="window-body">
+            <h2 className="md-h"><span className="md-hash">#</span> Overview</h2>
+            <p className="md-p">{project.description}</p>
+
+            <h2 className="md-h"><span className="md-hash">##</span> Features</h2>
+            <ul className="md-checklist">
+              {project.features.map((f) => (
+                <li key={f}>
+                  <span className="md-box" aria-hidden="true"><i className="fa-solid fa-check" /></span>
                   {f}
                 </li>
               ))}
             </ul>
           </div>
+        </Reveal>
 
-        </div>
-
-        {/* Right — sticky sidebar */}
-        <aside className="proj-detail-sidebar">
-
-          {/* Tech stack */}
-          <div className="proj-sidebar-card">
-            <h3 className="proj-sidebar-title">
-              <i className="fa-solid fa-microchip" />
-              Tech Stack
-            </h3>
-            <div className="proj-tech-grid">
-              {project.techStack.map((t, i) => (
-                <div key={i} className="proj-tech-chip">
-                  {techMap?.[t.toLowerCase()] && (
-                    <img src={techMap[t.toLowerCase()]} alt={t} width={18} height={18} />
-                  )}
-                  <span>{t}</span>
-                </div>
-              ))}
+        <aside className="detail-side">
+          <Reveal className="window" delay={80}>
+            <div className="window-bar">
+              <i className="fa-solid fa-cube tone-green" aria-hidden="true" />
+              <span className="window-title" style={{ textAlign: "left" }}>package.json</span>
             </div>
-          </div>
-
-          {/* Project links */}
-          <div className="proj-sidebar-card" style={{ position: "relative" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
-              <h3 className="proj-sidebar-title" style={{ margin: 0 }}>
-                <i className="fa-solid fa-link" />
-                Project Links
-              </h3>
-              <div className="card-3d-graphic" style={{ width: "40px", height: "40px", opacity: 0.5 }}>
-                <ThreeDCanvas type="cube" />
-              </div>
+            <div className="window-body side-body">
+              <p className="code"><span className="tk-key">"dependencies"</span><span className="tk-punc">: [</span></p>
+              <ul className="dep-list">
+                {project.techStack.map((t) => (
+                  <li key={t}>
+                    {techMap?.[t.toLowerCase()] ? (
+                      <img src={techMap[t.toLowerCase()]} alt="" width={16} height={16} loading="lazy" />
+                    ) : (
+                      <i className="fa-solid fa-cube" aria-hidden="true" />
+                    )}
+                    <span className="tk-str">"{t}"</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="code"><span className="tk-punc">]</span></p>
             </div>
-            <div className="proj-link-btns">
+          </Reveal>
+
+          <Reveal className="window" delay={140}>
+            <div className="window-bar">
+              <i className="fa-solid fa-link tone-purple" aria-hidden="true" />
+              <span className="window-title" style={{ textAlign: "left" }}>links</span>
+            </div>
+            <div className="window-body side-body side-links">
               {project.link && (
-                <a href={project.link} target="_blank" rel="noopener noreferrer" className="proj-link-btn gradient-button">
-                  <i className="fas fa-external-link-alt" />
-                  View Live Site
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="side-link">
+                  <span className="dim">live</span><span className="side-link-val">{host}</span><i className="fa-solid fa-arrow-up-right-from-square" />
                 </a>
               )}
               {project.github && (
-                <a href={project.github} target="_blank" rel="noopener noreferrer" className="proj-link-btn github-btn">
-                  <i className="fab fa-github" />
-                  Source Code
+                <a href={project.github} target="_blank" rel="noopener noreferrer" className="side-link">
+                  <span className="dim">repo</span><span className="side-link-val">{project.github.replace("https://github.com/", "")}</span><i className="fa-brands fa-github" />
                 </a>
               )}
               {project.docs && (
-                <a href={project.docs} target="_blank" rel="noopener noreferrer" className="proj-link-btn docs-btn">
-                  <i className="fas fa-book" />
-                  Documentation
+                <a href={project.docs} target="_blank" rel="noopener noreferrer" className="side-link">
+                  <span className="dim">docs</span><span className="side-link-val">README</span><i className="fa-solid fa-book" />
                 </a>
               )}
             </div>
-          </div>
-
+          </Reveal>
         </aside>
       </div>
 
-      {/* ════════════════════════════════════════
-          PREV / NEXT NAV
-      ════════════════════════════════════════ */}
-      <div className="proj-nav-row">
-        {prevProject ? (
-          <Link href={`/projects/${prevProject.id}`} className="proj-nav-btn prev">
-            <i className="fa-solid fa-arrow-left" />
-            <div>
-              <span className="proj-nav-label">Previous</span>
-              <span className="proj-nav-name">{prevProject.title}</span>
-            </div>
+      {/* ── Prev / next ── */}
+      <nav className="detail-pager" aria-label="More projects">
+        {prev ? (
+          <Link href={`/projects/${prev.id}`} className="pager-link">
+            <span className="pager-cmd mono"><i className="fa-solid fa-arrow-left" /> cd ../{slugOf(prev.title)}</span>
+            <span className="pager-title">{prev.title}</span>
           </Link>
-        ) : <div />}
-
-        {nextProject ? (
-          <Link href={`/projects/${nextProject.id}`} className="proj-nav-btn next">
-            <div style={{ textAlign: "right" }}>
-              <span className="proj-nav-label">Next</span>
-              <span className="proj-nav-name">{nextProject.title}</span>
-            </div>
-            <i className="fa-solid fa-arrow-right" />
+        ) : <span />}
+        {next ? (
+          <Link href={`/projects/${next.id}`} className="pager-link next">
+            <span className="pager-cmd mono">cd ../{slugOf(next.title)} <i className="fa-solid fa-arrow-right" /></span>
+            <span className="pager-title">{next.title}</span>
           </Link>
-        ) : <div />}
-      </div>
-
+        ) : <span />}
+      </nav>
     </div>
   );
 }

@@ -1,5 +1,13 @@
+import { Inter, JetBrains_Mono } from "next/font/google";
 import ClientLayoutWrapper from "@/components/ClientLayoutWrapper";
 import "@/styles/custom.scss";
+
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
+const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+
+// Runs before first paint so the saved (or system) theme never flashes the wrong colours.
+// Older visits may have stored one of the retired colour themes — those fall back to the system setting.
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="dark"}})()`;
 
 export const metadata = {
   title: {
@@ -30,6 +38,13 @@ export const metadata = {
   }
 };
 
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0e0b" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f8f6" },
+  ],
+};
+
 export default function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -45,13 +60,14 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${mono.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link
-          href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Funnel+Display:wght@300..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Rock+3D&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
           rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
         />
         <script
           type="application/ld+json"
@@ -62,4 +78,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-

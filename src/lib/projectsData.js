@@ -150,7 +150,7 @@ export const allProjects = [
     link: "https://evolve-fawn.vercel.app/",
     github: "https://github.com/Arigbo/evolve",
     docs: "https://github.com/Arigbo/evolve",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=60",
+    imageUrl: "/evolve.png",
     techStack: ["Next.js", "SCSS", "React"],
     category: "Full-Stack",
     status: "finished"
@@ -169,7 +169,7 @@ export const allProjects = [
     link: "https://ralonic.vercel.app/",
     github: "https://github.com/Arigbo/ralonick",
     docs: "https://github.com/Arigbo/ralonick",
-    imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=60",
+    imageUrl: "/ralonic.png",
     techStack: ["Next.js", "Node.js", "TypeScript", "SCSS"],
     category: "Full-Stack",
     status: "finished"
@@ -264,7 +264,7 @@ export const allProjects = [
     link: "https://lodger-ancient.vercel.app/",
     github: "https://github.com/Arigbo/lodger",
     docs: "https://github.com/Arigbo/lodger",
-    imageUrl: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop&q=60",
+    imageUrl: "/lodger.png",
     techStack: ["Next.js", "Node.js", "TypeScript", "SCSS", "Firebase", "Stripe", "Redis"],
     category: "Full-Stack",
     status: "finished"
@@ -283,7 +283,7 @@ export const allProjects = [
     link: "https://ancients-weather.vercel.app/",
     github: "https://github.com/Arigbo/weather-app",
     docs: "https://github.com/Arigbo/weather-app",
-    imageUrl: "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&auto=format&fit=crop&q=60",
+    imageUrl: "/weatherap.png",
     techStack: ["Next.js", "TypeScript", "SCSS", "Axios", "Jotai", "Date-fns"],
     category: "Frontend",
     status: "finished"
