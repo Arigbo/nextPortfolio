@@ -473,6 +473,11 @@ kbd,
   50% { opacity: 0; }
 }
 
+/* Monochrome-black brand logos (devicon) vanish on the dark theme — flip them */
+[data-theme="dark"] img:is([src*="nextjs-original"], [src*="express-original"], [src*="github-original"], [src*="logos/vercel"]) {
+  filter: invert(1) brightness(1.1);
+}
+
 /* ── Scroll reveal (see components/Reveal.jsx) ────────────── */
 .reveal {
   opacity: 0;

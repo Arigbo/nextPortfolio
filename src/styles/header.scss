@@ -4,7 +4,7 @@
 
 .skip-link {
   position: fixed;
-  top: 0.75rem;
+  top: -100px;
   left: 0.75rem;
   z-index: 200;
   padding: 0.5rem 0.9rem;
@@ -14,10 +14,9 @@
   font-family: var(--mono);
   font-size: 0.85rem;
   font-weight: 700;
-  transform: translateY(-160%);
-  transition: transform 0.2s;
+  transition: top 0.2s;
 
-  &:focus { transform: none; }
+  &:focus-visible { top: 0.75rem; }
 }
 
 .site-header {

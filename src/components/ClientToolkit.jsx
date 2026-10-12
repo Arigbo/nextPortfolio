@@ -79,7 +79,7 @@ export default function ClientToolkit({ toolkit }) {
                 onMouseEnter={() => setActive(t)}
                 onFocus={() => setActive(t)}
               >
-                {src ? <img src={src} alt="" width={16} height={16} /> : <i className="fa-solid fa-cube" aria-hidden="true" />}
+                {src ? <img src={src} alt="" width={16} height={16} onError={(e) => { e.currentTarget.style.visibility = "hidden"; }} /> : <i className="fa-solid fa-cube" aria-hidden="true" />}
                 <span>{t}</span>
                 {count > 0 && <span className="tool-count">{count}</span>}
               </button>
