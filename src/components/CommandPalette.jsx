@@ -99,16 +99,14 @@ export default function CommandPalette({ open, onClose }) {
     );
   }, [commands, query]);
 
-  // Reset when opened; focus the input
+  // Reset when opened (the input autofocuses on mount) and lock page scroll
   useEffect(() => {
     if (!open) return;
     setQuery("");
     setActive(0);
     setToast("");
-    const t = setTimeout(() => inputRef.current?.focus(), 10);
     document.body.style.overflow = "hidden";
     return () => {
-      clearTimeout(t);
       document.body.style.overflow = "";
     };
   }, [open]);
@@ -159,6 +157,7 @@ export default function CommandPalette({ open, onClose }) {
           <span className="tk-prompt">❯</span>
           <input
             ref={inputRef}
+            autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Type a command or search…"

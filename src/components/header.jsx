@@ -32,7 +32,7 @@ export default function Header() {
   const themeLabel = theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
 
   return (
-    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+    <header className={`site-header ${scrolled ? "is-scrolled" : ""} ${menuOpen ? "menu-open" : ""}`}>
       <div className="header-inner container">
         <Link href="/" className="brand" aria-label={`${SITE.name} — home`}>
           <Logo />

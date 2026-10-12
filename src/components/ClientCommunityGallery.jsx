@@ -84,7 +84,8 @@ function MasonryImage({ photo, index, onOpen }) {
           className="masonry-img"
           loading="lazy"
           decoding="async"
-          style={{ display: isPending ? "none" : "block" }}
+          // Kept in the layout (not display:none) while pending — hidden lazy images never start loading
+          style={isPending ? { position: "absolute", inset: 0, height: "100%", objectFit: "cover", opacity: 0 } : undefined}
           onLoad={() => setStatus("loaded")}
           onError={handleError}
         />
@@ -187,7 +188,7 @@ export default function ClientCommunityGallery({ category }) {
       </Reveal>
 
       <div className="gallery-bar mono">
-        <span className="tk-com"># showing {visibleCount.toLocaleString()} of {total.toLocaleString()} photos</span>
+        <span className="tk-com"># showing {Math.min(visibleCount, total).toLocaleString()} of {total.toLocaleString()} photos</span>
         <Link href="/about#community" className="text-link">
           <i className="fa-solid fa-arrow-left" /> cd ..
         </Link>

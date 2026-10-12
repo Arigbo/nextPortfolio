@@ -51,6 +51,9 @@
   font-size: 0.95rem;
   min-height: 1.6em;
 
+  /* long roles wrap on phones — reserve two lines so the page doesn't jump while typing */
+  @media (max-width: 480px) { min-height: 3.3em; }
+
   .hero-role-text { color: var(--accent); }
 }
 
