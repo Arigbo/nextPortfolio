@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
+import { NoPreview } from "@/components/ProjectCard";
 import { allProjects, techMap } from "@/lib/projectsData";
 import { slugOf } from "@/lib/site";
 import "@/styles/project-detail.scss";
@@ -22,9 +23,9 @@ export async function generateMetadata({ params }) {
       title: `${project.title} | Arigbo Jesse Portfolio`,
       description: project.description,
       url: `https://arigbo-jesse.vercel.app/projects/${id}`,
-      images: [{ url: project.imageUrl, alt: project.title }]
+      ...(project.imageUrl && { images: [{ url: project.imageUrl, alt: project.title }] })
     },
-    twitter: { card: "summary_large_image", title: `${project.title} | Arigbo Jesse Portfolio`, description: project.description, images: [project.imageUrl] }
+    twitter: { card: project.imageUrl ? "summary_large_image" : "summary", title: `${project.title} | Arigbo Jesse Portfolio`, description: project.description, ...(project.imageUrl && { images: [project.imageUrl] }) }
   };
 }
 
@@ -38,7 +39,7 @@ export default async function ProjectDetailsPage({ params }) {
   const next = allProjects[index + 1];
   const slug = slugOf(project.title);
   const live = Boolean(project.link);
-  const host = project.link ? project.link.replace(/^https?:\/\//, "").replace(/\/$/, "") : `${slug}.local`;
+  const host = project.link ? project.link.replace(/^https?:\/\//, "").replace(/\/$/, "") : null;
 
   return (
     <div className="page container detail">
@@ -54,7 +55,7 @@ export default async function ProjectDetailsPage({ params }) {
         <p className="detail-tagline">{project.description}</p>
 
         <div className="detail-meta">
-          <span className={`status ${live ? "live" : "wip"}`}>{live ? "live" : "in development"}</span>
+          <span className={`status ${live ? "live" : "wip"}`}>{live ? "live" : "not publicly deployed"}</span>
           <span className="detail-meta-item"><i className="fa-solid fa-layer-group" /> {project.category}</span>
           <span className="detail-meta-item"><i className="fa-solid fa-cubes" /> {project.techStack.length} technologies</span>
         </div>
@@ -70,33 +71,45 @@ export default async function ProjectDetailsPage({ params }) {
               <i className="fa-brands fa-github" /> source
             </a>
           )}
-          {project.docs && project.docs !== project.github && (
-            <a href={project.docs} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-              <i className="fa-solid fa-book" /> docs
-            </a>
+          {project.repo === "private" && (
+            <span className="btn btn-ghost btn-static">
+              <i className="fa-solid fa-lock" /> private repository
+            </span>
           )}
         </div>
       </Reveal>
 
-      {/* ── Screenshot in a browser frame ── */}
-      <Reveal as="figure" className="window browser" delay={100}>
-        <div className="window-bar">
-          <span className="dots"><i /><i /><i /></span>
-          <span className="browser-url">
-            <i className={live ? "fa-solid fa-lock" : "fa-solid fa-circle-half-stroke"} aria-hidden="true" />
-            {host}
-          </span>
-        </div>
-        {project.link ? (
-          <a href={project.link} target="_blank" rel="noopener noreferrer" className="browser-view" aria-label={`Open ${project.title} live site`}>
-            <img src={project.imageUrl} alt={`${project.title} screenshot`} />
-          </a>
-        ) : (
-          <div className="browser-view">
-            <img src={project.imageUrl} alt={`${project.title} preview`} />
+      {/* ── Real screenshot in a browser frame, or an honest placeholder ── */}
+      {project.imageUrl ? (
+        <Reveal as="figure" className="window browser" delay={100}>
+          <div className="window-bar">
+            <span className="dots"><i /><i /><i /></span>
+            {host && (
+              <span className="browser-url">
+                <i className="fa-solid fa-lock" aria-hidden="true" />
+                {host}
+              </span>
+            )}
           </div>
-        )}
-      </Reveal>
+          {project.link ? (
+            <a href={project.link} target="_blank" rel="noopener noreferrer" className="browser-view" aria-label={`Open ${project.title} live site`}>
+              <img src={project.imageUrl} alt={`${project.title} screenshot`} />
+            </a>
+          ) : (
+            <div className="browser-view">
+              <img src={project.imageUrl} alt={`${project.title} screenshot`} />
+            </div>
+          )}
+        </Reveal>
+      ) : (
+        <Reveal className="window browser" delay={100}>
+          <div className="window-bar">
+            <span className="dots"><i /><i /><i /></span>
+            <span className="window-title">preview</span>
+          </div>
+          <NoPreview project={project} className="no-preview-lg" />
+        </Reveal>
+      )}
 
       {/* ── README + sidebar ── */}
       <div className="detail-grid">
@@ -161,10 +174,15 @@ export default async function ProjectDetailsPage({ params }) {
                   <span className="dim">repo</span><span className="side-link-val">{project.github.replace("https://github.com/", "")}</span><i className="fa-brands fa-github" />
                 </a>
               )}
-              {project.docs && (
-                <a href={project.docs} target="_blank" rel="noopener noreferrer" className="side-link">
-                  <span className="dim">docs</span><span className="side-link-val">README</span><i className="fa-solid fa-book" />
-                </a>
+              {project.repo === "private" && (
+                <span className="side-link">
+                  <span className="dim">repo</span><span className="side-link-val">private</span><i className="fa-solid fa-lock" />
+                </span>
+              )}
+              {!project.link && !project.github && project.repo !== "private" && (
+                <span className="side-link">
+                  <span className="dim">status</span><span className="side-link-val">no public links yet</span>
+                </span>
               )}
             </div>
           </Reveal>

@@ -8,20 +8,12 @@ import { communityCategories } from "@/lib/communityData";
 import { SITE, SOCIALS, yearsExp } from "@/lib/site";
 import "@/styles/about.scss";
 
+// Add real profile URLs to `links` (e.g. { platform: "X", url: "https://x.com/..." }) and they'll render.
 const communities = [
-  { name: "GDG Community", social: [{ platform: "whatsapp", url: "#" }, { platform: "X", url: "#" }, { platform: "facebook", url: "#" }, { platform: "linkedin", url: "#" }, { platform: "instagram", url: "#" }, { platform: "Discord", url: "#" }] },
-  { name: "Ancients",      social: [{ platform: "whatsapp", url: "#" }, { platform: "X", url: "#" }, { platform: "linkedin", url: "#" }, { platform: "Discord", url: "#" }] },
-  { name: "Sui",           social: [{ platform: "whatsapp", url: "#" }, { platform: "X", url: "#" }, { platform: "linkedin", url: "#" }, { platform: "Discord", url: "#" }, { platform: "Telegram", url: "#" }] },
-  { name: "Codex",         social: [{ platform: "whatsapp", url: "#" }, { platform: "X", url: "#" }, { platform: "facebook", url: "#" }, { platform: "linkedin", url: "#" }, { platform: "instagram", url: "#" }, { platform: "Discord", url: "#" }] },
-];
-
-const collaborators = [
-  { name: "John Doe",    handle: "@johndoe",   collaboration: "Worked on E-commerce Platform, handled backend API development." },
-  { name: "Jane Smith",  handle: "@janesmith", collaboration: "Collaborated on Data Dashboard, focused on data visualization." },
-  { name: "Sam Wilson",  handle: "@samw",      collaboration: "Team member for Task Management Tool, implemented real-time features." },
-  { name: "Emily Clark", handle: "@emilyc",    collaboration: "Assisted in frontend design for multiple projects." },
-  { name: "David Lee",   handle: "@davidl",    collaboration: "Contributed to database optimization in E-commerce Platform." },
-  { name: "Alice Brown", handle: "@aliceb",    collaboration: "Worked on Python scripts for Data Dashboard analytics." },
+  { name: "GDG Community", links: [] },
+  { name: "Ancients",      links: [] },
+  { name: "Sui",           links: [] },
+  { name: "Codex",         links: [] },
 ];
 
 const timelineEvents = [
@@ -48,7 +40,6 @@ const FACTS = [
   { key: "email", value: SITE.email, href: `mailto:${SITE.email}` },
 ];
 
-const initials = (name) => name.split(" ").map((w) => w[0]).join("").slice(0, 2);
 const shortHash = (year, i) => `${(parseInt(year, 10) * 7919 + i * 104729).toString(16).slice(-7)}`;
 
 export default function ClientAbout() {
@@ -164,28 +155,6 @@ export default function ClientAbout() {
         <ClientToolkit toolkit={toolkit} />
       </section>
 
-      {/* ═══════════ COLLABORATORS ═══════════ */}
-      <section className="section" id="collaborators">
-        <Reveal className="cmd-head">
-          <div>
-            <p className="cmd-line"><span className="tk-prompt">❯</span>cat CONTRIBUTORS</p>
-            <h2>People I've collaborated with</h2>
-          </div>
-        </Reveal>
-
-        <div className="contrib-grid">
-          {collaborators.map((c, i) => (
-            <Reveal key={c.handle} delay={(i % 3) * 70} className="contrib">
-              <span className="contrib-avatar mono" aria-hidden="true">{initials(c.name)}</span>
-              <div>
-                <p className="contrib-name">{c.name} <span className="dim mono">{c.handle}</span></p>
-                <p className="contrib-note">{c.collaboration}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
       {/* ═══════════ COMMUNITY ═══════════ */}
       <section className="section" id="community">
         <Reveal className="cmd-head">
@@ -193,8 +162,7 @@ export default function ClientAbout() {
             <p className="cmd-line"><span className="tk-prompt">❯</span>ls ~/community</p>
             <h2>Communities</h2>
             <p className="cmd-sub">
-              My journey isn't just about code — it's about people. Galleries from meetups, hackathons,
-              workshops and virtual gatherings.
+              My journey isn't just about code — it's about people. Photos from events I've attended.
             </p>
           </div>
         </Reveal>
@@ -206,7 +174,7 @@ export default function ClientAbout() {
                 <div className="pcard-bar">
                   <i className="fa-solid fa-folder" aria-hidden="true" />
                   <span className="pcard-path">{cat.id}/</span>
-                  <span className="dim mono dir-count">{cat.photos.length.toLocaleString()} files</span>
+                  <span className="dim mono dir-count">{cat.photos.length} photos</span>
                 </div>
                 <div className="dir-img">
                   <img src={cat.coverImage} alt="" loading="lazy" />
@@ -239,23 +207,27 @@ export default function ClientAbout() {
                   <span className="tk-punc">- </span><span className="tk-key">name</span><span className="tk-punc">: </span>
                   <span className="tk-str">{c.name}</span>
                 </p>
-                <p className="code member-links-label">
-                  {"  "}<span className="tk-key">links</span><span className="tk-punc">:</span>
-                </p>
-                <div className="member-links">
-                  {c.social.map((s) => (
-                    <a
-                      key={s.platform}
-                      href={s.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="icon-btn"
-                      aria-label={`${c.name} on ${s.platform}`}
-                    >
-                      <i className={SOCIAL_ICONS[s.platform.toLowerCase()] ?? "fa-solid fa-link"} aria-hidden="true" />
-                    </a>
-                  ))}
-                </div>
+                {c.links.length > 0 && (
+                  <>
+                    <p className="code member-links-label">
+                      {"  "}<span className="tk-key">links</span><span className="tk-punc">:</span>
+                    </p>
+                    <div className="member-links">
+                      {c.links.map((s) => (
+                        <a
+                          key={s.platform}
+                          href={s.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="icon-btn"
+                          aria-label={`${c.name} on ${s.platform}`}
+                        >
+                          <i className={SOCIAL_ICONS[s.platform.toLowerCase()] ?? "fa-solid fa-link"} aria-hidden="true" />
+                        </a>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </Reveal>
           ))}

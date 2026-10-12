@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import ProjectCard from "@/components/ProjectCard";
-import TestimonialLog from "@/components/testimonies";
 import { allProjects, techStackData } from "@/lib/projectsData";
 import { SITE, yearsExp } from "@/lib/site";
 import "@/styles/home.scss";
@@ -51,7 +50,9 @@ const STACK_GROUPS = [
 
 export default function ClientHome() {
   const role = useTypewriter(ROLES);
-  const featured = allProjects.slice(0, 3);
+  // Feature the projects visitors can actually open and see
+  const featured = allProjects.filter((p) => p.link && p.imageUrl).slice(0, 3);
+  const liveCount = allProjects.filter((p) => p.link).length;
   const totalTech = techStackData.frontend.length + techStackData.backend.length + techStackData.extra.length;
 
   return (
@@ -89,7 +90,8 @@ export default function ClientHome() {
               {"  "}<span className="tk-key">"role"</span><span className="tk-punc">: </span><span className="tk-str">"{SITE.role}"</span><span className="tk-punc">,</span>{"\n"}
               {"  "}<span className="tk-key">"location"</span><span className="tk-punc">: </span><span className="tk-str">"{SITE.location}"</span><span className="tk-punc">,</span>{"\n"}
               {"  "}<span className="tk-key">"experience"</span><span className="tk-punc">: </span><span className="tk-str">"{yearsExp}+ years"</span><span className="tk-punc">,</span>{"\n"}
-              {"  "}<span className="tk-key">"projects_shipped"</span><span className="tk-punc">: </span><span className="tk-num">{allProjects.length}</span><span className="tk-punc">,</span>{"\n"}
+              {"  "}<span className="tk-key">"projects"</span><span className="tk-punc">: </span><span className="tk-num">{allProjects.length}</span><span className="tk-punc">,</span>{"\n"}
+              {"  "}<span className="tk-key">"live_in_production"</span><span className="tk-punc">: </span><span className="tk-num">{liveCount}</span><span className="tk-punc">,</span>{"\n"}
               {"  "}<span className="tk-key">"technologies"</span><span className="tk-punc">: </span><span className="tk-num">{totalTech}</span><span className="tk-punc">,</span>{"\n"}
               {"  "}<span className="tk-key">"open_to_work"</span><span className="tk-punc">: </span><span className="tk-kw">true</span>{"\n"}
               <span className="tk-punc">{"}"}</span>
@@ -167,7 +169,7 @@ export default function ClientHome() {
                 <div className="stack-items">
                   {group.items.map((t) => (
                     <span key={t.name} className="stack-item">
-                      <img src={t.logo} alt="" width={16} height={16} loading="lazy" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                      {t.logo && <img src={t.logo} alt="" width={16} height={16} loading="lazy" onError={(e) => { e.currentTarget.style.display = "none"; }} />}
                       <span className="tk-str">"{t.name}"</span>
                     </span>
                   ))}
@@ -182,18 +184,6 @@ export default function ClientHome() {
             </p>
           </div>
         </Reveal>
-      </section>
-
-      {/* ═══════════ TESTIMONIALS ═══════════ */}
-      <section className="section container" id="testimonials">
-        <Reveal className="cmd-head">
-          <div>
-            <p className="cmd-line"><span className="tk-prompt">❯</span>git log --author=clients</p>
-            <h2>What people say</h2>
-            <p className="cmd-sub">Feedback from partners and clients I've shipped with.</p>
-          </div>
-        </Reveal>
-        <TestimonialLog />
       </section>
     </div>
   );

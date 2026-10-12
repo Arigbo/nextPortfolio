@@ -39,8 +39,8 @@ export default function ClientProjects() {
           <p className="cmd-line"><span className="tk-prompt">❯</span>ls -la ./projects</p>
           <h1>Projects</h1>
           <p className="cmd-sub">
-            Web applications, platforms and client tools I've engineered — from patient portals to
-            live classrooms. Open any project for the full case study.
+            Web applications, platforms and client sites I've built — from a student-housing
+            marketplace to a patient–doctor portal. Open any project for the full case study.
           </p>
         </div>
         <p className="projects-total mono">

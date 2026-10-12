@@ -127,90 +127,98 @@ export const techStackData = {
   ],
 };
 
+// Logos for libraries that appear in project stacks but not in the skills list above
+const projectOnlyLogos = {
+  bootstrap: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
+  "redux toolkit": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg",
+};
+
 export const techMap = [...techStackData.frontend, ...techStackData.backend, ...techStackData.extra].reduce(
   (map, tech) => {
-    map[tech.name.toLowerCase()] = tech.logo;
+    if (tech.logo) map[tech.name.toLowerCase()] = tech.logo;
     return map;
   },
-  {}
+  { ...projectOnlyLogos }
 );
 
+/*
+ * Project entries. Every description, feature and tech tag below is grounded in
+ * the project's repository (dependencies / routes) or its live site — keep it
+ * that way: no claims that can't be shown.
+ *
+ * imageUrl: null  → card shows a "no preview yet" placeholder
+ * repo:     "public" | "private" | null (no repository to show)
+ */
 export const allProjects = [
   {
     id: "p1",
     title: "Evolve Classroom",
-    description: "Evolve was born from a simple idea: to fix online education. We were tired of passive video tutorials and outdated curricula that left learners with a certificate but no practical skills. Courses are centered around building a single, challenging project from start to finish with direct mentorship and a vibrant community.",
+    description: "A website for Evolve, a project-based IT training programme: it presents the programme, its course catalogue and why to choose it, with an enquiry form for prospective students.",
     features: [
-      "Project-centric learning curricula flow",
-      "Direct mentorship check-in modules",
-      "Interactive coding roadmaps",
-      "Community workspaces and forum hubs",
-      "Custom responsive dashboard workspace"
+      "Landing page presenting the programme and its course catalogue",
+      "Enquiry / contact form in a modal",
+      "Scroll-triggered animations with Framer Motion",
+      "Responsive layout styled with SCSS"
     ],
     link: "https://evolve-fawn.vercel.app/",
     github: "https://github.com/Arigbo/evolve",
-    docs: "https://github.com/Arigbo/evolve",
+    repo: "public",
     imageUrl: "/evolve.png",
-    techStack: ["Next.js", "SCSS", "React"],
-    category: "Full-Stack",
-    status: "finished"
+    techStack: ["Next.js", "React", "SCSS", "Framer Motion"],
+    category: "Frontend",
   },
   {
     id: "p2",
-    title: "Ralonic Engineering Portal",
-    description: "A comprehensive digital operations portal for Ralonic, a fast-growing engineering and construction company operating in Land and Marine sectors in Nigeria. Handles production facilities maintenance logging, procurement tracking, and industrial equipment leasing.",
+    title: "Ralonick Company Website",
+    description: "Corporate website for Ralonick, a Nigerian construction and oil & gas services company — presenting its services (design, engineering, procurement, fabrication and repair of GRE/GRP pipe systems), company profile and projects.",
     features: [
-      "Procurement lifecycle management boards",
-      "Marine and land equipment tracking registers",
-      "Total Quality Management (TQM) checklist templates",
-      "Interactive design engineering documentation portals",
-      "Secure project access controls for clients"
+      "Hero carousel showcasing the company's services (Swiper)",
+      "Company profile, services and contact sections",
+      "Scroll animations with AOS",
+      "Responsive layout built with Bootstrap and SCSS"
     ],
     link: "https://ralonic.vercel.app/",
     github: "https://github.com/Arigbo/ralonick",
-    docs: "https://github.com/Arigbo/ralonick",
+    repo: "public",
     imageUrl: "/ralonic.png",
-    techStack: ["Next.js", "Node.js", "TypeScript", "SCSS"],
-    category: "Full-Stack",
-    status: "finished"
+    techStack: ["Next.js", "TypeScript", "Bootstrap", "SCSS"],
+    category: "Frontend",
   },
   {
     id: "p3",
     title: "CareKey Healthcare Portal",
-    description: "A comprehensive digital patient portal and clinic administration dashboard. Bridges patient onboarding, doctor schedules, electronic health records, and secure messaging under one central compliance-guided interface.",
+    description: "A patient–doctor platform: patients onboard, choose a doctor, chat privately and keep a medical history they can share; doctors manage their patients, incoming requests and medical records.",
     features: [
-      "Patient self-onboarding checkups flow",
-      "Doctor appointment slots scheduling boards",
-      "Private real-time chat between doctor and patient",
-      "Electronic Health Records (EHR) management & secure storage",
-      "Clinic partnership registration flow"
+      "Separate patient and doctor dashboards with authentication",
+      "Patient onboarding and doctor selection",
+      "Private patient–doctor chat",
+      "Medical records written with a rich-text editor (Tiptap), with record history",
+      "Record sharing and a clinic partnership page"
     ],
     link: "",
-    github: "https://github.com/Arigbo/carekey",
-    docs: "https://github.com/Arigbo/carekey",
-    imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop&q=60",
-    techStack: ["Next.js", "TypeScript", "Firebase", "Firestore", "Firebase Data Connect"],
+    github: null,
+    repo: "private",
+    imageUrl: null,
+    techStack: ["Next.js", "TypeScript", "Firebase", "Firebase Data Connect", "Tailwind CSS"],
     category: "Full-Stack",
-    status: "finished"
   },
   {
     id: "p4",
-    title: "SkillsBridge Live Classroom",
-    description: "An educational platform designed for skills training, featuring virtual audio/video classrooms powered by Cloudflare RealtimeKit, interactive instructor calendars, and rich progress cards for students.",
+    title: "SkillsBridge",
+    description: "A multi-tenant learning platform where organisations manage their courses, faculty and students — with separate dashboards for super-admins, organisation admins, faculty and students.",
     features: [
-      "Virtual streaming rooms powered by Cloudflare RealtimeKit UI",
-      "Interactive session scheduling system",
-      "Student dashboards with enrolled courses",
-      "Instructor dashboard for session management",
-      "Token-based secure meeting authorization"
+      "Super-admin management of organisations and their users",
+      "Organisation and faculty admin dashboards with course management",
+      "Student dashboard",
+      "Invite-based onboarding and authentication with NextAuth",
+      "Data tables with TanStack Table and state managed with Redux Toolkit"
     ],
     link: "",
-    github: "https://github.com/Arigbo/skillsbridge",
-    docs: "https://github.com/Arigbo/skillsbridge",
-    imageUrl: "https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&auto=format&fit=crop&q=60",
-    techStack: ["Next.js", "TypeScript", "Redux Toolkit", "Cloudflare", "Tailwind CSS"],
-    category: "Full-Stack",
-    status: "finished"
+    github: null,
+    repo: "private",
+    imageUrl: null,
+    techStack: ["Next.js", "TypeScript", "Redux Toolkit", "NextAuth", "Tailwind CSS"],
+    category: "Frontend",
   },
   {
     id: "p5",
@@ -224,12 +232,11 @@ export const allProjects = [
       "Analytics summaries and graphs dashboard"
     ],
     link: "",
-    github: "https://github.com/Arigbo/my-report",
-    docs: "https://github.com/Arigbo/my-report",
-    imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=60",
+    github: null,
+    repo: null,
+    imageUrl: null,
     techStack: ["Next.js", "TypeScript", "Firebase", "Firestore", "SCSS"],
     category: "Full-Stack",
-    status: "finished"
   },
   {
     id: "p6",
@@ -243,49 +250,46 @@ export const allProjects = [
       "Secure client access panels"
     ],
     link: "",
-    github: "https://github.com/Arigbo/arisch-workspace",
-    docs: "https://github.com/Arigbo/arisch-workspace",
-    imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop&q=60",
+    github: null,
+    repo: null,
+    imageUrl: null,
     techStack: ["Next.js", "Firebase", "Resend", "TypeScript", "Tailwind CSS"],
     category: "Full-Stack",
-    status: "finished"
   },
   {
     id: "p7",
-    title: "Lodger Booking Platform",
-    description: "A platform for managing and booking temporary lodging accommodations. Features integrated payment gateways, interactive availability calendars, and user ratings.",
+    title: "Lodger Student Housing",
+    description: "A student-housing marketplace: students find, book and pay for rentals near campus, while landlords list properties and manage leases, tenants, maintenance and payouts.",
     features: [
-      "Interactive lodgings availability booking calendar",
-      "Secure stripe payment gateway flow",
-      "Review ratings and guest comment system",
-      "Fast response caches using Upstash Redis",
-      "Tenant and landlord message portal"
+      "Separate student and landlord portals — listings, bookmarks, leases, tenancy, messages and notifications",
+      "Stripe payments and Stripe Connect payouts for landlords, with webhooks",
+      "AI-generated listing descriptions and image moderation (Genkit + Gemini)",
+      "Property locations on interactive maps (Leaflet)",
+      "Rate limiting with Upstash Redis and transactional email via Resend"
     ],
     link: "https://lodger-ancient.vercel.app/",
     github: "https://github.com/Arigbo/lodger",
-    docs: "https://github.com/Arigbo/lodger",
+    repo: "public",
     imageUrl: "/lodger.png",
-    techStack: ["Next.js", "Node.js", "TypeScript", "SCSS", "Firebase", "Stripe", "Redis"],
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase", "Stripe", "Redis", "Resend", "Genkit"],
     category: "Full-Stack",
-    status: "finished"
   },
   {
     id: "p8",
     title: "Weather App",
-    description: "A rich weather dashboard providing current atmospheric conditions and 7-day outlook predictions based on geographical coordinates.",
+    description: "A weather dashboard showing current conditions, an hourly forecast and a multi-day outlook for any searched location or your current position.",
     features: [
-      "Live coordinates mapping data updates",
-      "Detailed 7-day weather predictions",
-      "Interactive weather statistics graph charts",
-      "Theme modes matching local timezone cycles",
-      "Location search and history bookmarks"
+      "Current temperature with feels-like, high and low",
+      "Scrollable 3-hourly forecast strip",
+      "Visibility, humidity, wind speed, air pressure, sunrise and sunset",
+      "Multi-day forecast",
+      "Location search and a use-my-location button"
     ],
     link: "https://ancients-weather.vercel.app/",
     github: "https://github.com/Arigbo/weather-app",
-    docs: "https://github.com/Arigbo/weather-app",
+    repo: "public",
     imageUrl: "/weatherap.png",
-    techStack: ["Next.js", "TypeScript", "SCSS", "Axios", "Jotai", "Date-fns"],
+    techStack: ["Next.js", "TypeScript", "SCSS", "Tailwind CSS", "Axios", "TanStack Query", "Jotai", "Date-fns"],
     category: "Frontend",
-    status: "finished"
   }
 ];
