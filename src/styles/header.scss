@@ -24,14 +24,28 @@
   inset: 0 0 auto;
   z-index: 100;
   height: var(--header-h);
-  border-bottom: 1px solid transparent;
-  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
 
-  &.is-scrolled {
+  /* The frosted background lives on a pseudo-element: a backdrop-filter on the
+     header itself would make it the containing block for the fixed mobile menu,
+     squashing the menu into the 60px bar with no background. */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background: color-mix(in srgb, var(--bg) 82%, transparent);
     backdrop-filter: blur(14px) saturate(1.2);
     -webkit-backdrop-filter: blur(14px) saturate(1.2);
-    border-bottom-color: var(--border);
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transition: opacity 0.3s, background 0.3s;
+  }
+
+  &.is-scrolled::before { opacity: 1; }
+
+  &.menu-open::before {
+    opacity: 1;
+    background: var(--bg);
   }
 }
 
@@ -190,7 +204,8 @@
   inset: var(--header-h) 0 0;
   z-index: 99;
   background: var(--bg);
-  border-top: 1px solid var(--border);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s, visibility 0.25s;
