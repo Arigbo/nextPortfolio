@@ -1,6 +1,18 @@
 import Link from "next/link";
 import { slugOf } from "@/lib/site";
 
+/** Placeholder shown where a project has no real screenshot yet */
+export function NoPreview({ project, className = "" }) {
+  return (
+    <div className={`no-preview ${className}`} role="img" aria-label={`No preview available for ${project.title}`}>
+      <span className="no-preview-code mono">
+        <span className="tk-prompt">❯</span> open ./{slugOf(project.title)}{"\n"}
+        <span className="tk-com">// {project.repo === "private" ? "private project — no public preview" : "preview coming soon"}</span>
+      </span>
+    </div>
+  );
+}
+
 /** A project rendered as a folder-ish window: path bar, screenshot, summary. */
 export default function ProjectCard({ project, priority = false }) {
   const live = Boolean(project.link);
@@ -11,16 +23,20 @@ export default function ProjectCard({ project, priority = false }) {
       <div className="pcard-bar">
         <i className="fa-solid fa-folder" aria-hidden="true" />
         <span className="pcard-path">{slugOf(project.title)}/</span>
-        <span className={`status ${live ? "live" : "wip"}`}>{live ? "live" : "in dev"}</span>
+        <span className={`status ${live ? "live" : "wip"}`}>{live ? "live" : "private"}</span>
       </div>
 
       <div className="pcard-img">
-        <img
-          src={project.imageUrl}
-          alt={`${project.title} preview`}
-          loading={priority ? "eager" : "lazy"}
-          decoding="async"
-        />
+        {project.imageUrl ? (
+          <img
+            src={project.imageUrl}
+            alt={`${project.title} preview`}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+          />
+        ) : (
+          <NoPreview project={project} />
+        )}
       </div>
 
       <div className="pcard-body">

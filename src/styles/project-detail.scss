@@ -91,6 +91,24 @@
 
 a.browser-view:hover img { transform: scale(1.012); }
 
+.no-preview-lg {
+  min-height: 260px;
+
+  .no-preview-code { font-size: 0.9rem; }
+}
+
+/* non-interactive label styled like a button (e.g. "private repository") */
+.btn-static {
+  cursor: default;
+  color: var(--dim);
+
+  &:hover {
+    transform: none;
+    color: var(--dim);
+    border-color: var(--border-strong);
+  }
+}
+
 /* ── README + sidebar ── */
 .detail-grid {
   display: grid;
