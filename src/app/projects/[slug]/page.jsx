@@ -1,48 +1,81 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
 import { NoPreview } from "@/components/ProjectCard";
-import { allProjects, techMap } from "@/lib/projectsData";
-import { slugOf } from "@/lib/site";
+import { allProjects, techMap, projectPath } from "@/lib/projectsData";
+import { SITE } from "@/lib/site";
+import { pageMetadata, absoluteUrl, jsonLdScript } from "@/lib/seo";
 import "@/styles/project-detail.scss";
 
 export function generateStaticParams() {
-  return allProjects.map((p) => ({ id: p.id }));
+  return allProjects.map((p) => ({ slug: p.slug }));
 }
 
+/** Trim to ~155 chars on a word boundary so search results don't cut mid-word */
+const metaDescription = (text, max = 155) =>
+  text.length <= max ? text : `${text.slice(0, text.lastIndexOf(" ", max - 1)).replace(/[,;:—–-]\s*$/, "")}…`;
+
 export async function generateMetadata({ params }) {
-  const { id } = await params;
-  const project = allProjects.find((p) => p.id === id);
-  if (!project) return { title: "Project Not Found", description: "The requested project could not be located." };
-  return {
+  const { slug } = await params;
+  const project = allProjects.find((p) => p.slug === slug);
+  if (!project) return { title: "Project Not Found" };
+
+  return pageMetadata({
     title: project.title,
-    description: project.description,
-    openGraph: {
-      type: "article",
-      title: `${project.title} | Arigbo Jesse Portfolio`,
-      description: project.description,
-      url: `https://arigbo-jesse.vercel.app/projects/${id}`,
-      ...(project.imageUrl && { images: [{ url: project.imageUrl, alt: project.title }] })
-    },
-    twitter: { card: project.imageUrl ? "summary_large_image" : "summary", title: `${project.title} | Arigbo Jesse Portfolio`, description: project.description, ...(project.imageUrl && { images: [project.imageUrl] }) }
+    description: metaDescription(project.description),
+    path: projectPath(project),
+    type: "article",
+    ...(project.imageUrl && { image: { url: project.imageUrl, alt: `${project.title} screenshot` } }),
+  });
+}
+
+/** JSON-LD for a project page: the work itself + its breadcrumb trail */
+function projectJsonLd(project) {
+  const url = absoluteUrl(projectPath(project));
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        "@id": `${url}#work`,
+        name: project.title,
+        description: project.description,
+        url,
+        ...(project.imageUrl && { image: absoluteUrl(project.imageUrl) }),
+        ...(project.link && { sameAs: project.link }),
+        ...(project.github && { codeRepository: project.github }),
+        keywords: project.techStack.join(", "),
+        author: { "@id": `${SITE.url}/#person` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Projects", item: absoluteUrl("/projects") },
+          { "@type": "ListItem", position: 3, name: project.title, item: url },
+        ],
+      },
+    ],
   };
 }
 
 export default async function ProjectDetailsPage({ params }) {
-  const { id } = await params;
-  const index = allProjects.findIndex((p) => p.id === id);
+  const { slug } = await params;
+  const index = allProjects.findIndex((p) => p.slug === slug);
   if (index === -1) notFound();
 
   const project = allProjects[index];
   const prev = allProjects[index - 1];
   const next = allProjects[index + 1];
-  const slug = slugOf(project.title);
   const live = Boolean(project.link);
   const host = project.link ? project.link.replace(/^https?:\/\//, "").replace(/\/$/, "") : null;
 
   return (
     <div className="page container detail">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(projectJsonLd(project)) }} />
+
       {/* ── Header ── */}
       <Reveal className="detail-head">
         <nav className="crumbs mono" aria-label="Breadcrumb">
@@ -93,11 +126,11 @@ export default async function ProjectDetailsPage({ params }) {
           </div>
           {project.link ? (
             <a href={project.link} target="_blank" rel="noopener noreferrer" className="browser-view" aria-label={`Open ${project.title} live site`}>
-              <img src={project.imageUrl} alt={`${project.title} screenshot`} />
+              <Image src={project.imageUrl} alt={`${project.title} screenshot`} width={project.imageSize.width} height={project.imageSize.height} sizes="(min-width: 1180px) 1140px, 100vw" priority />
             </a>
           ) : (
             <div className="browser-view">
-              <img src={project.imageUrl} alt={`${project.title} screenshot`} />
+              <Image src={project.imageUrl} alt={`${project.title} screenshot`} width={project.imageSize.width} height={project.imageSize.height} sizes="(min-width: 1180px) 1140px, 100vw" priority />
             </div>
           )}
         </Reveal>
@@ -192,14 +225,14 @@ export default async function ProjectDetailsPage({ params }) {
       {/* ── Prev / next ── */}
       <nav className="detail-pager" aria-label="More projects">
         {prev ? (
-          <Link href={`/projects/${prev.id}`} className="pager-link">
-            <span className="pager-cmd mono"><i className="fa-solid fa-arrow-left" /> cd ../{slugOf(prev.title)}</span>
+          <Link href={projectPath(prev)} className="pager-link">
+            <span className="pager-cmd mono"><i className="fa-solid fa-arrow-left" /> cd ../{prev.slug}</span>
             <span className="pager-title">{prev.title}</span>
           </Link>
         ) : <span />}
         {next ? (
-          <Link href={`/projects/${next.id}`} className="pager-link next">
-            <span className="pager-cmd mono">cd ../{slugOf(next.title)} <i className="fa-solid fa-arrow-right" /></span>
+          <Link href={projectPath(next)} className="pager-link next">
+            <span className="pager-cmd mono">cd ../{next.slug} <i className="fa-solid fa-arrow-right" /></span>
             <span className="pager-title">{next.title}</span>
           </Link>
         ) : <span />}

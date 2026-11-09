@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import { allProjects, techMap } from "@/lib/projectsData";
-import { slugOf } from "@/lib/site";
+import { allProjects, techMap, projectPath } from "@/lib/projectsData";
 
 const TOOL_DESCRIPTIONS = {
   "Next.js": "Production-grade React framework for server-side rendering, static site generation, and building fast full-stack applications.",
@@ -108,9 +107,9 @@ export default function ClientToolkit({ toolkit }) {
             <ul className="man-text man-projects">
               {used.map((p) => (
                 <li key={p.id}>
-                  <Link href={`/projects/${p.id}`} className="man-project">
+                  <Link href={projectPath(p)} className="man-project">
                     <i className="fa-solid fa-folder" aria-hidden="true" />
-                    <span>{slugOf(p.title)}/</span>
+                    <span>{p.slug}/</span>
                     <span className="dim">{p.title}</span>
                     <i className="fa-solid fa-arrow-right man-arrow" aria-hidden="true" />
                   </Link>

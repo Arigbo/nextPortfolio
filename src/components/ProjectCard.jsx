@@ -1,12 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
-import { slugOf } from "@/lib/site";
+import { projectPath } from "@/lib/projectsData";
 
 /** Placeholder shown where a project has no real screenshot yet */
 export function NoPreview({ project, className = "" }) {
   return (
     <div className={`no-preview ${className}`} role="img" aria-label={`No preview available for ${project.title}`}>
       <span className="no-preview-code mono">
-        <span className="tk-prompt">❯</span> open ./{slugOf(project.title)}{"\n"}
+        <span className="tk-prompt">❯</span> open ./{project.slug}{"\n"}
         <span className="tk-com">// {project.repo === "private" ? "private project — no public preview" : "preview coming soon"}</span>
       </span>
     </div>
@@ -19,20 +20,22 @@ export default function ProjectCard({ project, priority = false }) {
   const extra = project.techStack.length - 4;
 
   return (
-    <Link href={`/projects/${project.id}`} className="pcard">
+    <Link href={projectPath(project)} className="pcard">
       <div className="pcard-bar">
         <i className="fa-solid fa-folder" aria-hidden="true" />
-        <span className="pcard-path">{slugOf(project.title)}/</span>
+        <span className="pcard-path">{project.slug}/</span>
         <span className={`status ${live ? "live" : "wip"}`}>{live ? "live" : "private"}</span>
       </div>
 
       <div className="pcard-img">
         {project.imageUrl ? (
-          <img
+          <Image
             src={project.imageUrl}
             alt={`${project.title} preview`}
-            loading={priority ? "eager" : "lazy"}
-            decoding="async"
+            width={project.imageSize.width}
+            height={project.imageSize.height}
+            sizes="(min-width: 1000px) 360px, (min-width: 640px) 50vw, 100vw"
+            priority={priority}
           />
         ) : (
           <NoPreview project={project} />

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 
@@ -78,12 +79,14 @@ function MasonryImage({ photo, index, onOpen }) {
       )}
 
       {status !== "failed" && (
-        <img
-          src={`${photo.url}${photo.url.includes("?") ? "&" : "?"}r=${retries}`}
+        <Image
+          key={retries} // remounting is how a retry re-requests the image
+          src={photo.url}
           alt={photo.caption}
+          width={photo.width}
+          height={photo.height}
+          sizes="(min-width: 900px) 380px, (min-width: 560px) 50vw, 100vw"
           className="masonry-img"
-          loading="lazy"
-          decoding="async"
           // Kept in the layout (not display:none) while pending — hidden lazy images never start loading
           style={isPending ? { position: "absolute", inset: 0, height: "100%", objectFit: "cover", opacity: 0 } : undefined}
           onLoad={() => setStatus("loaded")}
@@ -242,7 +245,7 @@ export default function ClientCommunityGallery({ category }) {
           </button>
 
           <figure className="lightbox-stage" onClick={(e) => e.stopPropagation()}>
-            <img src={activePhoto.url} alt={activePhoto.caption} className="lightbox-img" />
+            <Image src={activePhoto.url} alt={activePhoto.caption} width={activePhoto.width} height={activePhoto.height} sizes="100vw" className="lightbox-img" priority />
             <figcaption className="lightbox-caption">
               <span className="tag">{activePhoto.tag}</span>
               <p>{activePhoto.caption}</p>
@@ -261,13 +264,15 @@ export default function ClientCommunityGallery({ category }) {
             {photos.slice(stripStart, photoIndex + 10).map((photo, i) => {
               const ri = stripStart + i;
               return (
-                <img
+                <Image
                   key={ri}
                   src={photo.url}
                   alt=""
+                  width={photo.width}
+                  height={photo.height}
+                  sizes="72px"
                   className={`film-thumb ${ri === photoIndex ? "active" : ""}`}
                   onClick={() => { setPhotoIndex(ri); setActivePhoto(photos[ri]); }}
-                  loading="lazy"
                 />
               );
             })}

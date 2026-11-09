@@ -1,17 +1,13 @@
 import ClientProjects from "@/components/ClientProjects";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "My Projects",
-  description: "Explore a curated showcase of web applications, SaaS platforms, API integrations, and open source projects engineered by Arigbo Jesse.",
-  openGraph: {
-    title: "Projects Portfolio | Arigbo Jesse",
-    description: "Explore a curated showcase of web applications, SaaS platforms, API integrations, and open source projects engineered by Arigbo Jesse.",
-    url: "https://arigbo-jesse.vercel.app/projects"
-  }
-};
+export const metadata = pageMetadata({
+  title: "Projects",
+  description:
+    "Projects by Arigbo Jesse: Lodger (student housing), CareKey (patient–doctor portal), SkillsBridge (learning platform), a weather app and client websites.",
+  path: "/projects",
+});
 
 export default function ProjectsPage() {
   return <ClientProjects />;
 }
-
-

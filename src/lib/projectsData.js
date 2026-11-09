@@ -147,11 +147,15 @@ export const techMap = [...techStackData.frontend, ...techStackData.backend, ...
  * that way: no claims that can't be shown.
  *
  * imageUrl: null  → card shows a "no preview yet" placeholder
+ * imageSize:      intrinsic pixel size of the screenshot (for next/image)
  * repo:     "public" | "private" | null (no repository to show)
+ * slug:     the URL segment (/projects/<slug>) — keep stable once published;
+ *           old /projects/<id> URLs redirect here (see next.config.mjs)
  */
 export const allProjects = [
   {
     id: "p1",
+    slug: "evolve",
     title: "Evolve Classroom",
     description: "A website for Evolve, a project-based IT training programme: it presents the programme, its course catalogue and why to choose it, with an enquiry form for prospective students.",
     features: [
@@ -164,11 +168,13 @@ export const allProjects = [
     github: "https://github.com/Arigbo/evolve",
     repo: "public",
     imageUrl: "/evolve.png",
+    imageSize: { width: 1351, height: 681 },
     techStack: ["Next.js", "React", "SCSS", "Framer Motion"],
     category: "Frontend",
   },
   {
     id: "p2",
+    slug: "ralonick",
     title: "Ralonick Company Website",
     description: "Corporate website for Ralonick, a Nigerian construction and oil & gas services company — presenting its services (design, engineering, procurement, fabrication and repair of GRE/GRP pipe systems), company profile and projects.",
     features: [
@@ -181,11 +187,13 @@ export const allProjects = [
     github: "https://github.com/Arigbo/ralonick",
     repo: "public",
     imageUrl: "/ralonic.png",
+    imageSize: { width: 1347, height: 680 },
     techStack: ["Next.js", "TypeScript", "Bootstrap", "SCSS"],
     category: "Frontend",
   },
   {
     id: "p3",
+    slug: "carekey",
     title: "CareKey Healthcare Portal",
     description: "A patient–doctor platform: patients onboard, choose a doctor, chat privately and keep a medical history they can share; doctors manage their patients, incoming requests and medical records.",
     features: [
@@ -204,6 +212,7 @@ export const allProjects = [
   },
   {
     id: "p4",
+    slug: "skillsbridge",
     title: "SkillsBridge",
     description: "A multi-tenant learning platform where organisations manage their courses, faculty and students — with separate dashboards for super-admins, organisation admins, faculty and students.",
     features: [
@@ -222,6 +231,7 @@ export const allProjects = [
   },
   {
     id: "p5",
+    slug: "myreport",
     title: "MyReport Performance Platform",
     description: "A secure field service and student reporting application. Empowers service supervisors and academic instructors to compile, format, preview, and generate client-ready PDF performance analytics reports.",
     features: [
@@ -240,6 +250,7 @@ export const allProjects = [
   },
   {
     id: "p6",
+    slug: "agunwami",
     title: "Agunwami Enterprise Portal",
     description: "A unified enterprise workspace managing communications, transactional email flows, project boards, and task statuses for Agunwami Enterprises.",
     features: [
@@ -258,6 +269,7 @@ export const allProjects = [
   },
   {
     id: "p7",
+    slug: "lodger",
     title: "Lodger Student Housing",
     description: "A student-housing marketplace: students find, book and pay for rentals near campus, while landlords list properties and manage leases, tenants, maintenance and payouts.",
     features: [
@@ -271,11 +283,13 @@ export const allProjects = [
     github: "https://github.com/Arigbo/lodger",
     repo: "public",
     imageUrl: "/lodger.png",
+    imageSize: { width: 1362, height: 680 },
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase", "Stripe", "Redis", "Resend", "Genkit"],
     category: "Full-Stack",
   },
   {
     id: "p8",
+    slug: "weather-app",
     title: "Weather App",
     description: "A weather dashboard showing current conditions, an hourly forecast and a multi-day outlook for any searched location or your current position.",
     features: [
@@ -289,7 +303,11 @@ export const allProjects = [
     github: "https://github.com/Arigbo/weather-app",
     repo: "public",
     imageUrl: "/weatherap.png",
+    imageSize: { width: 1366, height: 680 },
     techStack: ["Next.js", "TypeScript", "SCSS", "Tailwind CSS", "Axios", "TanStack Query", "Jotai", "Date-fns"],
     category: "Frontend",
   }
 ];
+
+/** Canonical path for a project page */
+export const projectPath = (project) => `/projects/${project.slug}`;

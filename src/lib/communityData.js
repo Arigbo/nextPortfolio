@@ -21,7 +21,14 @@ export const communityCategories = [
     title: "DevFest Port Harcourt 2025",
     description: "Photos from DevFest Port Harcourt 2025, the developer festival organised by GDG Cloud Port Harcourt.",
     coverImage: "/IMG-20251122-WA0039.jpg",
+    coverSize: { width: 2560, height: 1920 },
     icon: "fa-solid fa-users",
-    photos: devfestPhotos.map((p) => ({ url: `/${p.file}`, caption: p.caption, tag: "DevFest 2025" })),
+    // WA0039 is landscape; the rest are portrait phone photos
+    photos: devfestPhotos.map((p) => ({
+      url: `/${p.file}`,
+      caption: p.caption,
+      tag: "DevFest 2025",
+      ...(p.file.endsWith("WA0039.jpg") ? { width: 2560, height: 1920 } : { width: 1920, height: 2560 }),
+    })),
   },
 ];

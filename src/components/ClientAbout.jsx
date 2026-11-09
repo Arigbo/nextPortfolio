@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import ClientToolkit from "@/components/ClientToolkit";
@@ -106,7 +107,7 @@ export default function ClientAbout() {
             <span className="window-meta">preview</span>
           </div>
           <div className="photo-frame">
-            <img src="/graduation.jpg" alt="Arigbo Jesse in graduation cap and gown" />
+            <Image src="/graduation.jpg" alt="Arigbo Jesse in graduation cap and gown" width={822} height={1024} sizes="(min-width: 900px) 430px, 100vw" priority />
           </div>
           <p className="photo-caption mono">
             <span className="tk-com">// {SITE.name}, B.S. Computer Science</span>
@@ -177,7 +178,7 @@ export default function ClientAbout() {
                   <span className="dim mono dir-count">{cat.photos.length} photos</span>
                 </div>
                 <div className="dir-img">
-                  <img src={cat.coverImage} alt="" loading="lazy" />
+                  <Image src={cat.coverImage} alt="" width={cat.coverSize.width} height={cat.coverSize.height} sizes="(min-width: 1000px) 360px, (min-width: 640px) 50vw, 100vw" />
                 </div>
                 <div className="dir-body">
                   <h3><i className={cat.icon} aria-hidden="true" /> {cat.title}</h3>
