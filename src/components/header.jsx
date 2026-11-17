@@ -87,7 +87,7 @@ export default function Header() {
       </div>
 
       {/* Mobile menu — a little shell session */}
-      <div id="mobile-menu" className={`mobile-menu ${menuOpen ? "open" : ""}`} aria-hidden={!menuOpen}>
+      <div id="mobile-menu" className={`mobile-menu ${menuOpen ? "open" : ""}`} aria-hidden={!menuOpen} data-lenis-prevent>
         <div className="mobile-menu-inner container">
           <p className="mobile-menu-cmd"><span className="tk-prompt">❯</span> ls ~/</p>
           {NAV.map((item, i) => (

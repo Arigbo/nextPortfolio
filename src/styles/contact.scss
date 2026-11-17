@@ -203,3 +203,5 @@
   color: var(--blue);
   &:hover { text-decoration: underline; }
 }
+
+.local-time { font-variant-numeric: tabular-nums; }

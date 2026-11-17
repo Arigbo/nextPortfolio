@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ClientLayoutWrapper from "@/components/ClientLayoutWrapper";
 import { SITE } from "@/lib/site";
 import { pageMetadata, siteJsonLd, jsonLdScript } from "@/lib/seo";
+import "lenis/dist/lenis.css";
 import "@/styles/custom.scss";
 
 const sans = Geist({ subsets: ["latin"], variable: "--font-sans", display: "swap" });

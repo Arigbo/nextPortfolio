@@ -126,3 +126,9 @@
 
   i { margin-left: 0.25rem; font-size: 0.75em; transition: transform 0.25s var(--ease); }
 }
+
+/* inner wrapper the Projects page moves for column parallax (card keeps its own tilt) */
+.drift {
+  display: flex;
+  width: 100%;
+}

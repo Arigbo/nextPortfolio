@@ -42,6 +42,9 @@
   --shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7);
   --shadow-sm: 0 10px 30px -16px rgba(0, 0, 0, 0.55);
   --grid-dot: rgba(255, 255, 255, 0.035);
+  --grid-dot-strong: rgba(255, 255, 255, 0.22);
+  --light-a: rgba(255, 255, 255, 0.05);
+  --light-b: rgba(140, 195, 164, 0.06);
   --overlay: rgba(8, 9, 10, 0.72);
   --spot: rgba(255, 255, 255, 0.06);
 }
@@ -78,6 +81,9 @@
   --shadow: 0 30px 60px -34px rgba(20, 20, 30, 0.22);
   --shadow-sm: 0 10px 28px -18px rgba(20, 20, 30, 0.2);
   --grid-dot: rgba(0, 0, 0, 0.05);
+  --grid-dot-strong: rgba(0, 0, 0, 0.22);
+  --light-a: rgba(255, 255, 255, 0.9);
+  --light-b: rgba(59, 122, 91, 0.06);
   --overlay: rgba(17, 18, 20, 0.4);
   --spot: rgba(0, 0, 0, 0.04);
 }
@@ -177,16 +183,13 @@ h1, h2, h3, h4 {
   margin-inline: auto;
 }
 
+/* Generous negative space: sections breathe more as the screen grows */
 .page {
-  padding-block: calc(var(--header-h) + 3.5rem) 5rem;
-
-  @media (max-width: 640px) { padding-block-start: calc(var(--header-h) + 2rem); }
+  padding-block: calc(var(--header-h) + clamp(2.5rem, 7vw, 6rem)) clamp(4rem, 8vw, 7rem);
 }
 
 .section {
-  padding-block: 4.5rem;
-
-  @media (max-width: 640px) { padding-block: 3.25rem; }
+  padding-block: clamp(4rem, 10vw, 9rem);
 }
 
 .mono { font-family: var(--mono); }
@@ -211,7 +214,7 @@ h1, h2, h3, h4 {
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(2rem, 4vw, 3.25rem);
 
   .cmd-line {
     font-family: var(--mono);
@@ -495,6 +498,74 @@ kbd,
 /* Monochrome-black brand logos (devicon) vanish on the dark theme — flip them */
 [data-theme="dark"] img:is([src*="nextjs-original"], [src*="express-original"], [src*="github-original"], [src*="logos/vercel"]) {
   filter: invert(1) brightness(1.1);
+}
+
+/* ── Ambient layer (components/Ambient.jsx) ───────────────── */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* two soft lights drifting on long, offset loops */
+.ambient-light {
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 50%;
+  filter: blur(40px);
+  will-change: transform;
+}
+
+.ambient-light-a {
+  top: -30vmax;
+  left: -15vmax;
+  background: radial-gradient(closest-side, var(--light-a), transparent);
+  animation: drift-a 38s ease-in-out infinite alternate;
+}
+
+.ambient-light-b {
+  bottom: -35vmax;
+  right: -20vmax;
+  background: radial-gradient(closest-side, var(--light-b), transparent);
+  animation: drift-b 46s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+  to { transform: translate(28vw, 22vh) scale(1.15); }
+}
+
+@keyframes drift-b {
+  to { transform: translate(-24vw, -26vh) scale(0.9); }
+}
+
+/* the dot grid lights up around the cursor */
+.ambient-spot {
+  --mx: 50vw;
+  --my: 30vh;
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--grid-dot-strong) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(260px circle at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.5) 45%, transparent 100%);
+  -webkit-mask-image: radial-gradient(260px circle at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.5) 45%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.6s;
+
+  &.is-on { opacity: 1; }
+}
+
+/* ── Page transition (app/template.jsx) ────────────────────── */
+.page-enter {
+  /* "backwards", not "both": once finished it leaves no transform behind, which would
+     otherwise trap position: fixed children (the photo viewer) inside this wrapper */
+  animation: page-in 0.7s var(--ease) backwards;
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(18px); filter: blur(6px); }
 }
 
 /* ── 3D tilt + glare (see components/Tilt.jsx) ─────────────── */

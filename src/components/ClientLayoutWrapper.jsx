@@ -6,6 +6,9 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import CommandPalette from "@/components/CommandPalette";
 import Cursor from "@/components/Cursor";
+import SmoothScroll from "@/components/SmoothScroll";
+import Ambient from "@/components/Ambient";
+import ScrollScenes from "@/components/ScrollScenes";
 
 export default function ClientLayoutWrapper({ children }) {
   const [theme, setTheme] = useState("dark");
@@ -42,6 +45,9 @@ export default function ClientLayoutWrapper({ children }) {
   return (
     <body>
       <Context.Provider value={{ theme, toggleTheme, openPalette }}>
+        <Ambient />
+        <SmoothScroll />
+        <ScrollScenes />
         <a href="#main" className="skip-link">Skip to content</a>
         <Header />
         <main id="main">{children}</main>

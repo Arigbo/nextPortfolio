@@ -130,7 +130,6 @@ export const techStackData = {
 // Logos for libraries that appear in project stacks but not in the skills list above
 const projectOnlyLogos = {
   bootstrap: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
-  "redux toolkit": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg",
 };
 
 export const techMap = [...techStackData.frontend, ...techStackData.backend, ...techStackData.extra].reduce(
@@ -195,7 +194,7 @@ export const allProjects = [
     id: "p3",
     slug: "carekey",
     title: "CareKey Healthcare Portal",
-    description: "A patient–doctor platform: patients onboard, choose a doctor, chat privately and keep a medical history they can share; doctors manage their patients, incoming requests and medical records.",
+    description: "Patient-owned health records for Nigeria: patients keep their medical history in one secure place and share it only with the doctors they choose; doctors manage their patients, access requests and medical records.",
     features: [
       "Separate patient and doctor dashboards with authentication",
       "Patient onboarding and doctor selection",
@@ -203,31 +202,13 @@ export const allProjects = [
       "Medical records written with a rich-text editor (Tiptap), with record history",
       "Record sharing and a clinic partnership page"
     ],
-    link: "",
+    link: "https://carekey.vercel.app/",
     github: null,
     repo: "private",
-    imageUrl: null,
+    imageUrl: "/carekey.png",
+    imageSize: { width: 1366, height: 682 },
     techStack: ["Next.js", "TypeScript", "Firebase", "Firebase Data Connect", "Tailwind CSS"],
     category: "Full-Stack",
-  },
-  {
-    id: "p4",
-    slug: "skillsbridge",
-    title: "SkillsBridge",
-    description: "A multi-tenant learning platform where organisations manage their courses, faculty and students — with separate dashboards for super-admins, organisation admins, faculty and students.",
-    features: [
-      "Super-admin management of organisations and their users",
-      "Organisation and faculty admin dashboards with course management",
-      "Student dashboard",
-      "Invite-based onboarding and authentication with NextAuth",
-      "Data tables with TanStack Table and state managed with Redux Toolkit"
-    ],
-    link: "",
-    github: null,
-    repo: "private",
-    imageUrl: null,
-    techStack: ["Next.js", "TypeScript", "Redux Toolkit", "NextAuth", "Tailwind CSS"],
-    category: "Frontend",
   },
   {
     id: "p5",
@@ -246,25 +227,6 @@ export const allProjects = [
     repo: null,
     imageUrl: null,
     techStack: ["Next.js", "TypeScript", "Firebase", "Firestore", "SCSS"],
-    category: "Full-Stack",
-  },
-  {
-    id: "p6",
-    slug: "agunwami",
-    title: "Agunwami Enterprise Portal",
-    description: "A unified enterprise workspace managing communications, transactional email flows, project boards, and task statuses for Agunwami Enterprises.",
-    features: [
-      "Task board registers with priority sorting",
-      "Transactional automated email triggers with Resend API",
-      "Client communication dashboard",
-      "Team collaboration task assignment cards",
-      "Secure client access panels"
-    ],
-    link: "",
-    github: null,
-    repo: null,
-    imageUrl: null,
-    techStack: ["Next.js", "Firebase", "Resend", "TypeScript", "Tailwind CSS"],
     category: "Full-Stack",
   },
   {
