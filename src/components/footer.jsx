@@ -26,7 +26,7 @@ export default function Footer() {
                 <h2 className="footer-cta-title">Let's build something great together.</h2>
               </div>
               <Link href="/contact" className="btn btn-primary">
-                ./contact.sh <i className="fa-solid fa-arrow-right" />
+                Get in touch <i className="fa-solid fa-arrow-right" />
               </Link>
             </div>
           </div>

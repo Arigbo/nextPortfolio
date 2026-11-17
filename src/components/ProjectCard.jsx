@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Tilt from "@/components/Tilt";
 import { projectPath } from "@/lib/projectsData";
 
 /** Placeholder shown where a project has no real screenshot yet */
@@ -14,13 +15,13 @@ export function NoPreview({ project, className = "" }) {
   );
 }
 
-/** A project rendered as a folder-ish window: path bar, screenshot, summary. */
+/** A project rendered as a folder-ish window: path bar, screenshot, summary — tilts in 3D toward the cursor. */
 export default function ProjectCard({ project, priority = false }) {
   const live = Boolean(project.link);
   const extra = project.techStack.length - 4;
 
   return (
-    <Link href={projectPath(project)} className="pcard">
+    <Tilt as={Link} href={projectPath(project)} className="pcard" data-cursor="View" max={5}>
       <div className="pcard-bar">
         <i className="fa-solid fa-folder" aria-hidden="true" />
         <span className="pcard-path">{project.slug}/</span>
@@ -58,6 +59,6 @@ export default function ProjectCard({ project, priority = false }) {
           open <span className="dim">--details</span> <i className="fa-solid fa-arrow-right" aria-hidden="true" />
         </span>
       </div>
-    </Link>
+    </Tilt>
   );
 }

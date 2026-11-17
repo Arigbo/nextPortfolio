@@ -236,7 +236,7 @@ a.browser-view:hover img { transform: scale(1.012); }
   &.next { text-align: right; align-items: flex-end; }
 
   .pager-cmd { font-size: 0.78rem; color: var(--dim); }
-  .pager-title { font-family: var(--mono); font-weight: 700; color: var(--text-bright); }
+  .pager-title { font-weight: 600; letter-spacing: -0.02em; color: var(--text-bright); }
 
   &:hover {
     border-color: var(--accent-line);

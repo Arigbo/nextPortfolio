@@ -5,6 +5,7 @@ import { Context } from "@/components/context";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import CommandPalette from "@/components/CommandPalette";
+import Cursor from "@/components/Cursor";
 
 export default function ClientLayoutWrapper({ children }) {
   const [theme, setTheme] = useState("dark");
@@ -46,6 +47,7 @@ export default function ClientLayoutWrapper({ children }) {
         <main id="main">{children}</main>
         <Footer />
         <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+        <Cursor />
       </Context.Provider>
     </body>
   );

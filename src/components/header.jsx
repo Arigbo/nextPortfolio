@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSite } from "@/components/context";
@@ -13,9 +13,15 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMac, setIsMac] = useState(false);
+  const progress = useRef(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+      // reading-progress line under the header
+      const max = document.documentElement.scrollHeight - innerHeight;
+      if (progress.current) progress.current.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     setIsMac(/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent));
@@ -33,6 +39,7 @@ export default function Header() {
 
   return (
     <header className={`site-header ${scrolled ? "is-scrolled" : ""} ${menuOpen ? "menu-open" : ""}`}>
+      <span className="scroll-progress" ref={progress} aria-hidden="true" />
       <div className="header-inner container">
         <Link href="/" className="brand" aria-label={`${SITE.name} — home`}>
           <Logo />

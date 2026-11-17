@@ -93,9 +93,9 @@ export default function ClientAbout() {
 
             <div className="intro-actions">
               <a href={SITE.resume} download className="btn btn-primary">
-                <i className="fa-solid fa-file-arrow-down" /> download resume.pdf
+                <i className="fa-solid fa-file-arrow-down" /> Download resume
               </a>
-              <Link href="/contact" className="btn">./contact.sh</Link>
+              <Link href="/contact" className="btn">Get in touch</Link>
             </div>
           </div>
         </Reveal>

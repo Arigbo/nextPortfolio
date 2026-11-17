@@ -212,7 +212,7 @@ export default function ClientCommunityGallery({ category }) {
       {hasMore ? (
         <div className="gallery-more">
           <button className="btn" onClick={loadMore}>
-            <i className="fa-solid fa-plus" /> load more <span className="dim">({(total - visibleCount).toLocaleString()} remaining)</span>
+            <i className="fa-solid fa-plus" /> Load more <span className="dim">({(total - visibleCount).toLocaleString()} remaining)</span>
           </button>
         </div>
       ) : (

@@ -108,7 +108,7 @@ export default function ClientProjects() {
               <span className="err">grep: no matches found</span>
             </p>
             <button className="btn" onClick={() => { setSearch(""); setFilter("All"); }}>
-              <i className="fa-solid fa-rotate-left" /> clear filters
+              <i className="fa-solid fa-rotate-left" /> Clear filters
             </button>
           </div>
         </div>

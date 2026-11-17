@@ -96,17 +96,17 @@ export default async function ProjectDetailsPage({ params }) {
         <div className="detail-actions">
           {project.link && (
             <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-              <i className="fa-solid fa-arrow-up-right-from-square" /> open live site
+              <i className="fa-solid fa-arrow-up-right-from-square" /> Visit live site
             </a>
           )}
           {project.github && (
             <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn">
-              <i className="fa-brands fa-github" /> source
+              <i className="fa-brands fa-github" /> Source code
             </a>
           )}
           {project.repo === "private" && (
             <span className="btn btn-ghost btn-static">
-              <i className="fa-solid fa-lock" /> private repository
+              <i className="fa-solid fa-lock" /> Private repository
             </span>
           )}
         </div>

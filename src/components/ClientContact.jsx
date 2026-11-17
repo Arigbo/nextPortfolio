@@ -114,10 +114,10 @@ export default function ClientContact() {
                 </p>
                 <div className="sent-actions">
                   <button className="btn" onClick={copyEmail}>
-                    <i className={copied ? "fa-solid fa-check" : "fa-regular fa-copy"} /> {copied ? "copied" : "copy email"}
+                    <i className={copied ? "fa-solid fa-check" : "fa-regular fa-copy"} /> {copied ? "Copied" : "Copy email"}
                   </button>
                   <button className="btn btn-ghost" onClick={() => { setSent(false); setForm(EMPTY); }}>
-                    <i className="fa-solid fa-rotate-left" /> new message
+                    <i className="fa-solid fa-rotate-left" /> New message
                   </button>
                 </div>
               </div>
@@ -156,7 +156,7 @@ export default function ClientContact() {
 
                 <div className="term-submit">
                   <button type="submit" className="btn btn-primary">
-                    <i className="fa-solid fa-paper-plane" /> ./send --message
+                    <i className="fa-solid fa-paper-plane" /> Send message
                   </button>
                   <span className="term-hint">opens in your email app</span>
                 </div>

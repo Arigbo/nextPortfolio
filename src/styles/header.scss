@@ -9,8 +9,8 @@
   z-index: 200;
   padding: 0.5rem 0.9rem;
   border-radius: var(--radius-sm);
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--ink);
+  color: var(--ink-text);
   font-family: var(--mono);
   font-size: 0.85rem;
   font-weight: 700;
@@ -47,6 +47,19 @@
     opacity: 1;
     background: var(--bg);
   }
+}
+
+/* reading progress — a hairline that fills as you scroll */
+.scroll-progress {
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 1px;
+  background: var(--text);
+  opacity: 0.55;
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .header-inner {
@@ -240,9 +253,10 @@
   gap: 0.9rem;
   padding: 0.95rem 0.25rem;
   border-bottom: 1px solid var(--border);
-  font-family: var(--mono);
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-family: var(--sans);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
   color: var(--text-bright);
   opacity: 0;
   transform: translateX(-8px);

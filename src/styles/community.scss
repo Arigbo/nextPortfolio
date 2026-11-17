@@ -106,7 +106,7 @@
   .tag {
     background: rgba(4, 7, 5, 0.6);
     border-color: rgba(255, 255, 255, 0.15);
-    color: #7ee787;
+    color: #8cc3a4;
   }
 
   p {
@@ -150,7 +150,7 @@
     border-color: rgba(255, 255, 255, 0.14);
     color: #e8f2eb;
 
-    &:hover { border-color: #7ee787; color: #7ee787; }
+    &:hover { border-color: #8cc3a4; color: #8cc3a4; }
   }
 
   .dim { color: #6b8573; }
@@ -201,7 +201,7 @@
   .tag {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.14);
-    color: #7ee787;
+    color: #8cc3a4;
   }
 }
 
@@ -246,6 +246,6 @@
 
   &.active {
     opacity: 1;
-    border-color: #7ee787;
+    border-color: #8cc3a4;
   }
 }

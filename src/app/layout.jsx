@@ -1,11 +1,11 @@
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import ClientLayoutWrapper from "@/components/ClientLayoutWrapper";
 import { SITE } from "@/lib/site";
 import { pageMetadata, siteJsonLd, jsonLdScript } from "@/lib/seo";
 import "@/styles/custom.scss";
 
-const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
-const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const sans = Geist({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
 // Runs before first paint so the saved (or system) theme never flashes the wrong colours.
 // Older visits may have stored one of the retired colour themes — those fall back to the system setting.
@@ -37,9 +37,13 @@ export const metadata = {
 };
 
 export const viewport = {
+  // Declares that the site has its own light AND dark theme. Without it, browsers with an
+  // auto/forced dark mode (Chrome on Android, Samsung Internet…) repaint the site with their
+  // own dark filter — so the light theme came out murky grey and the toggle seemed broken.
+  colorScheme: "dark light",
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0a0e0b" },
-    { media: "(prefers-color-scheme: light)", color: "#f6f8f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#0e0f11" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f7f5" },
   ],
 };
 
