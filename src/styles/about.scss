@@ -5,11 +5,11 @@
 /* ── Intro ── */
 .intro-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
   align-items: start;
 
-  @media (min-width: 900px) { grid-template-columns: 1.55fr 1fr; }
+  @media (min-width: 900px) { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
 }
 
 .bio {
@@ -27,12 +27,12 @@
 
 .fact {
   display: grid;
-  grid-template-columns: 7.5rem 1fr;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
   gap: 0.75rem;
 
   dd { min-width: 0; overflow-wrap: anywhere; }
 
-  @media (max-width: 420px) { grid-template-columns: 6rem 1fr; }
+  @media (max-width: 420px) { grid-template-columns: 6rem minmax(0, 1fr); }
 }
 
 .fact-link {
@@ -46,7 +46,8 @@
   gap: 0.6rem;
 }
 
-.photo-window {
+/* sticky lives on the reveal wrapper — the tilting window inside it moves freely */
+.photo-reveal {
   @media (min-width: 900px) {
     position: sticky;
     top: calc(var(--header-h) + 1.5rem);
@@ -67,7 +68,7 @@
     transition: transform 0.8s var(--ease);
   }
 
-  .photo-window:hover & img { transform: scale(1.02); }
+  .photo-window:hover & img { transform: scale(1.03); }
 }
 
 .photo-caption {
@@ -102,7 +103,25 @@
     padding-bottom: 0;
     &::before { display: none; }
   }
+
+  /* the rail "draws" downward and each node pops in, in sequence */
+  .reveal &::before {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.9s var(--ease);
+    transition-delay: calc(var(--i) * 180ms + 350ms);
+  }
+
+  .reveal.is-in &::before { transform: scaleY(1); }
 }
+
+.reveal .graph-node {
+  transform: scale(0);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: calc(var(--i) * 180ms + 200ms);
+}
+
+.reveal.is-in .graph-node { transform: scale(1); }
 
 .graph-node {
   position: absolute;
@@ -137,11 +156,11 @@
 /* ── Toolkit / man page ── */
 .toolkit {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
   align-items: start;
 
-  @media (min-width: 900px) { grid-template-columns: 1fr 1.15fr; }
+  @media (min-width: 900px) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); }
 }
 
 .toolkit-items {
@@ -195,6 +214,15 @@
     position: sticky;
     top: calc(var(--header-h) + 1.5rem);
   }
+}
+
+/* each tool's page slides in when the selection changes */
+.man-swap {
+  animation: man-in 0.45s var(--ease);
+}
+
+@keyframes man-in {
+  from { opacity: 0; transform: translateX(10px); }
 }
 
 .man-body {
@@ -270,11 +298,11 @@
 /* ── Community directories ── */
 .dir-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
 
-  @media (min-width: 640px) { grid-template-columns: repeat(2, 1fr); }
-  @media (min-width: 1000px) { grid-template-columns: repeat(3, 1fr); }
+  @media (min-width: 640px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 1000px) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 .dir-card {
@@ -290,14 +318,15 @@
   .dir-count { font-size: 0.7rem; }
 
   &:hover {
-    border-color: var(--accent-line);
-    transform: translateY(-4px);
+    border-color: var(--border-strong);
     box-shadow: var(--shadow);
 
     .dir-img img { transform: scale(1.04); }
     .pcard-cta i { transform: translateX(4px); }
   }
 }
+
+.dir-card:not(.tilt-on):hover { transform: translateY(-4px); }
 
 .dir-img {
   aspect-ratio: 16 / 9;
@@ -331,11 +360,11 @@
 /* ── Memberships ── */
 .member-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
 
-  @media (min-width: 560px) { grid-template-columns: repeat(2, 1fr); }
-  @media (min-width: 1000px) { grid-template-columns: repeat(4, 1fr); }
+  @media (min-width: 560px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 1000px) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 .member .window-body { padding: 1.15rem 1.25rem; }

@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import SplitHeading from "@/components/SplitHeading";
+import Tilt from "@/components/Tilt";
 
 /* ─────────────────────────────────────────────────────────────
    Constants
@@ -62,8 +64,10 @@ function MasonryImage({ photo, index, onOpen }) {
   const isPending = status === "loading" || status === "retrying";
 
   return (
-    <div
-      className={`masonry-item ${status === "loaded" ? "clickable" : ""}`}
+    <Tilt
+      max={4}
+      data-cursor={status === "loaded" ? "Open" : undefined}
+      className={`masonry-item ${status === "loaded" ? "clickable is-loaded" : ""}`}
       onClick={() => status === "loaded" && onOpen(photo, index)}
       role={status === "loaded" ? "button" : undefined}
       tabIndex={status === "loaded" ? 0 : undefined}
@@ -107,7 +111,7 @@ function MasonryImage({ photo, index, onOpen }) {
           <p>{photo.caption}</p>
         </div>
       )}
-    </div>
+    </Tilt>
   );
 }
 
@@ -182,7 +186,7 @@ export default function ClientCommunityGallery({ category }) {
             <span className="dim">cd</span>
             <Link href="/about">~/about</Link>/<Link href="/about#community">community</Link>/<span className="bright">{category.id}</span>
           </nav>
-          <h1><i className={`${category.icon} gallery-icon`} aria-hidden="true" /> {category.title}</h1>
+          <SplitHeading as="h1" text={category.title} />
           <p className="cmd-sub">{category.description}</p>
         </div>
         <p className="mono gallery-total">
@@ -245,7 +249,7 @@ export default function ClientCommunityGallery({ category }) {
           </button>
 
           <figure className="lightbox-stage" onClick={(e) => e.stopPropagation()}>
-            <Image src={activePhoto.url} alt={activePhoto.caption} width={activePhoto.width} height={activePhoto.height} sizes="100vw" className="lightbox-img" priority />
+            <Image key={photoIndex} src={activePhoto.url} alt={activePhoto.caption} width={activePhoto.width} height={activePhoto.height} sizes="100vw" className="lightbox-img" priority />
             <figcaption className="lightbox-caption">
               <span className="tag">{activePhoto.tag}</span>
               <p>{activePhoto.caption}</p>

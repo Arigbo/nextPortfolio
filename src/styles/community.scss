@@ -2,13 +2,6 @@
    COMMUNITY GALLERY
    ============================================================ */
 
-.gallery-icon {
-  color: var(--accent);
-  font-size: 0.62em;
-  vertical-align: 0.12em;
-  margin-right: 0.15em;
-}
-
 .gallery-total { font-size: 0.9rem; }
 
 .gallery-bar {
@@ -44,13 +37,21 @@
     cursor: zoom-in;
 
     &:hover {
-      border-color: var(--accent-line);
-      transform: translateY(-3px);
+      border-color: var(--border-strong);
 
       .masonry-img { transform: scale(1.03); }
       .masonry-caption { opacity: 1; transform: none; }
     }
+
+    &:not(.tilt-on):hover { transform: translateY(-3px); }
   }
+
+  /* each photo fades and settles in as it finishes loading */
+  &.is-loaded .masonry-img { animation: photo-in 0.7s var(--ease); }
+}
+
+@keyframes photo-in {
+  from { opacity: 0; transform: scale(1.04); filter: blur(6px); }
 }
 
 .masonry-img {
@@ -163,6 +164,19 @@
   align-items: center;
   padding: 0.9rem 1rem;
   font-size: 0.82rem;
+}
+
+/* the viewer zooms open; each photo crossfades in when you move between them */
+.lightbox-stage { animation: lightbox-zoom 0.35s var(--ease); }
+
+@keyframes lightbox-zoom {
+  from { opacity: 0; transform: scale(0.96); }
+}
+
+.lightbox-img { animation: lightbox-fade 0.4s var(--ease); }
+
+@keyframes lightbox-fade {
+  from { opacity: 0; transform: scale(0.985); }
 }
 
 .lightbox-stage {

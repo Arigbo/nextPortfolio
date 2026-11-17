@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Reveal from "@/components/Reveal";
+import SplitHeading from "@/components/SplitHeading";
 import { SITE, SOCIALS } from "@/lib/site";
 import "@/styles/contact.scss";
 
@@ -37,7 +38,7 @@ export default function ClientContact() {
       <Reveal className="cmd-head">
         <div>
           <p className="cmd-line"><span className="tk-prompt">❯</span>./contact.sh</p>
-          <h1>Let's build something.</h1>
+          <SplitHeading as="h1" text="Let's build something." />
           <p className="cmd-sub">
             Open for projects, collaborations and friendly chats. I usually reply within 24 hours.
           </p>
@@ -55,7 +56,7 @@ export default function ClientContact() {
             <div className="window-body contact-info">
               <p className="status live pulse contact-avail">available for new projects</p>
 
-              <div className="info-row">
+              <div className="info-row stagger-item" style={{ "--i": 0 }}>
                 <span className="tk-key">email</span>
                 <div className="info-val">
                   <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
@@ -64,17 +65,17 @@ export default function ClientContact() {
                   </button>
                 </div>
               </div>
-              <div className="info-row">
+              <div className="info-row stagger-item" style={{ "--i": 1 }}>
                 <span className="tk-key">whatsapp</span>
                 <div className="info-val">
                   <a href={SITE.whatsapp} target="_blank" rel="noopener noreferrer">{SITE.phone}</a>
                 </div>
               </div>
-              <div className="info-row">
+              <div className="info-row stagger-item" style={{ "--i": 2 }}>
                 <span className="tk-key">location</span>
                 <div className="info-val"><span className="tk-str">{SITE.location}</span></div>
               </div>
-              <div className="info-row">
+              <div className="info-row stagger-item" style={{ "--i": 3 }}>
                 <span className="tk-key">response</span>
                 <div className="info-val"><span className="tk-str">~24 hours</span></div>
               </div>
@@ -82,8 +83,8 @@ export default function ClientContact() {
           </Reveal>
 
           <Reveal className="socials" delay={80}>
-            {SOCIALS.map((s) => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social">
+            {SOCIALS.map((s, i) => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="social stagger-item" style={{ "--i": i }}>
                 <i className={s.icon} aria-hidden="true" />
                 <span className="social-label">{s.label}</span>
                 <span className="social-handle">{s.handle}</span>
@@ -124,22 +125,22 @@ export default function ClientContact() {
             ) : (
               <form onSubmit={handleSubmit} className="term-form">
                 <div className="term-row">
-                  <label className="term-field">
+                  <label className="term-field stagger-item" style={{ "--i": 0 }}>
                     <span className="term-label"><span className="tk-prompt">?</span> name:</span>
                     <input value={form.name} onChange={update("name")} placeholder="Ada Lovelace" autoComplete="name" required />
                   </label>
-                  <label className="term-field">
+                  <label className="term-field stagger-item" style={{ "--i": 1 }}>
                     <span className="term-label"><span className="tk-prompt">?</span> email:</span>
                     <input type="email" value={form.email} onChange={update("email")} placeholder="ada@example.com" autoComplete="email" required />
                   </label>
                 </div>
 
-                <label className="term-field">
+                <label className="term-field stagger-item" style={{ "--i": 2 }}>
                   <span className="term-label"><span className="tk-prompt">?</span> subject:</span>
                   <input value={form.subject} onChange={update("subject")} placeholder="Project inquiry" />
                 </label>
 
-                <label className="term-field">
+                <label className="term-field stagger-item" style={{ "--i": 3 }}>
                   <span className="term-label">
                     <span className="tk-prompt">?</span> message:
                     <span className="term-count">{form.message.length}/{MAX_MESSAGE}</span>
@@ -155,7 +156,7 @@ export default function ClientContact() {
                 </label>
 
                 <div className="term-submit">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary" data-magnetic>
                     <i className="fa-solid fa-paper-plane" /> Send message
                   </button>
                   <span className="term-hint">opens in your email app</span>

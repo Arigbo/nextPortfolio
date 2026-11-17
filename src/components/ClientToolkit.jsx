@@ -65,7 +65,7 @@ export default function ClientToolkit({ toolkit }) {
           <span className="window-meta">{toolkit.length}</span>
         </div>
         <div className="window-body toolkit-items" role="listbox" aria-label="Tools">
-          {toolkit.map((t) => {
+          {toolkit.map((t, i) => {
             const count = projectsUsing(t).length;
             const src = techMap[t.toLowerCase()];
             return (
@@ -73,7 +73,8 @@ export default function ClientToolkit({ toolkit }) {
                 key={t}
                 role="option"
                 aria-selected={active === t}
-                className={`tool ${active === t ? "active" : ""}`}
+                className={`tool stagger-item ${active === t ? "active" : ""}`}
+                style={{ "--i": i }}
                 onClick={() => setActive(t)}
                 onMouseEnter={() => setActive(t)}
                 onFocus={() => setActive(t)}
@@ -92,7 +93,8 @@ export default function ClientToolkit({ toolkit }) {
           <i className="fa-solid fa-book tone-blue" aria-hidden="true" />
           <span className="window-title" style={{ textAlign: "left" }}>man {active.toLowerCase().replace(/\s+/g, "-")}</span>
         </div>
-        <div className="window-body man-body" aria-live="polite">
+        {/* keyed by tool so the page re-animates whenever the selection changes */}
+        <div className="window-body man-body man-swap" key={active} aria-live="polite">
           <p className="man-section">NAME</p>
           <p className="man-text man-name">
             {logo && <img src={logo} alt="" width={22} height={22} />}

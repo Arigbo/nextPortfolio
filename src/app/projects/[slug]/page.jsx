@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
+import SplitHeading from "@/components/SplitHeading";
+import Tilt from "@/components/Tilt";
 import { NoPreview } from "@/components/ProjectCard";
 import { allProjects, techMap, projectPath } from "@/lib/projectsData";
 import { SITE } from "@/lib/site";
@@ -84,7 +86,7 @@ export default async function ProjectDetailsPage({ params }) {
           <Link href="/">~</Link>/<Link href="/projects">projects</Link>/<span className="bright">{slug}</span>
         </nav>
 
-        <h1 className="detail-title">{project.title}</h1>
+        <SplitHeading as="h1" className="detail-title" text={project.title} />
         <p className="detail-tagline">{project.description}</p>
 
         <div className="detail-meta">
@@ -95,7 +97,7 @@ export default async function ProjectDetailsPage({ params }) {
 
         <div className="detail-actions">
           {project.link && (
-            <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+            <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary" data-magnetic>
               <i className="fa-solid fa-arrow-up-right-from-square" /> Visit live site
             </a>
           )}
@@ -114,25 +116,30 @@ export default async function ProjectDetailsPage({ params }) {
 
       {/* ── Real screenshot in a browser frame, or an honest placeholder ── */}
       {project.imageUrl ? (
-        <Reveal as="figure" className="window browser" delay={100}>
-          <div className="window-bar">
-            <span className="dots"><i /><i /><i /></span>
-            {host && (
-              <span className="browser-url">
-                <i className="fa-solid fa-lock" aria-hidden="true" />
-                {host}
-              </span>
-            )}
+        <Reveal className="browser-stage" delay={100}>
+          {/* outer layer: swings up from a 3D angle as it scrolls into view (CSS scroll timeline) */}
+          <div className="browser-3d">
+            <Tilt as="figure" className="window browser" max={3}>
+              <div className="window-bar">
+                <span className="dots"><i /><i /><i /></span>
+                {host && (
+                  <span className="browser-url">
+                    <i className="fa-solid fa-lock" aria-hidden="true" />
+                    {host}
+                  </span>
+                )}
+              </div>
+              {project.link ? (
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="browser-view" aria-label={`Open ${project.title} live site`}>
+                  <Image src={project.imageUrl} alt={`${project.title} screenshot`} width={project.imageSize.width} height={project.imageSize.height} sizes="(min-width: 1180px) 1140px, 100vw" priority />
+                </a>
+              ) : (
+                <div className="browser-view">
+                  <Image src={project.imageUrl} alt={`${project.title} screenshot`} width={project.imageSize.width} height={project.imageSize.height} sizes="(min-width: 1180px) 1140px, 100vw" priority />
+                </div>
+              )}
+            </Tilt>
           </div>
-          {project.link ? (
-            <a href={project.link} target="_blank" rel="noopener noreferrer" className="browser-view" aria-label={`Open ${project.title} live site`}>
-              <Image src={project.imageUrl} alt={`${project.title} screenshot`} width={project.imageSize.width} height={project.imageSize.height} sizes="(min-width: 1180px) 1140px, 100vw" priority />
-            </a>
-          ) : (
-            <div className="browser-view">
-              <Image src={project.imageUrl} alt={`${project.title} screenshot`} width={project.imageSize.width} height={project.imageSize.height} sizes="(min-width: 1180px) 1140px, 100vw" priority />
-            </div>
-          )}
         </Reveal>
       ) : (
         <Reveal className="window browser" delay={100}>
@@ -157,8 +164,8 @@ export default async function ProjectDetailsPage({ params }) {
 
             <h2 className="md-h"><span className="md-hash">##</span> Features</h2>
             <ul className="md-checklist">
-              {project.features.map((f) => (
-                <li key={f}>
+              {project.features.map((f, i) => (
+                <li key={f} className="stagger-item" style={{ "--i": i }}>
                   <span className="md-box" aria-hidden="true"><i className="fa-solid fa-check" /></span>
                   {f}
                 </li>
@@ -176,8 +183,8 @@ export default async function ProjectDetailsPage({ params }) {
             <div className="window-body side-body">
               <p className="code"><span className="tk-key">"dependencies"</span><span className="tk-punc">: [</span></p>
               <ul className="dep-list">
-                {project.techStack.map((t) => (
-                  <li key={t}>
+                {project.techStack.map((t, i) => (
+                  <li key={t} className="stagger-item" style={{ "--i": i }}>
                     {techMap?.[t.toLowerCase()] ? (
                       <img src={techMap[t.toLowerCase()]} alt="" width={16} height={16} loading="lazy" />
                     ) : (
@@ -223,20 +230,24 @@ export default async function ProjectDetailsPage({ params }) {
       </div>
 
       {/* ── Prev / next ── */}
-      <nav className="detail-pager" aria-label="More projects">
+      <Reveal as="nav" className="detail-pager" aria-label="More projects">
         {prev ? (
-          <Link href={projectPath(prev)} className="pager-link">
-            <span className="pager-cmd mono"><i className="fa-solid fa-arrow-left" /> cd ../{prev.slug}</span>
-            <span className="pager-title">{prev.title}</span>
-          </Link>
+          <Tilt className="pager-tilt" max={4}>
+            <Link href={projectPath(prev)} className="pager-link">
+              <span className="pager-cmd mono"><i className="fa-solid fa-arrow-left" /> cd ../{prev.slug}</span>
+              <span className="pager-title">{prev.title}</span>
+            </Link>
+          </Tilt>
         ) : <span />}
         {next ? (
-          <Link href={projectPath(next)} className="pager-link next">
-            <span className="pager-cmd mono">cd ../{next.slug} <i className="fa-solid fa-arrow-right" /></span>
-            <span className="pager-title">{next.title}</span>
-          </Link>
+          <Tilt className="pager-tilt" max={4}>
+            <Link href={projectPath(next)} className="pager-link next">
+              <span className="pager-cmd mono">cd ../{next.slug} <i className="fa-solid fa-arrow-right" /></span>
+              <span className="pager-title">{next.title}</span>
+            </Link>
+          </Tilt>
         ) : <span />}
-      </nav>
+      </Reveal>
     </div>
   );
 }

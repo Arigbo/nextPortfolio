@@ -4,11 +4,11 @@
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
   align-items: start;
 
-  @media (min-width: 960px) { grid-template-columns: 380px 1fr; }
+  @media (min-width: 960px) { grid-template-columns: 380px minmax(0, 1fr); }
 }
 
 .contact-side {
@@ -29,7 +29,7 @@
 
 .info-row {
   display: grid;
-  grid-template-columns: 5.5rem 1fr;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
   gap: 0.75rem;
   align-items: center;
 }
@@ -108,10 +108,10 @@
 
 .term-row {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.15rem;
 
-  @media (min-width: 640px) { grid-template-columns: 1fr 1fr; }
+  @media (min-width: 640px) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 
 .term-field {
@@ -144,6 +144,18 @@
   textarea { resize: vertical; min-height: 160px; line-height: 1.6; }
 }
 
+/* the focused field's prompt nudges forward and its label takes the accent */
+.term-field:focus-within .term-label {
+  color: var(--accent);
+
+  .tk-prompt { transform: translateX(3px); }
+}
+
+.term-label .tk-prompt {
+  display: inline-block;
+  transition: transform 0.3s var(--ease);
+}
+
 .term-label {
   display: flex;
   align-items: center;
@@ -152,6 +164,7 @@
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-bright);
+  transition: color 0.25s;
 
   .term-count { margin-left: auto; font-weight: 400; font-size: 0.72rem; color: var(--dim); }
 }

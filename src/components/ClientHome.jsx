@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import SplitHeading from "@/components/SplitHeading";
 import ProjectCard from "@/components/ProjectCard";
 import HeroStack from "@/components/HeroStack";
 import { allProjects, techStackData } from "@/lib/projectsData";
@@ -115,7 +116,7 @@ export default function ClientHome() {
         <Reveal className="cmd-head">
           <div>
             <p className="cmd-line"><span className="tk-prompt">❯</span>ls ./projects --featured</p>
-            <h2>Featured projects</h2>
+            <SplitHeading text="Featured projects" />
             <p className="cmd-sub">A few systems I've designed and shipped. Open any one for the full case study.</p>
           </div>
           <Link href="/projects" className="text-link">
@@ -137,7 +138,7 @@ export default function ClientHome() {
         <Reveal className="cmd-head">
           <div>
             <p className="cmd-line"><span className="tk-prompt">❯</span>cat package.json</p>
-            <h2>My stack</h2>
+            <SplitHeading text="My stack" />
             <p className="cmd-sub">The languages, frameworks and infrastructure I build with day to day.</p>
           </div>
           <Link href="/about#toolkit" className="text-link">
