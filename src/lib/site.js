@@ -1,6 +1,7 @@
 // Shared site-wide data: navigation, contact details and social links.
 
 export const SITE = {
+  url: "https://arigbo-jesse.vercel.app", // production domain — canonical URLs, sitemap and JSON-LD use it
   name: "Arigbo Jesse",
   handle: "arigbo-jesse",
   role: "Full-Stack Engineer",
@@ -28,9 +29,6 @@ export const SOCIALS = [
   { label: "X (Twitter)", handle: "@anc13nt2", href: "https://x.com/anc13nt2?s=09", icon: "fa-brands fa-x-twitter" },
   { label: "WhatsApp", handle: SITE.phone, href: SITE.whatsapp, icon: "fa-brands fa-whatsapp" },
 ];
-
-/** "Evolve Classroom" → "evolve" — used as a folder-style name for projects */
-export const slugOf = (title) => title.toLowerCase().split(/\s+/)[0].replace(/[^a-z0-9-]/g, "");
 
 /** Is the current pathname inside this nav item? */
 export const isActive = (pathname, href) =>

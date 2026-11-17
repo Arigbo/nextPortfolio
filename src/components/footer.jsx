@@ -25,8 +25,8 @@ export default function Footer() {
                 </p>
                 <h2 className="footer-cta-title">Let's build something great together.</h2>
               </div>
-              <Link href="/contact" className="btn btn-primary">
-                ./contact.sh <i className="fa-solid fa-arrow-right" />
+              <Link href="/contact" className="btn btn-primary" data-magnetic>
+                Get in touch <i className="fa-solid fa-arrow-right" />
               </Link>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function Footer() {
         <div className="container status-bar-inner">
           <div className="status-left">
             <span className="sb-item sb-branch"><i className="fa-solid fa-code-branch" aria-hidden="true" /> main</span>
-            <span className="sb-item"><i className="fa-regular fa-circle-check" aria-hidden="true" /> 0 problems</span>
+            <span className="sb-item sb-hide-xs"><i className="fa-regular fa-circle-check" aria-hidden="true" /> 0 problems</span>
             <span className="sb-item sb-hide-sm">Next.js · React</span>
           </div>
           <div className="status-right">

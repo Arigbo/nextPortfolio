@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSite } from "@/components/context";
-import { allProjects } from "@/lib/projectsData";
-import { NAV, SITE, SOCIALS, slugOf } from "@/lib/site";
+import { allProjects, projectPath } from "@/lib/projectsData";
+import { NAV, SITE, SOCIALS } from "@/lib/site";
 
 /**
  * VS Code-style command palette: jump to pages and projects, or run quick
@@ -36,11 +36,11 @@ export default function CommandPalette({ open, onClose }) {
       ...allProjects.map((p) => ({
         group: "Projects",
         label: p.title,
-        hint: `${slugOf(p.title)}/`,
+        hint: `${p.slug}/`,
         icon: "fa-solid fa-folder",
         tone: "yellow",
         keywords: p.techStack.join(" "),
-        run: go(`/projects/${p.id}`),
+        run: go(projectPath(p)),
       })),
       {
         group: "Actions",

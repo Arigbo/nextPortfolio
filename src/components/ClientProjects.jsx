@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import Reveal from "@/components/Reveal";
+import SplitHeading from "@/components/SplitHeading";
 import ProjectCard from "@/components/ProjectCard";
 import { allProjects } from "@/lib/projectsData";
 import "@/styles/projects.scss";
@@ -37,7 +38,7 @@ export default function ClientProjects() {
       <Reveal className="cmd-head">
         <div>
           <p className="cmd-line"><span className="tk-prompt">❯</span>ls -la ./projects</p>
-          <h1>Projects</h1>
+          <SplitHeading as="h1" text="Projects" />
           <p className="cmd-sub">
             Web applications, platforms and client sites I've built — from a student-housing
             marketplace to a patient–doctor portal. Open any project for the full case study.
@@ -89,7 +90,8 @@ export default function ClientProjects() {
       </p>
 
       {filtered.length > 0 ? (
-        <div className="project-grid">
+        // keyed by the query so the matching cards animate back in after each filter/search
+        <div className="project-grid" key={`${filter}|${search}`}>
           {filtered.map((p, i) => (
             <Reveal key={p.id} delay={(i % 3) * 80} className="project-grid-item">
               <ProjectCard project={p} />
@@ -108,7 +110,7 @@ export default function ClientProjects() {
               <span className="err">grep: no matches found</span>
             </p>
             <button className="btn" onClick={() => { setSearch(""); setFilter("All"); }}>
-              <i className="fa-solid fa-rotate-left" /> clear filters
+              <i className="fa-solid fa-rotate-left" /> Clear filters
             </button>
           </div>
         </div>

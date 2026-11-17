@@ -39,6 +39,24 @@
 }
 
 /* ── Browser frame ── */
+/* swings up from a 3D angle as it enters the viewport — native scroll timeline,
+   so it's free of JS; browsers without support just show it flat */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .browser-3d {
+      transform-origin: 50% 100%;
+      animation: browser-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+
+@keyframes browser-rise {
+  from { transform: perspective(1400px) rotateX(24deg) scale(0.94); opacity: 0.35; }
+  to { transform: perspective(1400px) rotateX(0deg) scale(1); opacity: 1; }
+}
+
 .browser {
   margin-bottom: 2rem;
   border-color: var(--border-strong);
@@ -112,11 +130,11 @@ a.browser-view:hover img { transform: scale(1.012); }
 /* ── README + sidebar ── */
 .detail-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
   align-items: start;
 
-  @media (min-width: 960px) { grid-template-columns: 1fr 340px; }
+  @media (min-width: 960px) { grid-template-columns: minmax(0, 1fr) 340px; }
 }
 
 .md-p {
@@ -216,11 +234,18 @@ a.browser-view:hover img { transform: scale(1.012); }
 /* ── Pager ── */
 .detail-pager {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 1rem;
   margin-top: 3rem;
   padding-top: 2rem;
   border-top: 1px solid var(--border);
+}
+
+.pager-tilt {
+  display: flex;
+  border-radius: var(--radius);
+
+  .pager-link { width: 100%; }
 }
 
 .pager-link {
@@ -236,7 +261,7 @@ a.browser-view:hover img { transform: scale(1.012); }
   &.next { text-align: right; align-items: flex-end; }
 
   .pager-cmd { font-size: 0.78rem; color: var(--dim); }
-  .pager-title { font-family: var(--mono); font-weight: 700; color: var(--text-bright); }
+  .pager-title { font-weight: 600; letter-spacing: -0.02em; color: var(--text-bright); }
 
   &:hover {
     border-color: var(--accent-line);

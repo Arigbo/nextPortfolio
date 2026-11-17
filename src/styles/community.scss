@@ -2,13 +2,6 @@
    COMMUNITY GALLERY
    ============================================================ */
 
-.gallery-icon {
-  color: var(--accent);
-  font-size: 0.62em;
-  vertical-align: 0.12em;
-  margin-right: 0.15em;
-}
-
 .gallery-total { font-size: 0.9rem; }
 
 .gallery-bar {
@@ -44,13 +37,21 @@
     cursor: zoom-in;
 
     &:hover {
-      border-color: var(--accent-line);
-      transform: translateY(-3px);
+      border-color: var(--border-strong);
 
       .masonry-img { transform: scale(1.03); }
       .masonry-caption { opacity: 1; transform: none; }
     }
+
+    &:not(.tilt-on):hover { transform: translateY(-3px); }
   }
+
+  /* each photo fades and settles in as it finishes loading */
+  &.is-loaded .masonry-img { animation: photo-in 0.7s var(--ease); }
+}
+
+@keyframes photo-in {
+  from { opacity: 0; transform: scale(1.04); filter: blur(6px); }
 }
 
 .masonry-img {
@@ -106,7 +107,7 @@
   .tag {
     background: rgba(4, 7, 5, 0.6);
     border-color: rgba(255, 255, 255, 0.15);
-    color: #7ee787;
+    color: #8cc3a4;
   }
 
   p {
@@ -150,7 +151,7 @@
     border-color: rgba(255, 255, 255, 0.14);
     color: #e8f2eb;
 
-    &:hover { border-color: #7ee787; color: #7ee787; }
+    &:hover { border-color: #8cc3a4; color: #8cc3a4; }
   }
 
   .dim { color: #6b8573; }
@@ -163,6 +164,19 @@
   align-items: center;
   padding: 0.9rem 1rem;
   font-size: 0.82rem;
+}
+
+/* the viewer zooms open; each photo crossfades in when you move between them */
+.lightbox-stage { animation: lightbox-zoom 0.35s var(--ease); }
+
+@keyframes lightbox-zoom {
+  from { opacity: 0; transform: scale(0.96); }
+}
+
+.lightbox-img { animation: lightbox-fade 0.4s var(--ease); }
+
+@keyframes lightbox-fade {
+  from { opacity: 0; transform: scale(0.985); }
 }
 
 .lightbox-stage {
@@ -178,6 +192,8 @@
 }
 
 .lightbox-img {
+  width: auto;
+  height: auto;
   max-width: 100%;
   max-height: calc(100vh - 230px);
   object-fit: contain;
@@ -199,7 +215,7 @@
   .tag {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.14);
-    color: #7ee787;
+    color: #8cc3a4;
   }
 }
 
@@ -244,6 +260,6 @@
 
   &.active {
     opacity: 1;
-    border-color: #7ee787;
+    border-color: #8cc3a4;
   }
 }

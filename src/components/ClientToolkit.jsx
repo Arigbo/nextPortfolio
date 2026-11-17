@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import { allProjects, techMap } from "@/lib/projectsData";
-import { slugOf } from "@/lib/site";
+import { allProjects, techMap, projectPath } from "@/lib/projectsData";
 
 const TOOL_DESCRIPTIONS = {
   "Next.js": "Production-grade React framework for server-side rendering, static site generation, and building fast full-stack applications.",
@@ -66,7 +65,7 @@ export default function ClientToolkit({ toolkit }) {
           <span className="window-meta">{toolkit.length}</span>
         </div>
         <div className="window-body toolkit-items" role="listbox" aria-label="Tools">
-          {toolkit.map((t) => {
+          {toolkit.map((t, i) => {
             const count = projectsUsing(t).length;
             const src = techMap[t.toLowerCase()];
             return (
@@ -74,7 +73,8 @@ export default function ClientToolkit({ toolkit }) {
                 key={t}
                 role="option"
                 aria-selected={active === t}
-                className={`tool ${active === t ? "active" : ""}`}
+                className={`tool stagger-item ${active === t ? "active" : ""}`}
+                style={{ "--i": i }}
                 onClick={() => setActive(t)}
                 onMouseEnter={() => setActive(t)}
                 onFocus={() => setActive(t)}
@@ -93,7 +93,8 @@ export default function ClientToolkit({ toolkit }) {
           <i className="fa-solid fa-book tone-blue" aria-hidden="true" />
           <span className="window-title" style={{ textAlign: "left" }}>man {active.toLowerCase().replace(/\s+/g, "-")}</span>
         </div>
-        <div className="window-body man-body" aria-live="polite">
+        {/* keyed by tool so the page re-animates whenever the selection changes */}
+        <div className="window-body man-body man-swap" key={active} aria-live="polite">
           <p className="man-section">NAME</p>
           <p className="man-text man-name">
             {logo && <img src={logo} alt="" width={22} height={22} />}
@@ -108,9 +109,9 @@ export default function ClientToolkit({ toolkit }) {
             <ul className="man-text man-projects">
               {used.map((p) => (
                 <li key={p.id}>
-                  <Link href={`/projects/${p.id}`} className="man-project">
+                  <Link href={projectPath(p)} className="man-project">
                     <i className="fa-solid fa-folder" aria-hidden="true" />
-                    <span>{slugOf(p.title)}/</span>
+                    <span>{p.slug}/</span>
                     <span className="dim">{p.title}</span>
                     <i className="fa-solid fa-arrow-right man-arrow" aria-hidden="true" />
                   </Link>

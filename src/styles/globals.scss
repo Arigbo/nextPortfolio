@@ -1,81 +1,92 @@
 /* ============================================================
-   DESIGN SYSTEM — terminal / dev aesthetic
+   DESIGN SYSTEM — calm graphite + one muted accent
    Tokens, base elements and shared components.
    Theme lives on <html data-theme="dark|light">.
+   Rule of thumb: neutrals do the work; the accent is a seasoning
+   (prompts, links, status) — never a glow.
    ============================================================ */
 
 :root,
 [data-theme="dark"] {
-  color-scheme: dark;
+  /* "only" stops browsers' forced/auto dark modes from repainting our colours */
+  color-scheme: only dark;
 
-  --bg: #0a0e0b;
-  --bg-alt: #0c120e;
-  --surface: #0f1511;
-  --surface-2: #141c17;
-  --border: #1d2921;
-  --border-strong: #2a3a2f;
+  --bg: #0e0f11;
+  --bg-alt: #121316;
+  --surface: #15171a;
+  --surface-2: #1b1d21;
+  --border: #26292e;
+  --border-strong: #353940;
 
-  --text: #b9c8be;
-  --text-bright: #e8f2eb;
-  --dim: #6b8573;
-  --faint: #3b4e41;
+  --text: #b4b8bf;
+  --text-bright: #f1f2f4;
+  --dim: #80858e;
+  --faint: #4a4e55;
 
-  --green: #7ee787;
-  --blue: #79c0ff;
-  --orange: #ffa657;
-  --purple: #d2a8ff;
-  --red: #ff7b72;
-  --yellow: #e3b341;
+  /* syntax colours — desaturated so code reads calm, not neon */
+  --green: #8cc3a4;
+  --blue: #8fb0d9;
+  --orange: #d9a877;
+  --purple: #b7a3dc;
+  --red: #dd8f87;
+  --yellow: #d3b675;
 
-  --accent: var(--green);
-  --accent-ink: #052e10;
-  --accent-soft: rgba(126, 231, 135, 0.1);
-  --accent-line: rgba(126, 231, 135, 0.28);
+  --accent: #8cc3a4;
+  --accent-soft: rgba(140, 195, 164, 0.1);
+  --accent-line: rgba(140, 195, 164, 0.3);
 
-  --shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.75);
-  --shadow-sm: 0 10px 30px -14px rgba(0, 0, 0, 0.6);
-  --grid-dot: rgba(126, 231, 135, 0.06);
-  --overlay: rgba(4, 7, 5, 0.72);
+  /* primary buttons are solid ink, not accent-coloured */
+  --ink: #f1f2f4;
+  --ink-text: #0e0f11;
+
+  --shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7);
+  --shadow-sm: 0 10px 30px -16px rgba(0, 0, 0, 0.55);
+  --grid-dot: rgba(255, 255, 255, 0.035);
+  --overlay: rgba(8, 9, 10, 0.72);
+  --spot: rgba(255, 255, 255, 0.06);
 }
 
 [data-theme="light"] {
-  color-scheme: light;
+  color-scheme: only light;
 
-  --bg: #f6f8f6;
-  --bg-alt: #eef2ef;
+  --bg: #f7f7f5;
+  --bg-alt: #f0f0ed;
   --surface: #ffffff;
-  --surface-2: #f2f5f3;
-  --border: #dbe3dd;
-  --border-strong: #c2cfc6;
+  --surface-2: #f4f4f1;
+  --border: #e4e4df;
+  --border-strong: #cfcfc9;
 
-  --text: #33433a;
-  --text-bright: #0c1a11;
-  --dim: #64776b;
-  --faint: #a5b4aa;
+  --text: #3e4046;
+  --text-bright: #111214;
+  --dim: #6c6f77;
+  --faint: #a9abb1;
 
-  --green: #1a7f37;
-  --blue: #0969da;
-  --orange: #bc4c00;
-  --purple: #8250df;
-  --red: #cf222e;
-  --yellow: #9a6700;
+  --green: #3b7a5b;
+  --blue: #36689f;
+  --orange: #a35f27;
+  --purple: #6c53a6;
+  --red: #b0453c;
+  --yellow: #85691d;
 
-  --accent: var(--green);
-  --accent-ink: #ffffff;
-  --accent-soft: rgba(26, 127, 55, 0.08);
-  --accent-line: rgba(26, 127, 55, 0.3);
+  --accent: #3b7a5b;
+  --accent-soft: rgba(59, 122, 91, 0.08);
+  --accent-line: rgba(59, 122, 91, 0.3);
 
-  --shadow: 0 30px 70px -34px rgba(16, 40, 24, 0.28);
-  --shadow-sm: 0 10px 28px -16px rgba(16, 40, 24, 0.25);
-  --grid-dot: rgba(26, 127, 55, 0.07);
-  --overlay: rgba(12, 26, 17, 0.45);
+  --ink: #111214;
+  --ink-text: #ffffff;
+
+  --shadow: 0 30px 60px -34px rgba(20, 20, 30, 0.22);
+  --shadow-sm: 0 10px 28px -18px rgba(20, 20, 30, 0.2);
+  --grid-dot: rgba(0, 0, 0, 0.05);
+  --overlay: rgba(17, 18, 20, 0.4);
+  --spot: rgba(0, 0, 0, 0.04);
 }
 
 :root {
-  --mono: var(--font-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --sans: var(--font-sans), Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --radius: 12px;
-  --radius-sm: 8px;
+  --mono: var(--font-mono), "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: var(--font-sans), "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius: 14px;
+  --radius-sm: 9px;
   --header-h: 60px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -147,11 +158,11 @@ textarea {
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--mono);
+  font-family: var(--sans);
   color: var(--text-bright);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
 }
 
 :focus-visible {
@@ -335,36 +346,44 @@ h1, h2, h3, h4 {
   border: 1px solid var(--border-strong);
   background: var(--surface);
   color: var(--text-bright);
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   line-height: 1.2;
   white-space: nowrap;
-  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s var(--ease), box-shadow 0.2s;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.35s var(--ease), box-shadow 0.25s;
 
-  i { font-size: 0.8em; }
+  i { font-size: 0.8em; transition: transform 0.25s var(--ease); }
 
   &:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--text);
     transform: translateY(-1px);
+
+    .fa-arrow-right { transform: translateX(3px); }
   }
 
   &:active { transform: translateY(0); }
 
   &.btn-primary {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--accent-ink);
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--ink-text);
 
     &:hover {
-      color: var(--accent-ink);
-      box-shadow: 0 0 0 4px var(--accent-soft), 0 8px 24px -10px var(--accent);
+      color: var(--ink-text);
+      box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.45);
     }
   }
 
   &.btn-ghost {
     background: transparent;
+  }
+
+  &.btn-lg {
+    padding: 0.85rem 1.35rem;
+    font-size: 0.95rem;
+    border-radius: 11px;
   }
 
   &.btn-sm {
@@ -478,6 +497,128 @@ kbd,
   filter: invert(1) brightness(1.1);
 }
 
+/* ── 3D tilt + glare (see components/Tilt.jsx) ─────────────── */
+.tilt {
+  --rx: 0deg;
+  --ry: 0deg;
+  --gx: 50%;
+  --gy: 50%;
+  --glare: 0;
+  position: relative;
+  transform-style: preserve-3d;
+
+  &.tilt-on {
+    transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateZ(0);
+    transition: transform 0.5s var(--ease), border-color 0.25s, box-shadow 0.35s;
+    will-change: transform;
+
+    &:hover { transition: transform 0.12s linear, border-color 0.25s, box-shadow 0.35s; }
+
+    /* soft light that follows the cursor across the surface */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: radial-gradient(420px circle at var(--gx) var(--gy), var(--spot), transparent 60%);
+      opacity: var(--glare);
+      transition: opacity 0.35s;
+      z-index: 2;
+    }
+  }
+}
+
+/* ── Magnetic elements (pulled by components/Cursor.jsx) ─── */
+[data-magnetic] {
+  transition: transform 0.45s var(--ease), border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.25s;
+}
+
+/* ── Custom cursor (components/Cursor.jsx) ──────────────────── */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+/* keep the native I-beam where people type */
+html.has-custom-cursor :is(input, textarea, [contenteditable="true"]) {
+  cursor: text !important;
+}
+
+.cursor-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  pointer-events: none;
+  transition: opacity 0.3s;
+
+  &.is-hidden,
+  &.is-text { opacity: 0; }
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.cursor-dot span {
+  display: block;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--text-bright);
+  transition: transform 0.25s var(--ease), opacity 0.2s;
+
+  .is-hover & { transform: scale(0.5); }
+  .is-label & { opacity: 0; }
+}
+
+.cursor-ring-inner {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--text-bright) 45%, transparent);
+  transition: width 0.35s var(--ease), height 0.35s var(--ease), margin 0.35s var(--ease),
+    background 0.3s, border-color 0.3s, transform 0.2s var(--ease);
+
+  .is-hover & {
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+    border-color: color-mix(in srgb, var(--text-bright) 25%, transparent);
+    background: color-mix(in srgb, var(--text-bright) 7%, transparent);
+  }
+
+  .is-label & {
+    width: 76px;
+    height: 76px;
+    margin: -38px 0 0 -38px;
+    border-color: transparent;
+    background: var(--ink);
+  }
+
+  .is-down & { transform: scale(0.85); }
+}
+
+.cursor-label {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-text);
+  animation: cursor-label-in 0.3s var(--ease);
+}
+
+@keyframes cursor-label-in {
+  from { opacity: 0; transform: scale(0.6); }
+}
+
 /* ── Scroll reveal (see components/Reveal.jsx) ────────────── */
 .reveal {
   opacity: 0;
@@ -486,6 +627,43 @@ kbd,
   transition-delay: var(--delay, 0ms);
 
   &.is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Word-by-word heading (components/SplitHeading.jsx).
+   Hidden only inside a .reveal, so a heading used elsewhere is never stuck invisible. */
+.split-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.split-word {
+  display: inline-block;
+
+  .reveal & {
+    transform: translateY(105%);
+    transition: transform 0.9s var(--ease);
+    transition-delay: calc(var(--w) * 70ms + 80ms);
+  }
+
+  .reveal.is-in & { transform: none; }
+}
+
+/* Children that cascade in once their .reveal parent is in view: give each --i */
+.stagger-item {
+  .reveal & {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    transition-delay: calc(var(--i, 0) * 60ms + 150ms);
+  }
+
+  .reveal.is-in & {
     opacity: 1;
     transform: none;
   }

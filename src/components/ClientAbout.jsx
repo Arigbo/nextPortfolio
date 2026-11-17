@@ -1,8 +1,11 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import SplitHeading from "@/components/SplitHeading";
+import Tilt from "@/components/Tilt";
 import ClientToolkit from "@/components/ClientToolkit";
 import { communityCategories } from "@/lib/communityData";
 import { SITE, SOCIALS, yearsExp } from "@/lib/site";
@@ -49,7 +52,7 @@ export default function ClientAbout() {
       <Reveal className="cmd-head">
         <div>
           <p className="cmd-line"><span className="tk-prompt">❯</span>cat about.md</p>
-          <h1>About me</h1>
+          <SplitHeading as="h1" text="About me" />
           <p className="cmd-sub">
             {SITE.role} · Cloud Architect · Community Builder — {yearsExp}+ years crafting scalable systems.
           </p>
@@ -74,8 +77,8 @@ export default function ClientAbout() {
 
             <h2 className="md-h"><span className="md-hash">##</span> facts</h2>
             <dl className="facts">
-              {FACTS.map((f) => (
-                <div key={f.key} className="fact">
+              {FACTS.map((f, i) => (
+                <div key={f.key} className="fact stagger-item" style={{ "--i": i }}>
                   <dt className="tk-key">{f.key}:</dt>
                   <dd>
                     {f.href ? (
@@ -91,26 +94,28 @@ export default function ClientAbout() {
             </dl>
 
             <div className="intro-actions">
-              <a href={SITE.resume} download className="btn btn-primary">
-                <i className="fa-solid fa-file-arrow-down" /> download resume.pdf
+              <a href={SITE.resume} download className="btn btn-primary" data-magnetic>
+                <i className="fa-solid fa-file-arrow-down" /> Download resume
               </a>
-              <Link href="/contact" className="btn">./contact.sh</Link>
+              <Link href="/contact" className="btn">Get in touch</Link>
             </div>
           </div>
         </Reveal>
 
-        <Reveal className="window photo-window" delay={100}>
-          <div className="window-bar">
-            <i className="fa-regular fa-image tone-purple" aria-hidden="true" />
-            <span className="window-title" style={{ textAlign: "left" }}>graduation.jpg</span>
-            <span className="window-meta">preview</span>
-          </div>
-          <div className="photo-frame">
-            <img src="/graduation.jpg" alt="Arigbo Jesse in graduation cap and gown" />
-          </div>
-          <p className="photo-caption mono">
-            <span className="tk-com">// {SITE.name}, B.S. Computer Science</span>
-          </p>
+        <Reveal className="photo-reveal" delay={100}>
+          <Tilt className="window photo-window" max={6}>
+            <div className="window-bar">
+              <i className="fa-regular fa-image tone-purple" aria-hidden="true" />
+              <span className="window-title" style={{ textAlign: "left" }}>graduation.jpg</span>
+              <span className="window-meta">preview</span>
+            </div>
+            <div className="photo-frame">
+              <Image src="/graduation.jpg" alt="Arigbo Jesse in graduation cap and gown" width={822} height={1024} sizes="(min-width: 900px) 430px, 100vw" priority />
+            </div>
+            <p className="photo-caption mono">
+              <span className="tk-com">// {SITE.name}, B.S. Computer Science</span>
+            </p>
+          </Tilt>
         </Reveal>
       </div>
 
@@ -119,14 +124,14 @@ export default function ClientAbout() {
         <Reveal className="cmd-head">
           <div>
             <p className="cmd-line"><span className="tk-prompt">❯</span>git log --graph --reverse</p>
-            <h2>My journey</h2>
+            <SplitHeading text="My journey" />
           </div>
         </Reveal>
 
         <Reveal className="window">
           <ol className="window-body graph">
             {timelineEvents.map((ev, i) => (
-              <li key={ev.year} className="graph-item">
+              <li key={ev.year} className="graph-item stagger-item" style={{ "--i": i }}>
                 <span className="graph-node" aria-hidden="true" />
                 <p className="graph-head mono">
                   <span className="tk-str">{shortHash(ev.year, i)}</span>{" "}
@@ -145,7 +150,7 @@ export default function ClientAbout() {
         <Reveal className="cmd-head">
           <div>
             <p className="cmd-line"><span className="tk-prompt">❯</span>man toolkit</p>
-            <h2>Toolkit & philosophy</h2>
+            <SplitHeading text="Toolkit & philosophy" />
             <p className="cmd-sub">
               A modern, end-to-end stack — clean architecture and performance-first thinking.
               Pick a tool to see what it does and where I've used it.
@@ -160,7 +165,7 @@ export default function ClientAbout() {
         <Reveal className="cmd-head">
           <div>
             <p className="cmd-line"><span className="tk-prompt">❯</span>ls ~/community</p>
-            <h2>Communities</h2>
+            <SplitHeading text="Communities" />
             <p className="cmd-sub">
               My journey isn't just about code — it's about people. Photos from events I've attended.
             </p>
@@ -170,21 +175,21 @@ export default function ClientAbout() {
         <div className="dir-grid">
           {communityCategories.map((cat, i) => (
             <Reveal key={cat.id} delay={(i % 3) * 80} className="project-grid-item">
-              <Link href={`/community/${cat.id}`} className="dir-card">
+              <Tilt as={Link} href={`/community/${cat.id}`} className="dir-card" data-cursor="Open" max={5}>
                 <div className="pcard-bar">
                   <i className="fa-solid fa-folder" aria-hidden="true" />
                   <span className="pcard-path">{cat.id}/</span>
                   <span className="dim mono dir-count">{cat.photos.length} photos</span>
                 </div>
                 <div className="dir-img">
-                  <img src={cat.coverImage} alt="" loading="lazy" />
+                  <Image src={cat.coverImage} alt="" width={cat.coverSize.width} height={cat.coverSize.height} sizes="(min-width: 1000px) 360px, (min-width: 640px) 50vw, 100vw" />
                 </div>
                 <div className="dir-body">
                   <h3><i className={cat.icon} aria-hidden="true" /> {cat.title}</h3>
                   <p>{cat.description}</p>
                   <span className="pcard-cta">open gallery <i className="fa-solid fa-arrow-right" aria-hidden="true" /></span>
                 </div>
-              </Link>
+              </Tilt>
             </Reveal>
           ))}
         </div>
@@ -195,7 +200,7 @@ export default function ClientAbout() {
         <Reveal className="cmd-head">
           <div>
             <p className="cmd-line"><span className="tk-prompt">❯</span>cat memberships.yml</p>
-            <h2>Memberships & networks</h2>
+            <SplitHeading text="Memberships & networks" />
           </div>
         </Reveal>
 

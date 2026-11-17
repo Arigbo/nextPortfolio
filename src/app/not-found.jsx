@@ -20,10 +20,10 @@ export default function NotFound() {
           </p>
           <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
             <Link href="/" className="btn btn-primary">
-              <i className="fa-solid fa-house" /> cd ~
+              <i className="fa-solid fa-house" /> Back home
             </Link>
             <Link href="/projects" className="btn">
-              ls ./projects
+              See projects
             </Link>
           </div>
         </div>
