@@ -65,10 +65,8 @@
     height: 100%;
     object-fit: cover;
     object-position: top center;
-    transition: transform 0.8s var(--ease);
+    /* moved by scroll parallax (ScrollScenes) — no CSS transition on transform */
   }
-
-  .photo-window:hover & img { transform: scale(1.03); }
 }
 
 .photo-caption {
@@ -321,7 +319,6 @@
     border-color: var(--border-strong);
     box-shadow: var(--shadow);
 
-    .dir-img img { transform: scale(1.04); }
     .pcard-cta i { transform: translateX(4px); }
   }
 }
@@ -338,7 +335,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s var(--ease);
   }
 }
 

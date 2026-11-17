@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Reveal from "@/components/Reveal";
 import SplitHeading from "@/components/SplitHeading";
 import { SITE, SOCIALS } from "@/lib/site";
@@ -13,6 +13,16 @@ export default function ClientContact() {
   const [form, setForm] = useState(EMPTY);
   const [sent, setSent] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  // Live local time where I am (WAT). Starts empty so server and client markup match.
+  const [localTime, setLocalTime] = useState("--:--");
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Africa/Lagos" });
+    const tick = () => setLocalTime(fmt.format(new Date()));
+    tick();
+    const id = setInterval(tick, 15000);
+    return () => clearInterval(id);
+  }, []);
 
   const update = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
@@ -76,6 +86,13 @@ export default function ClientContact() {
                 <div className="info-val"><span className="tk-str">{SITE.location}</span></div>
               </div>
               <div className="info-row stagger-item" style={{ "--i": 3 }}>
+                <span className="tk-key">local time</span>
+                <div className="info-val">
+                  <span className="tk-str local-time">{localTime}</span>
+                  <span className="dim">WAT (UTC+1)</span>
+                </div>
+              </div>
+              <div className="info-row stagger-item" style={{ "--i": 4 }}>
                 <span className="tk-key">response</span>
                 <div className="info-val"><span className="tk-str">~24 hours</span></div>
               </div>

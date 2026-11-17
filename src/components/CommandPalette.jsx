@@ -172,7 +172,7 @@ export default function CommandPalette({ open, onClose }) {
           <kbd>esc</kbd>
         </div>
 
-        <ul className="palette-list" id="palette-list" role="listbox" ref={listRef}>
+        <ul className="palette-list" id="palette-list" role="listbox" ref={listRef} data-lenis-prevent>
           {results.length === 0 && (
             <li className="palette-empty">
               <span className="tk-kw">zsh:</span> command not found: {query}

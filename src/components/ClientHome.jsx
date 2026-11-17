@@ -1,17 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import SplitHeading from "@/components/SplitHeading";
-import ProjectCard from "@/components/ProjectCard";
 import HeroStack from "@/components/HeroStack";
+import ProjectShowcase from "@/components/ProjectShowcase";
+import ScrollStatement from "@/components/ScrollStatement";
+import { gsap, ScrollTrigger, MQ } from "@/lib/gsap";
 import { allProjects, techStackData } from "@/lib/projectsData";
 import { SITE } from "@/lib/site";
 import "@/styles/home.scss";
 
 // What the projects on this site actually are — the hero cycles through them
-const BUILDS = ["student-housing marketplaces", "patient–doctor portals", "learning platforms", "company websites"];
+const BUILDS = ["student-housing marketplaces", "patient health-record platforms", "company websites", "weather dashboards"];
 
 function useTypewriter(words, speed = 70, pause = 1800) {
   const [text, setText] = useState(words[0]);
@@ -49,11 +51,51 @@ export default function ClientHome() {
   const building = useTypewriter(BUILDS);
   // Projects visitors can open and see — they power the 3D hero and "featured"
   const showcase = allProjects.filter((p) => p.link && p.imageUrl);
-  const featured = showcase.slice(0, 3);
   const totalTech = techStackData.frontend.length + techStackData.backend.length + techStackData.extra.length;
+  const home = useRef(null);
+
+  // Scroll scenes: hero exit + marquee that reacts to scroll speed
+  useEffect(() => {
+    const root = home.current;
+    const mm = gsap.matchMedia();
+
+    mm.add(MQ.motion, () => {
+      // Leaving the hero: copy lifts and fades, the 3D stack fans apart in depth
+      const hero = root.querySelector(".hero");
+      const exit = { trigger: hero, start: "top top", end: "bottom top", scrub: true };
+      gsap.to(root.querySelector(".hero-copy"), { yPercent: -18, opacity: 0.15, ease: "none", scrollTrigger: exit });
+      gsap.to(root.querySelector(".stack3d"), { "--spread": 1, ease: "none", scrollTrigger: exit });
+
+      // Marquee: steady loop that speeds up (and follows direction) with scroll velocity
+      root.querySelector(".marquee-wrap").classList.add("is-js");
+      const loops = gsap.utils.toArray(".marquee", root).map((row, i) =>
+        gsap.fromTo(row, { xPercent: i % 2 ? -50 : 0 }, { xPercent: i % 2 ? 0 : -50, duration: i % 2 ? 56 : 48, ease: "none", repeat: -1 })
+      );
+      let settle;
+      const speed = ScrollTrigger.create({
+        trigger: root.querySelector("#stack"),
+        start: "top bottom",
+        end: "bottom top",
+        onUpdate: (self) => {
+          const v = self.getVelocity() / 250;
+          const boost = gsap.utils.clamp(-6, 6, v) || 0;
+          loops.forEach((l) => l.timeScale(1 + Math.abs(boost)));
+          settle?.kill();
+          settle = gsap.to(loops, { timeScale: 1, duration: 1.2, ease: "power2.out", delay: 0.05 });
+        },
+      });
+
+      return () => {
+        speed.kill();
+        root.querySelector(".marquee-wrap")?.classList.remove("is-js");
+      };
+    });
+
+    return () => mm.revert();
+  }, []);
 
   return (
-    <div className="home">
+    <div className="home" ref={home}>
       {/* ═══════════ HERO ═══════════ */}
       <section className="hero container" aria-label="Introduction">
         <div className="hero-copy">
@@ -83,7 +125,7 @@ export default function ClientHome() {
 
           <p className="hero-desc line" style={{ "--d": 4 }}>
             Next.js, TypeScript and Firebase, end to end — from a Stripe-powered housing marketplace
-            to a multi-tenant learning platform.
+            to a patient-owned health records platform.
           </p>
 
           <div className="hero-actions line" style={{ "--d": 5 }}>
@@ -106,14 +148,20 @@ export default function ClientHome() {
         </div>
 
         <div className="hero-visual line" style={{ "--d": 2 }}>
-          {/* back-to-front: Lodger, the richest screenshot, sits in front */}
-          <HeroStack projects={[...showcase].sort((a, b) => (a.slug === "lodger") - (b.slug === "lodger"))} />
+          {/* four cards, back-to-front — Lodger, the richest screenshot, sits in front */}
+          <HeroStack projects={showcase.filter((p) => p.slug !== "weather-app").sort((a, b) => (a.slug === "lodger") - (b.slug === "lodger"))} />
         </div>
       </section>
 
-      {/* ═══════════ FEATURED PROJECTS ═══════════ */}
-      <section className="section container" id="projects">
-        <Reveal className="cmd-head">
+      {/* ═══════════ STATEMENT ═══════════ */}
+      <section className="section container statement-section" aria-label="What I do">
+        <p className="cmd-line mono"><span className="tk-prompt">❯</span> cat ./intro.txt</p>
+        <ScrollStatement text="I build products end to end — from the database to the last pixel — for students, patients, learners and the businesses that serve them." />
+      </section>
+
+      {/* ═══════════ FEATURED PROJECTS (pinned 3D showcase) ═══════════ */}
+      <section className="section" id="projects">
+        <Reveal className="cmd-head container">
           <div>
             <p className="cmd-line"><span className="tk-prompt">❯</span>ls ./projects --featured</p>
             <SplitHeading text="Featured projects" />
@@ -124,13 +172,7 @@ export default function ClientHome() {
           </Link>
         </Reveal>
 
-        <div className="project-grid">
-          {featured.map((p, i) => (
-            <Reveal key={p.id} delay={i * 90} className="project-grid-item">
-              <ProjectCard project={p} />
-            </Reveal>
-          ))}
-        </div>
+        <ProjectShowcase projects={showcase} />
       </section>
 
       {/* ═══════════ STACK ═══════════ */}

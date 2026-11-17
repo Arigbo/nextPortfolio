@@ -229,7 +229,7 @@ export default function ClientCommunityGallery({ category }) {
 
       {/* ═══ Lightbox ═══ */}
       {activePhoto && (
-        <div className="lightbox" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Photo viewer">
+        <div className="lightbox" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Photo viewer" data-lenis-prevent>
           <div className="lightbox-top mono" onClick={(e) => e.stopPropagation()}>
             <span>
               <span className="bright">{category.id}/</span>
