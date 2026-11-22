@@ -12,8 +12,11 @@ import { allProjects, techStackData } from "@/lib/projectsData";
 import { SITE } from "@/lib/site";
 import "@/styles/home.scss";
 
+// The hero's 3D stack holds four cards, listed back to front (the last sits in front)
+const HERO_STACK = ["evolve", "quickdriverscard", "carekey", "lodger"];
+
 // What the projects on this site actually are — the hero cycles through them
-const BUILDS = ["student-housing marketplaces", "patient health-record platforms", "company websites", "weather dashboards"];
+const BUILDS = ["student-housing marketplaces", "patient health-record platforms", "driver verification cards", "company websites"];
 
 function useTypewriter(words, speed = 70, pause = 1800) {
   const [text, setText] = useState(words[0]);
@@ -148,8 +151,7 @@ export default function ClientHome() {
         </div>
 
         <div className="hero-visual line" style={{ "--d": 2 }}>
-          {/* four cards, back-to-front — Lodger, the richest screenshot, sits in front */}
-          <HeroStack projects={showcase.filter((p) => p.slug !== "weather-app").sort((a, b) => (a.slug === "lodger") - (b.slug === "lodger"))} />
+          <HeroStack projects={HERO_STACK.map((slug) => showcase.find((p) => p.slug === slug)).filter(Boolean)} />
         </div>
       </section>
 
