@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Projects",
   description:
-    "Projects by Arigbo Jesse: Lodger (student housing), CareKey (patient-owned health records), a weather dashboard and two client websites.",
+    "Projects by Arigbo Jesse: Lodger (student housing), CareKey (health records), Quick Drivers Card (driver ID verification) and more.",
   path: "/projects",
 });
 

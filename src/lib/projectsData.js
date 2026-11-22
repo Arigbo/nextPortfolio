@@ -211,6 +211,26 @@ export const allProjects = [
     category: "Full-Stack",
   },
   {
+    id: "p9",
+    slug: "quickdriverscard",
+    title: "Quick Drivers Card",
+    description: "Printable driver ID cards with QR codes: anyone can scan a card to verify the driver and see the live status and history of their vehicle documents.",
+    features: [
+      "Dashboard for registering drivers and their vehicles",
+      "Printable ID cards with QR codes, exportable as an image or PDF",
+      "Public driver record that each card's QR code opens, showing whether documents are valid, expiring or expired",
+      "Driver document uploads with a document history",
+      "Animated landing page with Framer Motion and smooth scrolling (Lenis)"
+    ],
+    link: "https://quickdriverscard.vercel.app/",
+    github: "https://github.com/Arigbo/quickdriverscard",
+    repo: "public",
+    imageUrl: "/quickdriverscard.png",
+    imageSize: { width: 1366, height: 682 },
+    techStack: ["Next.js", "React", "SCSS", "Framer Motion", "jsPDF"],
+    category: "Frontend",
+  },
+  {
     id: "p5",
     slug: "myreport",
     title: "MyReport Performance Platform",
